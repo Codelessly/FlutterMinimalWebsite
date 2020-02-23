@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
           minWidth: 450,
           defaultScale: true,
           breakpoints: [
-            ResponsiveBreakpoint(breakpoint: 600, name: MOBILE),
+            ResponsiveBreakpoint(breakpoint: 450, name: MOBILE),
             ResponsiveBreakpoint(breakpoint: 800, name: TABLET, scale: true),
             ResponsiveBreakpoint(breakpoint: 1200, name: DESKTOP),
-            ResponsiveBreakpoint(breakpoint: 1400, name: "4K", scale: true),
+            ResponsiveBreakpoint(breakpoint: 2460, name: "4K", scale: true),
           ],
           background: Container(color: Color(0xFFF5F5F5))),
       initialRoute: "/",
