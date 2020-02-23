@@ -1,16 +1,24 @@
-# minimal
+![Screenshots](screenshots/Minimal%20Blog%20Home.png)
+# [Flutter Minimal Website](https://gallery.imfast.io/flutterwebsites/minimal/)
+[![Pub release](https://img.shields.io/badge/flutter-responsive-brightgreen.svg?style=flat-square)](https://github.com/Codelessly/ResponsiveFramework) [![GitHub issues](https://img.shields.io/github/issues/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite/issues) [![GitHub top language](https://img.shields.io/github/languages/top/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite)
 
-Flutter Minimal Website
+> ### A minimalistic website for blogs and portfolios.
 
-## Getting Started
+[Demo Link](https://gallery.imfast.io/flutterwebsites/minimal/)
+ 
+## License
 
-This project is a starting point for a Flutter application.
+    BSD Zero Clause License
 
-A few resources to get you started if this is your first Flutter project:
+    Copyright © 2020 Codelessly
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
