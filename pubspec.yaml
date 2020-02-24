@@ -8,7 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  responsive_framework: ^0.0.2
+  responsive_framework: ^0.0.3
   google_fonts: ^0.3.9
 
 dev_dependencies:
