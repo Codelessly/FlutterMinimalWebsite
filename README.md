@@ -1,11 +1,20 @@
-![Screenshots](screenshots/Minimal%20Blog%20Home.png)
+![Screenshots](screenshots/Minimal%20Home.png)
 # [Flutter Minimal Website](https://gallery.imfast.io/flutterwebsites/minimal/)
 [![Pub release](https://img.shields.io/badge/flutter-responsive-brightgreen.svg?style=flat-square)](https://github.com/Codelessly/ResponsiveFramework) [![GitHub issues](https://img.shields.io/github/issues/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite/issues) [![GitHub top language](https://img.shields.io/github/languages/top/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite)
 
+<img src="assets/Minimal-Logo-iOS.png" width="128">
+
 > ### A minimalistic website for blogs and portfolios.
 
-[Demo Link](https://gallery.imfast.io/flutterwebsites/minimal/)
- 
+[View Minimal Website](https://gallery.imfast.io/flutterwebsites/minimal/|w=120)
+
+## Screenshots
+
+|List|Post| 
+|--|--|
+|![Screenshots](screenshots/Minimal%20List.png)|![Screenshots](screenshots/Minimal%20Post.png)|
+
+
 ## License
 
     BSD Zero Clause License
