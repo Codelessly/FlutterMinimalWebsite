@@ -81,7 +81,7 @@ Flutter Minimal Website is licensed under Zero-Clause BSD and released as Emailw
   
 ## Contributors ❤️
 
-Minimal Template is a good start but there are still a lot of features to develop. Let's expand the capabilities of Flutter Web together! You can help by:
+Minimal Template is a good start but there are still a lot of features to develop. Let's work together to expand the capabilities of Flutter Web! You can help by:
 
 - Recommending "web ready" Flutter components to add to this project.
 - Developing "web ready" components (and letting me know!) 💕
@@ -115,6 +115,16 @@ Please feel free to open an issue or reach out through one of the channel below.
   <img alt="Codelessly GitHub"
        src="https://lh3.googleusercontent.com/L15QqmKK7Vl-Ag1ZxaBqNQlXVEw58JT2BDb-ef5t2eboDh0pPSLjDgi3-aQ3Opdhhyk=w96" />
 </a>
+<br></br>
+<a href="https://github.com/Codelessly/ResponsiveFramework">
+  <img alt="Built with Responsive Framework"
+       src="screenshots/Built%20with%20Responsive%20Badge.png" />
+</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://github.com/flutter/flutter">
+  <img alt="Flutter"
+       src="screenshots/Flutter%20Logo%20Banner.png" />
+</a>
+
 
 ## License
 
