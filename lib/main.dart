@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
           breakpoints: [
             ResponsiveBreakpoint(breakpoint: 450, name: MOBILE),
             ResponsiveBreakpoint(breakpoint: 800, name: TABLET, scale: true),
+            ResponsiveBreakpoint(breakpoint: 1000, name: TABLET, scale: true),
             ResponsiveBreakpoint(breakpoint: 1200, name: DESKTOP),
             ResponsiveBreakpoint(breakpoint: 2460, name: "4K", scale: true),
           ],
