@@ -168,15 +168,28 @@ class ScreenContainer extends StatelessWidget {
               ),
             ),
           Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
+            child: Container(
+              width: deviceScreenHeight * aspectRatio,
+              height: deviceScreenHeight,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromARGB(72, 178, 178, 178),
+                    blurRadius: 40,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
               child: Material(
-                elevation: 4,
-                child: SizedBox(
-                  width: deviceScreenHeight * aspectRatio,
-                  height: deviceScreenHeight,
-                  child: Container(
-                    color: Colors.blueGrey[50],
+                elevation: 8,
+                shadowColor: Color.fromARGB(156, 178, 178, 178),
+                color: Colors.blueGrey[50],
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Image.asset(
+                    "assets/images/typewriter_overhead_bw_w1080.jpg",
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
