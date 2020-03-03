@@ -31,6 +31,12 @@ class _DeviceScreensState extends State<DeviceScreens> {
               text: "4K", heightPadding: heightPadding, aspectRatio: 9 / 16),
           Container(width: 100),
           ScreenContainer(
+              text: "Samsung",
+              subtitle: "S10",
+              heightPadding: heightPadding,
+              aspectRatio: 9 / 20),
+          Container(width: 100),
+          ScreenContainer(
               text: "iPhone",
               subtitle: "X",
               heightPadding: heightPadding,
@@ -188,7 +194,7 @@ class ScreenContainer extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Image.asset(
-                    "assets/images/typewriter_overhead_bw_w1080.jpg",
+                    "assets/images/paper_flower_overhead_bw_w1080.jpg",
                     fit: BoxFit.cover,
                   ),
                 ),
