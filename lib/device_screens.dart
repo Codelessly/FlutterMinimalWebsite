@@ -2,14 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal/device_data.dart';
 
-class DeviceScreens extends StatefulWidget {
-  DeviceScreens({Key key}) : super(key: key);
+class ResponsivePreview extends StatefulWidget {
+  ResponsivePreview({Key key}) : super(key: key);
 
   @override
-  _DeviceScreensState createState() => _DeviceScreensState();
+  _ResponsivePreviewState createState() => _ResponsivePreviewState();
 }
 
-class _DeviceScreensState extends State<DeviceScreens> {
+class _ResponsivePreviewState extends State<ResponsivePreview> {
   ScrollController scrollController;
   DeviceDataRepository deviceDataRepository;
 
@@ -76,7 +76,7 @@ class DeviceContainer extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: heightPadding),
       child: Stack(
         children: <Widget>[
-          Container(
+          SizedBox(
             height: marginTop - 80,
             width: deviceScreenHeight * deviceData.aspectRatio + 200,
             child: Align(
@@ -115,13 +115,13 @@ class DeviceContainer extends StatelessWidget {
               ),
             ),
           if ((deviceData.model?.isEmpty ?? true) == false)
-            SizedBox(
-              height: marginTop - 50,
-              width: deviceScreenHeight * deviceData.aspectRatio - 70,
-              child: Container(
-                margin: EdgeInsets.only(left: 70),
+            Container(
+              margin: EdgeInsets.only(left: 70),
+              child: SizedBox(
+                height: marginTop,
+                width: deviceScreenHeight * deviceData.aspectRatio - 50,
                 child: Align(
-                  alignment: FractionalOffset(0, 0.5),
+                  alignment: FractionalOffset(0, 0.4),
                   child: AutoSizeText(
                     deviceData.brand ?? "",
                     maxLines: 1,

@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:minimal/device_screens.dart';
 
 void main() {
-  runApp(ScrollWidget());
+  runApp(ResponsivePreviewApp());
 }
 
-class ScrollWidget extends StatefulWidget {
+class ResponsivePreviewApp extends StatefulWidget {
   @override
-  _ScrollWidgetState createState() => _ScrollWidgetState();
+  _ResponsivePreviewAppState createState() => _ResponsivePreviewAppState();
 }
 
-class _ScrollWidgetState extends State<ScrollWidget>
+class _ResponsivePreviewAppState extends State<ResponsivePreviewApp>
     with WidgetsBindingObserver {
   final ScrollController scrollController = ScrollController();
 
@@ -35,7 +35,8 @@ class _ScrollWidgetState extends State<ScrollWidget>
         home: Scaffold(
       body: Stack(
         children: <Widget>[
-          DeviceScreens(),
+          Container(color: Colors.white),
+          ResponsivePreview(),
         ],
       ),
     ));
