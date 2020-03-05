@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 
 class DeviceDataRepository {
-  List<DeviceData> deviceDatas;
-  List<DeviceData> activeDeviceDatas;
+  List<DeviceData> deviceDatas = [];
+  List<DeviceData> activeDeviceDatas = [];
 
   DeviceDataRepository(String deviceDataJson, {List<String> activeDevices}) {
     deviceDatas = DeviceData.listDeserializerFromJson(deviceDataJson);
@@ -18,6 +18,18 @@ class DeviceDataRepository {
   void removeDeviceData(DeviceData deviceData) {
     deviceDatas.remove(deviceData);
   }
+
+  List<DeviceData> addAllWithBrand(String brand) {
+    Iterable<DeviceData> matchedDevices =
+        deviceDatas.where((element) => element.brand.contains(brand));
+    matchedDevices.forEach((element) {
+      if (!activeDeviceDatas.contains(element)) {
+        activeDeviceDatas.add(element);
+      }
+    });
+
+    return activeDeviceDatas;
+  }
 }
 
 class DeviceData {
@@ -28,6 +40,7 @@ class DeviceData {
   final int height;
   final double physicalSize;
   final double devicePixelRatio;
+  final double aspectRatio;
   final int dpi;
 
   DeviceData({
@@ -38,6 +51,7 @@ class DeviceData {
     this.height,
     this.physicalSize,
     this.devicePixelRatio,
+    this.aspectRatio,
     this.dpi,
   });
 
@@ -49,7 +63,8 @@ class DeviceData {
     int height,
     double physicalSize,
     double devicePixelRatio,
-    double dpi,
+    double aspectRatio,
+    int dpi,
   }) =>
       DeviceData(
         name: name ?? this.name,
@@ -59,6 +74,7 @@ class DeviceData {
         height: height ?? this.height,
         physicalSize: physicalSize ?? this.physicalSize,
         devicePixelRatio: devicePixelRatio ?? this.devicePixelRatio,
+        aspectRatio: aspectRatio ?? this.aspectRatio,
         dpi: dpi ?? this.dpi,
       );
 
@@ -75,6 +91,7 @@ class DeviceData {
         height: json["height"],
         physicalSize: json["physicalSize"]?.toDouble(),
         devicePixelRatio: json["devicePixelRatio"].toDouble(),
+        aspectRatio: json["width"] / json["height"],
         dpi: (json["physicalSize"] != null)
             ? (sqrt(json["width"] * json["width"] +
                         json["height"] * json["height"]) /
@@ -91,6 +108,7 @@ class DeviceData {
         "height": height,
         "physicalSize": physicalSize,
         "devicePixelRatio": devicePixelRatio,
+        "aspectRatio": aspectRatio,
         "dpi": dpi,
       };
 

@@ -31,30 +31,11 @@ class _ScrollWidgetState extends State<ScrollWidget>
 
   @override
   Widget build(BuildContext context) {
-//    final textWidget = Text("Hello, this is sample text");
-//    final materialApp = MaterialApp(
-//      home: SingleChildScrollView(
-//        controller: scrollController,
-//        child: Column(
-//          mainAxisSize: MainAxisSize.min,
-//          children: <Widget>[
-//            Flexible(
-//                fit: FlexFit.loose,
-//                child: Container(width: 250, height: 250, color: Colors.amber)),
-//          ],
-//        ),
-//      ),
-//      theme: Theme.of(context).copyWith(platform: TargetPlatform.android),
-//      debugShowCheckedModeBanner: false,
-//    );
     return MaterialApp(
         home: Scaffold(
       body: Stack(
         children: <Widget>[
-          Align(
-            alignment: Alignment.center,
-            child: DeviceScreens(),
-          ),
+          DeviceScreens(),
         ],
       ),
     ));
@@ -78,3 +59,21 @@ class _ScrollWidgetState extends State<ScrollWidget>
 //  theme: Theme.of(context).copyWith(platform: TargetPlatform.android),
 //  debugShowCheckedModeBanner: false,
 //);
+
+// Initialize screen.
+//    final textWidget = Text("Hello, this is sample text");
+//    final materialApp = MaterialApp(
+//      home: SingleChildScrollView(
+//        controller: scrollController,
+//        child: Column(
+//          mainAxisSize: MainAxisSize.min,
+//          children: <Widget>[
+//            Flexible(
+//                fit: FlexFit.loose,
+//                child: Container(width: 250, height: 250, color: Colors.amber)),
+//          ],
+//        ),
+//      ),
+//      theme: Theme.of(context).copyWith(platform: TargetPlatform.android),
+//      debugShowCheckedModeBanner: false,
+//    );

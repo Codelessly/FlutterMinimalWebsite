@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:minimal/device_data.dart';
 
 class DeviceScreens extends StatefulWidget {
   DeviceScreens({Key key}) : super(key: key);
@@ -10,92 +11,54 @@ class DeviceScreens extends StatefulWidget {
 
 class _DeviceScreensState extends State<DeviceScreens> {
   ScrollController scrollController;
+  DeviceDataRepository deviceDataRepository;
 
   @override
   void initState() {
     super.initState();
     scrollController = ScrollController();
+    deviceDataRepository = DeviceDataRepository(deviceDataJson);
+    deviceDataRepository.addAllWithBrand("iPhone");
+    print(
+        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
   }
 
   @override
   Widget build(BuildContext context) {
-    double heightPadding = 50;
+    double verticalPadding = 50;
     return Scrollbar(
-      child: ListView(
+      child: ListView.builder(
         controller: scrollController,
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 100),
-        children: <Widget>[
-          ScreenContainer(
-              text: "4K", heightPadding: heightPadding, aspectRatio: 9 / 16),
-          Container(width: 100),
-          ScreenContainer(
-              text: "Samsung",
-              subtitle: "S10",
-              heightPadding: heightPadding,
-              aspectRatio: 9 / 20),
-          Container(width: 100),
-          ScreenContainer(
-              text: "iPhone",
-              subtitle: "X",
-              heightPadding: heightPadding,
-              aspectRatio: 9 / 20),
-          Container(width: 100),
-          ScreenContainer(
-              text: "iPhone",
-              subtitle: "XR",
-              heightPadding: heightPadding,
-              aspectRatio: 9 / 20),
-          Container(width: 100),
-          ScreenContainer(
-              text: "iPhone",
-              subtitle: "11 Pro",
-              heightPadding: heightPadding,
-              aspectRatio: 9 / 20),
-          Container(width: 100),
-          ScreenContainer(
-              text: "iPhone",
-              subtitle: "11 Pro Max",
-              heightPadding: heightPadding,
-              aspectRatio: 9 / 20),
-          Container(width: 100),
-          ScreenContainer(
-              text: "Pixel",
-              subtitle: "3",
-              heightPadding: heightPadding,
-              aspectRatio: 9 / 20),
-          Container(width: 100),
-          ScreenContainer(
-              text: "QHD", heightPadding: heightPadding, aspectRatio: 9 / 20),
-          Container(width: 100),
-          ScreenContainer(
-              text: "1080p", heightPadding: heightPadding, aspectRatio: 1 / 2),
-          Container(width: 100),
-          ScreenContainer(
-              text: "720p", heightPadding: heightPadding, aspectRatio: 16 / 9),
-          Container(width: 100),
-          ScreenContainer(
-              text: "480p", heightPadding: heightPadding, aspectRatio: 16 / 9),
-        ],
+        itemBuilder: (context, index) {
+          DeviceData deviceData = deviceDataRepository.activeDeviceDatas[index];
+          return Container(
+              child: DeviceContainer(
+                deviceData: deviceData,
+                heightPadding: verticalPadding,
+              ),
+              margin:
+                  (index != (deviceDataRepository.activeDeviceDatas.length - 1))
+                      ? EdgeInsets.only(right: 50)
+                      : null);
+        },
+        itemCount: deviceDataRepository.activeDeviceDatas.length,
       ),
     );
   }
 }
 
-class ScreenContainer extends StatelessWidget {
-  final String text;
-  final String subtitle;
+class DeviceContainer extends StatelessWidget {
+  final DeviceData deviceData;
   final double heightPadding;
-  final double aspectRatio;
 
-  const ScreenContainer(
-      {Key key,
-      this.heightPadding = 0,
-      this.aspectRatio = 1,
-      this.text = "",
-      this.subtitle = ""})
-      : super(key: key);
+  const DeviceContainer({
+    Key key,
+    @required this.deviceData,
+    this.heightPadding = 0,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,18 +71,18 @@ class ScreenContainer extends StatelessWidget {
     // allowed width.
     double deviceScreenHeight = screenHeight - marginTop;
     return Container(
-      width: deviceScreenHeight * aspectRatio + 400,
+      width: deviceScreenHeight * deviceData.aspectRatio + 400,
       height: screenHeight,
       margin: EdgeInsets.symmetric(vertical: heightPadding),
       child: Stack(
         children: <Widget>[
           Container(
             height: marginTop - 80,
-            width: deviceScreenHeight * aspectRatio + 200,
+            width: deviceScreenHeight * deviceData.aspectRatio + 200,
             child: Align(
               alignment: FractionalOffset(0, 0.3),
               child: AutoSizeText(
-                subtitle,
+                deviceData.model ?? "",
                 maxLines: 1,
                 maxFontSize: 400,
                 minFontSize: 0,
@@ -132,14 +95,14 @@ class ScreenContainer extends StatelessWidget {
               ),
             ),
           ),
-          if (subtitle.isEmpty)
-            Container(
+          if (deviceData.model?.isEmpty ?? true)
+            SizedBox(
               height: marginTop - 80,
-              width: deviceScreenHeight * aspectRatio + 200,
+              width: deviceScreenHeight * deviceData.aspectRatio + 200,
               child: Align(
                 alignment: FractionalOffset(0, 0.3),
                 child: AutoSizeText(
-                  text,
+                  deviceData.brand ?? "",
                   maxLines: 1,
                   maxFontSize: 400,
                   minFontSize: 0,
@@ -151,31 +114,33 @@ class ScreenContainer extends StatelessWidget {
                 ),
               ),
             ),
-          if (subtitle.isNotEmpty)
-            Container(
+          if ((deviceData.model?.isEmpty ?? true) == false)
+            SizedBox(
               height: marginTop - 50,
-              width: deviceScreenHeight * aspectRatio - 70,
-              margin: EdgeInsets.only(left: 70),
-              child: Align(
-                alignment: FractionalOffset(0, 0.5),
-                child: AutoSizeText(
-                  text,
-                  maxLines: 1,
-                  maxFontSize: 400,
-                  minFontSize: 0,
-                  wrapWords: false,
-                  style: TextStyle(
-                      fontSize: 400,
-                      color: Color(0xFF757575),
-                      height: 0.9,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Montserrat"),
+              width: deviceScreenHeight * deviceData.aspectRatio - 70,
+              child: Container(
+                margin: EdgeInsets.only(left: 70),
+                child: Align(
+                  alignment: FractionalOffset(0, 0.5),
+                  child: AutoSizeText(
+                    deviceData.brand ?? "",
+                    maxLines: 1,
+                    maxFontSize: 400,
+                    minFontSize: 0,
+                    wrapWords: false,
+                    style: TextStyle(
+                        fontSize: 400,
+                        color: Color(0xFF757575),
+                        height: 0.9,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Montserrat"),
+                  ),
                 ),
               ),
             ),
           Center(
             child: Container(
-              width: deviceScreenHeight * aspectRatio,
+              width: deviceScreenHeight * deviceData.aspectRatio,
               height: deviceScreenHeight,
               decoration: BoxDecoration(
                 boxShadow: [
