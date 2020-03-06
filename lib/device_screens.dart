@@ -18,34 +18,32 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     super.initState();
     scrollController = ScrollController();
     deviceDataRepository = DeviceDataRepository(deviceDataJson);
-    deviceDataRepository.addAllWithBrand("iPhone");
-    print(
-        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
+//    deviceDataRepository.addAllWithBrand("iPhone");
+//    print(
+//        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
   }
 
   @override
   Widget build(BuildContext context) {
     double verticalPadding = 50;
-    return Scrollbar(
-      child: ListView.builder(
-        controller: scrollController,
-        scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 100),
-        itemBuilder: (context, index) {
-          DeviceData deviceData = deviceDataRepository.activeDeviceDatas[index];
-          return Container(
-              child: DeviceContainer(
-                deviceData: deviceData,
-                heightPadding: verticalPadding,
-              ),
-              margin:
-                  (index != (deviceDataRepository.activeDeviceDatas.length - 1))
-                      ? EdgeInsets.only(right: 50)
-                      : null);
-        },
-        itemCount: deviceDataRepository.activeDeviceDatas.length,
-      ),
+    return ListView.builder(
+      controller: scrollController,
+      scrollDirection: Axis.horizontal,
+      physics: BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 100),
+      itemBuilder: (context, index) {
+        DeviceData deviceData = deviceDataRepository.activeDeviceDatas[index];
+        return Container(
+            child: DeviceContainer(
+              deviceData: deviceData,
+              heightPadding: verticalPadding,
+            ),
+            margin:
+                (index != (deviceDataRepository.activeDeviceDatas.length - 1))
+                    ? EdgeInsets.only(right: 50)
+                    : null);
+      },
+      itemCount: deviceDataRepository.activeDeviceDatas.length,
     );
   }
 }
@@ -62,23 +60,42 @@ class DeviceContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight =
-        MediaQuery.of(context).size.height - (heightPadding * 2);
-    print("Screen Height: $screenHeight");
+    // Height available for device container.
+    // Screen height minus height padding.
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double deviceContainerHeight = screenHeight - (heightPadding * 2);
+    print("Device Container Height: $deviceContainerHeight");
     double marginTop = 400;
-    // Scaled device height.
-    // Calculated based on window height and maximum
-    // allowed width.
-    double deviceScreenHeight = screenHeight - marginTop;
+    // Constrain the maximum width within a range
+    // calculated from the device width and height.
+    // If the width of the screen is too narrow
+    // (i.e. on a phone), the preview width is allowed
+    // to exceed the width of the phone.
+    // A maximum width aspect ratio limit is set to
+    // fit a reasonable portion of wide displays in the
+    // preview area.
+    Map<String, double> deviceResizeCalc = deviceResizeCalculation(
+        maxWidthRatio: 1,
+        boundaryWidthRatio: 1 / 2,
+        minHeightPercentage: 2 /
+            3, // TODO Automatically calculate this value from screen aspect ratio.
+        aspectRatio: deviceData.aspectRatio,
+        containerHeight: deviceContainerHeight);
+    double deviceScreenWidth = deviceResizeCalc["width"];
+    double deviceScreenHeight = deviceResizeCalc["height"];
+    // TODO Add label construct to give container enough room for label.
     return Container(
-      width: deviceScreenHeight * deviceData.aspectRatio + 400,
-      height: screenHeight,
-      margin: EdgeInsets.symmetric(vertical: heightPadding),
+      width: deviceResizeCalc["width"] +
+          400, // TODO Calculate device positions for text positioning.
+      height: deviceContainerHeight,
+      margin: EdgeInsets.symmetric(
+          vertical: heightPadding), // TODO Move padding to deviceResizeCalc.
       child: Stack(
         children: <Widget>[
           SizedBox(
             height: marginTop - 80,
-            width: deviceScreenHeight * deviceData.aspectRatio + 200,
+            width: deviceScreenWidth + 200,
             child: Align(
               alignment: FractionalOffset(0, 0.3),
               child: AutoSizeText(
@@ -98,7 +115,7 @@ class DeviceContainer extends StatelessWidget {
           if (deviceData.model?.isEmpty ?? true)
             SizedBox(
               height: marginTop - 80,
-              width: deviceScreenHeight * deviceData.aspectRatio + 200,
+              width: deviceScreenWidth + 200,
               child: Align(
                 alignment: FractionalOffset(0, 0.3),
                 child: AutoSizeText(
@@ -119,7 +136,7 @@ class DeviceContainer extends StatelessWidget {
               margin: EdgeInsets.only(left: 70),
               child: SizedBox(
                 height: marginTop,
-                width: deviceScreenHeight * deviceData.aspectRatio - 50,
+                width: deviceScreenWidth - 50,
                 child: Align(
                   alignment: FractionalOffset(0, 0.4),
                   child: AutoSizeText(
@@ -140,7 +157,7 @@ class DeviceContainer extends StatelessWidget {
             ),
           Center(
             child: Container(
-              width: deviceScreenHeight * deviceData.aspectRatio,
+              width: deviceScreenWidth,
               height: deviceScreenHeight,
               decoration: BoxDecoration(
                 boxShadow: [
@@ -169,5 +186,29 @@ class DeviceContainer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Map<String, double> deviceResizeCalculation(
+      {double maxWidthRatio,
+      double boundaryWidthRatio,
+      double minHeightPercentage,
+      double aspectRatio,
+      double containerHeight}) {
+    if (aspectRatio > maxWidthRatio)
+      return {
+        "width": containerHeight * minHeightPercentage * aspectRatio,
+        "height": containerHeight * minHeightPercentage
+      };
+
+    if (aspectRatio > boundaryWidthRatio) {
+      double heightPercentageCalc =
+          1 - (aspectRatio - boundaryWidthRatio) * (1 - minHeightPercentage);
+      return {
+        "width": containerHeight * heightPercentageCalc * aspectRatio,
+        "height": containerHeight * heightPercentageCalc
+      };
+    }
+
+    return {"width": containerHeight * aspectRatio, "height": containerHeight};
   }
 }
