@@ -23,6 +23,9 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
 //        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
   }
 
+  // TODO: Set horizontal and vertical padding.
+  // Horizontal padding controls preview horizontal spacing. Control in ListView.
+
   @override
   Widget build(BuildContext context) {
     double verticalPadding = 50;
@@ -75,11 +78,11 @@ class DeviceContainer extends StatelessWidget {
     // A maximum width aspect ratio limit is set to
     // fit a reasonable portion of wide displays in the
     // preview area.
-    Map<String, double> deviceResizeCalc = deviceResizeCalculation(
+    Map<String, double> deviceResizeCalc = deviceScreenSizeCalc(
         maxWidthRatio: 1,
         boundaryWidthRatio: 1 / 2,
         minHeightPercentage: 2 /
-            3, // TODO Automatically calculate this value from screen aspect ratio.
+            3, // TODO Automatically calculate this value from screen aspect ratio. This percentage helps control how much of the preview fits on the device screen.
         aspectRatio: deviceData.aspectRatio,
         containerHeight: deviceContainerHeight);
     double deviceScreenWidth = deviceResizeCalc["width"];
@@ -90,7 +93,8 @@ class DeviceContainer extends StatelessWidget {
           400, // TODO Calculate device positions for text positioning.
       height: deviceContainerHeight,
       margin: EdgeInsets.symmetric(
-          vertical: heightPadding), // TODO Move padding to deviceResizeCalc.
+          vertical:
+              heightPadding), // TODO Move padding to deviceResizeCalc. Why?
       child: Stack(
         children: <Widget>[
           SizedBox(
@@ -188,12 +192,37 @@ class DeviceContainer extends StatelessWidget {
     );
   }
 
-  Map<String, double> deviceResizeCalculation(
+  /// Calculate the dimensions for the preview area
+  /// and device size.
+  ///
+  /// Calculate the appropriate dimensions by working
+  /// backwards from device size constraints.
+  /// The purpose of setting device size constraints
+  /// is to fit device preview on the preview screen
+  /// in a way the user expects.
+  ///
+  /// The [maxWidthRatio], [boundaryWidthRatio],
+  /// and [minHeightPercentage] approximate a
+  /// solver function to maximize the device preview
+  /// size and fit the maximum portion of the device
+  /// on the preview screen. When the [aspectRatio]
+  /// of the device preview exceeds the [boundaryWidthRatio],
+  /// the device height begins to shrink, up to the
+  /// [minHeightPercentage].
+  ///
+  /// After the device preview [Size] is determined,
+  /// calculate the container [Size].
+  ///
+  /// Returns a device preview [Size] and container [Size]
+  /// that can be used to position the device preview
+  /// and additional elements within the device preview.
+  Map<String, double> deviceScreenSizeCalc(
       {double maxWidthRatio,
       double boundaryWidthRatio,
       double minHeightPercentage,
       double aspectRatio,
       double containerHeight}) {
+    // TODO: Add asserts to force correct inputs for calculations.
     if (aspectRatio > maxWidthRatio)
       return {
         "width": containerHeight * minHeightPercentage * aspectRatio,
