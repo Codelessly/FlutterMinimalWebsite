@@ -19,7 +19,7 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     super.initState();
     scrollController = ScrollController();
     deviceDataRepository = DeviceDataRepository(deviceDataJson);
-//    deviceDataRepository.addAllWithBrand("iPhone");
+//    deviceDataRepository.addAllWithBrand("");
 //    print(
 //        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
   }
@@ -29,7 +29,7 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
 
   @override
   Widget build(BuildContext context) {
-    double verticalPadding = 50;
+    double verticalPadding = 100;
     return ListView.builder(
       controller: scrollController,
       scrollDirection: Axis.horizontal,
@@ -44,7 +44,7 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
             ),
             margin:
                 (index != (deviceDataRepository.activeDeviceDatas.length - 1))
-                    ? EdgeInsets.only(right: 50)
+                    ? EdgeInsets.only(right: 100)
                     : null);
       },
       itemCount: deviceDataRepository.activeDeviceDatas.length,
@@ -70,7 +70,6 @@ class DeviceContainer extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double deviceContainerHeight = screenHeight - (heightPadding * 2);
     print("Device Container Height: $deviceContainerHeight");
-    double marginTop = 400;
     // Constrain the maximum width within a range
     // calculated from the device width and height.
     // If the width of the screen is too narrow
@@ -95,23 +94,25 @@ class DeviceContainer extends StatelessWidget {
     Rect deviceScreenRect = Offset(400, 400) & deviceScreenSize;
     Rect deviceContainerRect =
         Offset.zero & Size(deviceContainerWidth, deviceContainerHeight);
+
+    LabelFactory labelFactory = LabelFactory(
+        type: LabelType.MINIMAL_LARGE,
+        title: deviceData.brand,
+        subtitle: deviceData.model,
+        deviceSize: deviceScreenSize);
     return Container(
-      width: deviceContainerWidth,
-      height: deviceContainerHeight,
+      width: labelFactory.containerRect.width,
+      height: labelFactory.containerRect.height,
       margin: EdgeInsets.symmetric(
           vertical:
               heightPadding), // TODO Move padding to deviceResizeCalc. This allows the device to exceed to not be cropped when out of screen.
       child: Stack(
         children: <Widget>[
-          Align(
-            alignment: Alignment.topLeft,
-            child: MinimalLargeLabel(
-                title: deviceData.brand,
-                subtitle: deviceData.model,
-                deviceSize: deviceScreenSize),
-          ),
-          Positioned.fromRelativeRect(
-            rect: RelativeRect.fromRect(deviceScreenRect, deviceContainerRect),
+          Positioned.fromRect(
+              rect: labelFactory.labelRect,
+              child: labelFactory.label as Widget),
+          Positioned.fromRect(
+            rect: labelFactory.deviceRect,
             child: Container(
               width: deviceScreenWidth,
               height: deviceScreenHeight,
@@ -255,36 +256,37 @@ class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
       height: labelRect.height,
       child: Stack(
         children: <Widget>[
-          // Subtitle.
-          Positioned.fromRect(
-            rect: subtitleRect,
-            child: SizedBox(
-              width: subtitleRect.width,
-              height: subtitleRect.height,
-              child: AutoSizeText(
-                subtitle ?? "",
-                maxLines: 1,
-                maxFontSize: 400,
-                minFontSize: 0,
-                softWrap: false,
-                style: TextStyle(
-                    fontSize: 400,
-                    color: Color(0xFFDFDFDF),
-                    fontWeight: FontWeight.bold,
-                    height: 0.9,
-                    fontFamily: "Montserrat"),
+          // Display Subtitle.
+          if (title?.isNotEmpty ?? false)
+            Positioned.fromRect(
+              rect: subtitleRect,
+              child: SizedBox(
+                width: subtitleRect.width,
+                height: subtitleRect.height,
+                child: AutoSizeText(
+                  subtitle ?? "",
+                  maxLines: 1,
+                  maxFontSize: 400,
+                  minFontSize: 0,
+                  softWrap: false,
+                  style: TextStyle(
+                      fontSize: 400,
+                      color: Color(0xFFDFDFDF),
+                      fontWeight: FontWeight.bold,
+                      height: 0.9,
+                      fontFamily: "Montserrat"),
+                ),
               ),
             ),
-          ),
           // Display large title.
-          if (subtitle?.isEmpty ?? true)
+          if (title?.isEmpty ?? true)
             Positioned.fromRect(
               rect: titleRect,
               child: SizedBox(
                 width: titleRect.width,
                 height: titleRect.height,
                 child: AutoSizeText(
-                  title ?? "",
+                  subtitle ?? "",
                   maxLines: 1,
                   maxFontSize: 400,
                   minFontSize: 0,
@@ -298,7 +300,7 @@ class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
               ),
             ),
           // Display small title.
-          if (subtitle?.isNotEmpty ?? false)
+          if (title?.isNotEmpty ?? false)
             Positioned.fromRect(
               rect: titleRect,
               child: SizedBox(
@@ -326,20 +328,20 @@ class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
   Rect get titleRect {
     Offset titleOffset = Offset.zero;
 
-    double titleWidth = deviceSize.shortestSide;
+    double titleWidth = deviceSize.shortestSide * 0.8;
 
     if (subtitle?.isNotEmpty ?? false) {
       titleOffset = Offset(100, 50);
     }
 
-    return titleOffset & Size(titleWidth, titleHeight);
+    return titleOffset & Size(titleWidth, titleHeight * 0.8);
   }
 
   Rect get subtitleRect {
     Offset subtitleOffset = Offset.zero;
 
-    double subtitleWidth = deviceSize.shortestSide;
-    double subtitleHeight = titleHeight * 1.3;
+    double subtitleWidth = deviceSize.shortestSide * 0.8;
+    double subtitleHeight = titleHeight;
 
     if (subtitle?.isNotEmpty ?? false) {
     } else {
@@ -351,7 +353,7 @@ class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
 
   Rect get deviceRect {
     Offset deviceOffset =
-        Offset(titleRect.left + 50, titleRect.bottom + titleHeight);
+        Offset(titleRect.left + 50, titleRect.bottom - (titleHeight * 0.2));
     double deviceResizeRatio =
         (deviceSize.height - deviceOffset.dy) / deviceSize.height;
     Size deviceSizeNew = deviceSize * deviceResizeRatio;
