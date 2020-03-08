@@ -23,7 +23,7 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     scrollController = ScrollController();
     deviceDataRepository = DeviceDataRepository(deviceDataJson);
 //    deviceDataRepository.addAllWithBrand("iPad");
-//    deviceDataRepository.addAllWithBrand("");
+    deviceDataRepository.addAllWithBrand("");
 //    print(
 //        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
   }
@@ -73,7 +73,6 @@ class DeviceContainer extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double deviceContainerHeight = screenHeight - (heightPadding * 2);
-    print("Device Container Height: $deviceContainerHeight");
     // Constrain the maximum width within a range
     // calculated from the device width and height.
     // If the width of the screen is too narrow
@@ -89,15 +88,6 @@ class DeviceContainer extends StatelessWidget {
             3, // TODO Automatically calculate this value from screen aspect ratio. This percentage helps control how much of the preview fits on the device screen.
         aspectRatio: deviceData.aspectRatio,
         containerHeight: deviceContainerHeight);
-    double deviceScreenWidth = deviceScreenSize.width;
-    double deviceScreenHeight = deviceScreenSize.height;
-
-    // TODO Calculate device positions for text positioning.
-    double deviceContainerWidth = deviceScreenWidth + 400;
-    // TODO Add label construct to give container enough room for label.
-    Rect deviceScreenRect = Offset(400, 400) & deviceScreenSize;
-    Rect deviceContainerRect =
-        Offset.zero & Size(deviceContainerWidth, deviceContainerHeight);
 
     LabelFactory labelFactory = LabelFactory(
         type: LabelType.MINIMAL_LARGE,
@@ -113,9 +103,8 @@ class DeviceContainer extends StatelessWidget {
           deviceContainerHeight / 2 - labelFactory.containerRect.center.dy;
     }
 
-    double scaleFactor = 1 /
-        (deviceData.devicePixelRatio *
-            (deviceData.height / labelFactory.deviceRect.size.height));
+    double previewScale =
+        deviceData.scaledSize.width / labelFactory.deviceSize.width;
 
     return Center(
       child: Container(
@@ -133,8 +122,8 @@ class DeviceContainer extends StatelessWidget {
             Positioned.fromRect(
               rect: labelFactory.deviceRect,
               child: Container(
-                width: deviceScreenWidth,
-                height: deviceScreenHeight,
+                width: labelFactory.deviceSize.width,
+                height: labelFactory.deviceSize.height,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -151,30 +140,39 @@ class DeviceContainer extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
-                    child: ResponsiveWrapper(
-                      mediaQueryData: MediaQueryData(
-                          size: labelFactory.deviceRect.size,
-                          devicePixelRatio: deviceData.devicePixelRatio *
-                              (deviceData.height /
-                                  labelFactory.deviceRect.size.height)),
-                      maxWidth: 1200,
-                      minWidth: 450,
-                      defaultScale: true,
-                      defaultScaleFactor: scaleFactor,
-                      breakpoints: [
-                        ResponsiveBreakpoint(breakpoint: 450, name: MOBILE),
-                        ResponsiveBreakpoint(
-                            breakpoint: 800, name: TABLET, scale: true),
-                        ResponsiveBreakpoint(
-                            breakpoint: 1000, name: TABLET, scale: true),
-                        ResponsiveBreakpoint(breakpoint: 1200, name: DESKTOP),
-                        ResponsiveBreakpoint(
-                            breakpoint: 2460, name: "4K", scale: true),
-                      ],
-                      background: Container(
-                        color: Color(0xFFF5F5F5),
+                    child: MediaQuery(
+                      data: MediaQueryData(
+                          size: labelFactory.deviceSize * previewScale,
+                          devicePixelRatio: deviceData.devicePixelRatio),
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: Container(
+                          width: labelFactory.deviceSize.width * previewScale,
+                          height: labelFactory.deviceSize.height * previewScale,
+                          child: ResponsiveWrapper(
+                            maxWidth: 1200,
+                            minWidth: 450,
+                            defaultScale: true,
+                            breakpoints: [
+                              ResponsiveBreakpoint(
+                                  breakpoint: 450, name: MOBILE),
+                              ResponsiveBreakpoint(
+                                  breakpoint: 800, name: TABLET, scale: true),
+                              ResponsiveBreakpoint(
+                                  breakpoint: 1000, name: TABLET, scale: true),
+                              ResponsiveBreakpoint(
+                                  breakpoint: 1200, name: DESKTOP),
+                              ResponsiveBreakpoint(
+                                  breakpoint: 2460, name: "4K", scale: true),
+                            ],
+                            background: Container(
+                              color: Color(0xFFF5F5F5),
+                            ),
+                            child: BouncingScrollWrapper.builder(
+                                context, ListPage()),
+                          ),
+                        ),
                       ),
-                      child: BouncingScrollWrapper.builder(context, ListPage()),
                     ),
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui';
 
 class DeviceDataRepository {
   List<DeviceData> deviceDatas = [];
@@ -7,7 +8,7 @@ class DeviceDataRepository {
 
   DeviceDataRepository(String deviceDataJson, {List<String> activeDevices}) {
     deviceDatas = DeviceData.listDeserializerFromJson(deviceDataJson);
-    activeDeviceDatas = deviceDatas;
+//    activeDeviceDatas = deviceDatas;
     // If a list of active devices exists, set active devices list.
 //    deviceDatas.removeWhere((e) => !activeDevices.any((activeDevice) => e.name == activeDevice));
   }
@@ -37,12 +38,10 @@ class DeviceData {
   final String name;
   final String brand;
   final String model;
-  final int width;
-  final int height;
+  final double width;
+  final double height;
   final double physicalSize;
   final double devicePixelRatio;
-  final double aspectRatio;
-  final int dpi;
 
   DeviceData({
     this.name,
@@ -52,8 +51,6 @@ class DeviceData {
     this.height,
     this.physicalSize,
     this.devicePixelRatio,
-    this.aspectRatio,
-    this.dpi,
   });
 
   DeviceData copyWith({
@@ -75,8 +72,6 @@ class DeviceData {
         height: height ?? this.height,
         physicalSize: physicalSize ?? this.physicalSize,
         devicePixelRatio: devicePixelRatio ?? this.devicePixelRatio,
-        aspectRatio: aspectRatio ?? this.aspectRatio,
-        dpi: dpi ?? this.dpi,
       );
 
   factory DeviceData.fromJson(String str) =>
@@ -90,15 +85,8 @@ class DeviceData {
         model: json["model"],
         width: json["width"],
         height: json["height"],
-        physicalSize: json["physicalSize"]?.toDouble(),
-        devicePixelRatio: json["devicePixelRatio"].toDouble(),
-        aspectRatio: json["width"] / json["height"],
-        dpi: (json["physicalSize"] != null)
-            ? (sqrt(json["width"] * json["width"] +
-                        json["height"] * json["height"]) /
-                    json["physicalSize"])
-                .round()
-            : null,
+        physicalSize: json["physicalSize"],
+        devicePixelRatio: json["devicePixelRatio"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -120,6 +108,15 @@ class DeviceData {
     return List<DeviceData>.generate(
         list.length, (index) => DeviceData.fromMap(list[index]));
   }
+
+  Size get size => Size(width, height);
+  double get aspectRatio => width / height;
+  int get dpi => physicalSize != null
+      ? (sqrt(width * width + height * height) / physicalSize).round()
+      : null;
+  double get scaledWidth => width / devicePixelRatio;
+  double get scaledHeight => height / devicePixelRatio;
+  Size get scaledSize => Size(scaledWidth, scaledHeight);
 }
 
 const String deviceDataJson =
