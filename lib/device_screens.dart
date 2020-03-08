@@ -21,12 +21,27 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
   void initState() {
     super.initState();
     scrollController = ScrollController();
-    deviceDataRepository =
-        DeviceDataRepository(deviceDataJson, activeDevices: ["iPad"]);
-//    deviceDataRepository.addAllWithBrand("iPad");
-//    deviceDataRepository.addAllWithBrand("");
-//    print(
-//        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
+    deviceDataRepository = DeviceDataRepository(deviceDataJson, activeDevices: [
+      "iPhone 11 Pro Max",
+      "iPhone 11",
+      "iPhone X",
+      "iPad Pro 11\"",
+      "iPad Air",
+      "iPad",
+      "Galaxy S20 Ultra",
+      "Galaxy S20",
+      "Galaxy S10",
+      "Galaxy S9",
+      "Galaxy Note 10+",
+      "Pixel 4",
+      "Pixel 3",
+      "Pro Display XDR",
+      "8K",
+      "5K",
+      "4K",
+      "HD",
+      "720p",
+    ]);
   }
 
   // TODO: Set horizontal and vertical padding.

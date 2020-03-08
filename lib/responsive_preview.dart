@@ -32,14 +32,16 @@ class _ResponsivePreviewAppState extends State<ResponsivePreviewApp>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(color: Colors.white),
-          ResponsivePreview(),
-        ],
+      home: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Container(color: Colors.white),
+            ResponsivePreview(),
+          ],
+        ),
       ),
-    ));
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
 
