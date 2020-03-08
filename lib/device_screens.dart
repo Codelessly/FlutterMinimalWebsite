@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal/device_data.dart';
 
@@ -78,88 +77,32 @@ class DeviceContainer extends StatelessWidget {
     // A maximum width aspect ratio limit is set to
     // fit a reasonable portion of wide displays in the
     // preview area.
-    Map<String, double> deviceResizeCalc = deviceScreenSizeCalc(
+    Size deviceScreenSize = deviceScreenSizeCalc(
         maxWidthRatio: 1,
         boundaryWidthRatio: 1 / 2,
         minHeightPercentage: 2 /
             3, // TODO Automatically calculate this value from screen aspect ratio. This percentage helps control how much of the preview fits on the device screen.
         aspectRatio: deviceData.aspectRatio,
         containerHeight: deviceContainerHeight);
-    double deviceScreenWidth = deviceResizeCalc["width"];
-    double deviceScreenHeight = deviceResizeCalc["height"];
+    double deviceScreenWidth = deviceScreenSize.width;
+    double deviceScreenHeight = deviceScreenSize.height;
+
+    // TODO Calculate device positions for text positioning.
+    double deviceContainerWidth = deviceScreenWidth + 400;
     // TODO Add label construct to give container enough room for label.
+    Rect deviceScreenRect = Offset(500, 500) & deviceScreenSize;
+    Rect deviceContainerRect =
+        Offset.zero & Size(deviceContainerWidth, deviceContainerHeight);
     return Container(
-      width: deviceResizeCalc["width"] +
-          400, // TODO Calculate device positions for text positioning.
+      width: deviceContainerWidth,
       height: deviceContainerHeight,
       margin: EdgeInsets.symmetric(
           vertical:
-              heightPadding), // TODO Move padding to deviceResizeCalc. Why?
+              heightPadding), // TODO Move padding to deviceResizeCalc. This allows the device to exceed to not be cropped when out of screen.
       child: Stack(
         children: <Widget>[
-          SizedBox(
-            height: marginTop - 80,
-            width: deviceScreenWidth + 200,
-            child: Align(
-              alignment: FractionalOffset(0, 0.3),
-              child: AutoSizeText(
-                deviceData.model ?? "",
-                maxLines: 1,
-                maxFontSize: 400,
-                minFontSize: 0,
-                style: TextStyle(
-                    fontSize: 400,
-                    color: Color(0xFFDFDFDF),
-                    height: 0.9,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Montserrat"),
-              ),
-            ),
-          ),
-          if (deviceData.model?.isEmpty ?? true)
-            SizedBox(
-              height: marginTop - 80,
-              width: deviceScreenWidth + 200,
-              child: Align(
-                alignment: FractionalOffset(0, 0.3),
-                child: AutoSizeText(
-                  deviceData.brand ?? "",
-                  maxLines: 1,
-                  maxFontSize: 400,
-                  minFontSize: 0,
-                  style: TextStyle(
-                      fontSize: 400,
-                      color: Color(0xFF757575),
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Montserrat"),
-                ),
-              ),
-            ),
-          if ((deviceData.model?.isEmpty ?? true) == false)
-            Container(
-              margin: EdgeInsets.only(left: 70),
-              child: SizedBox(
-                height: marginTop,
-                width: deviceScreenWidth - 50,
-                child: Align(
-                  alignment: FractionalOffset(0, 0.4),
-                  child: AutoSizeText(
-                    deviceData.brand ?? "",
-                    maxLines: 1,
-                    maxFontSize: 400,
-                    minFontSize: 0,
-                    wrapWords: false,
-                    style: TextStyle(
-                        fontSize: 400,
-                        color: Color(0xFF757575),
-                        height: 0.9,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "Montserrat"),
-                  ),
-                ),
-              ),
-            ),
-          Center(
+          Positioned.fromRelativeRect(
+            rect: RelativeRect.fromRect(deviceScreenRect, deviceContainerRect),
             child: Container(
               width: deviceScreenWidth,
               height: deviceScreenHeight,
@@ -192,8 +135,7 @@ class DeviceContainer extends StatelessWidget {
     );
   }
 
-  /// Calculate the dimensions for the preview area
-  /// and device size.
+  /// Calculate the dimensions for the device size.
   ///
   /// Calculate the appropriate dimensions by working
   /// backwards from device size constraints.
@@ -210,13 +152,8 @@ class DeviceContainer extends StatelessWidget {
   /// the device height begins to shrink, up to the
   /// [minHeightPercentage].
   ///
-  /// After the device preview [Size] is determined,
-  /// calculate the container [Size].
-  ///
-  /// Returns a device preview [Size] and container [Size]
-  /// that can be used to position the device preview
-  /// and additional elements within the device preview.
-  Map<String, double> deviceScreenSizeCalc(
+  /// Returns the device preview [Size].
+  Size deviceScreenSizeCalc(
       {double maxWidthRatio,
       double boundaryWidthRatio,
       double minHeightPercentage,
@@ -224,20 +161,96 @@ class DeviceContainer extends StatelessWidget {
       double containerHeight}) {
     // TODO: Add asserts to force correct inputs for calculations.
     if (aspectRatio > maxWidthRatio)
-      return {
-        "width": containerHeight * minHeightPercentage * aspectRatio,
-        "height": containerHeight * minHeightPercentage
-      };
+      return Size(containerHeight * minHeightPercentage * aspectRatio,
+          containerHeight * minHeightPercentage);
 
     if (aspectRatio > boundaryWidthRatio) {
       double heightPercentageCalc =
           1 - (aspectRatio - boundaryWidthRatio) * (1 - minHeightPercentage);
-      return {
-        "width": containerHeight * heightPercentageCalc * aspectRatio,
-        "height": containerHeight * heightPercentageCalc
-      };
+      return Size(containerHeight * heightPercentageCalc * aspectRatio,
+          containerHeight * heightPercentageCalc);
     }
 
-    return {"width": containerHeight * aspectRatio, "height": containerHeight};
+    return Size(containerHeight * aspectRatio, containerHeight);
   }
 }
+
+//class MinimalLargeLabel extends StatelessWidget {
+//  final String title;
+//  final String subtitle;
+//
+//  const MinimalLargeLabel({Key key, this.title, this.subtitle})
+//      : super(key: key);
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return SizedBox(
+//      child: Stack(
+//        children: <Widget>[
+//          SizedBox(
+//            height: marginTop - 80,
+//            width: deviceScreenWidth + 200,
+//            child: Align(
+//              alignment: FractionalOffset(0, 0.3),
+//              child: AutoSizeText(
+//                subtitle ?? "",
+//                maxLines: 1,
+//                maxFontSize: 400,
+//                minFontSize: 0,
+//                style: TextStyle(
+//                    fontSize: 400,
+//                    color: Color(0xFFDFDFDF),
+//                    height: 0.9,
+//                    fontWeight: FontWeight.bold,
+//                    fontFamily: "Montserrat"),
+//              ),
+//            ),
+//          ),
+//          if (subtitle?.isEmpty ?? true)
+//            SizedBox(
+//              height: marginTop - 80,
+//              width: deviceScreenWidth + 200,
+//              child: Align(
+//                alignment: FractionalOffset(0, 0.3),
+//                child: AutoSizeText(
+//                  deviceData.brand ?? "",
+//                  maxLines: 1,
+//                  maxFontSize: 400,
+//                  minFontSize: 0,
+//                  style: TextStyle(
+//                      fontSize: 400,
+//                      color: Color(0xFF757575),
+//                      fontWeight: FontWeight.bold,
+//                      fontFamily: "Montserrat"),
+//                ),
+//              ),
+//            ),
+//          if ((subtitle?.isEmpty ?? true) == false)
+//            Container(
+//              margin: EdgeInsets.only(left: 70),
+//              child: SizedBox(
+//                height: marginTop,
+//                width: deviceScreenWidth - 50,
+//                child: Align(
+//                  alignment: FractionalOffset(0, 0.4),
+//                  child: AutoSizeText(
+//                    title ?? "",
+//                    maxLines: 1,
+//                    maxFontSize: 400,
+//                    minFontSize: 0,
+//                    wrapWords: false,
+//                    style: TextStyle(
+//                        fontSize: 400,
+//                        color: Color(0xFF757575),
+//                        height: 0.9,
+//                        fontWeight: FontWeight.bold,
+//                        fontFamily: "Montserrat"),
+//                  ),
+//                ),
+//              ),
+//            ),
+//        ],
+//      ),
+//    );
+//  }
+//}
