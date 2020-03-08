@@ -110,48 +110,57 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     );
   }
 
-  double scrollStepDistance = 10;
-
   void startScroll() {
-    // Timer Method.
-    scrollTimer = Timer.periodic(
-        Duration(microseconds: ((1 / 60) * 1000).round()), (timer) {
-      if (scrollController.offset >=
-          scrollController.position.maxScrollExtent) {
-        stopScroll();
-      }
-      scrollController.jumpTo(scrollController.offset + scrollStepDistance);
-    });
-    // Scroll Controller Method.
-//    scrollController
-//        .animateTo(scrollController.offset + 200,
-//            duration: Duration(milliseconds: 200), curve: Curves.linear)
-//        .then((value) {
-//      print("Continue scroll");
-//      if (scrollController.offset >=
-//          scrollController.position.maxScrollExtent) {
-//        stopScroll();
-//      } else {
-//        startScroll();
-//      }
-//    });
+    if (kIsWeb) {
+      // Timer Method.
+      scrollTimer = Timer.periodic(
+          Duration(microseconds: ((1 / 30) * 1000).round()), (timer) {
+        if (scrollController.offset >=
+            scrollController.position.maxScrollExtent) {
+          stopScroll();
+        }
+        scrollController.jumpTo(scrollController.offset + 10);
+      });
+    } else {
+      // Scroll Controller Method.
+      scrollController
+          .animateTo(scrollController.offset + 200,
+              duration: Duration(milliseconds: 1000), curve: Curves.linear)
+          .then((value) {
+        print("Continue scroll");
+        if (scrolling == false ||
+            scrollController.offset >=
+                scrollController.position.maxScrollExtent) {
+          stopScroll();
+        } else {
+          startScroll();
+        }
+      });
+    }
+
     setState(() {
       scrolling = true;
     });
   }
 
   void stopScroll() {
-    // Timer Method.
-    scrollTimer.cancel();
-    // Scroll Controller Method.
-//    scrollController.animateTo(scrollController.offset,
-//        duration: Duration(seconds: 0), curve: Curves.linear);
+    print("Stop scroll");
+    if (kIsWeb) {
+      // Timer Method.
+      scrollTimer.cancel();
+    } else {
+      // Scroll Controller Method.
+      scrollController.animateTo(scrollController.offset,
+          duration: Duration(seconds: 0), curve: Curves.linear);
+    }
+
     setState(() {
       scrolling = false;
     });
   }
 
   void resetScroll() {
+    print("Reset scroll");
     stopScroll();
     scrollController.jumpTo(0);
   }
@@ -228,15 +237,19 @@ class DeviceContainer extends StatelessWidget {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Color.fromARGB(72, 178, 178, 178),
-                      blurRadius: 40,
+                      color: kIsWeb
+                          ? Color.fromARGB(72, 178, 178, 178)
+                          : Color.fromARGB(156, 178, 178, 178),
+                      blurRadius: kIsWeb ? 40 : 60,
                     ),
                   ],
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 child: Material(
                   elevation: 8,
-                  shadowColor: Color.fromARGB(156, 178, 178, 178),
+                  shadowColor: kIsWeb
+                      ? Color.fromARGB(156, 178, 178, 178)
+                      : Color.fromARGB(10, 178, 178, 178),
                   color: Colors.blueGrey[50],
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   child: ClipRRect(

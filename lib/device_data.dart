@@ -87,10 +87,10 @@ class DeviceData {
         name: (json["brand"] + " " + json["model"]).toString().trim(),
         brand: json["brand"],
         model: json["model"],
-        width: json["width"],
-        height: json["height"],
-        physicalSize: json["physicalSize"],
-        devicePixelRatio: json["devicePixelRatio"],
+        width: json["width"].toDouble(),
+        height: json["height"].toDouble(),
+        physicalSize: json["physicalSize"]?.toDouble(),
+        devicePixelRatio: json["devicePixelRatio"]?.toDouble(),
       );
 
   Map<String, dynamic> toMap() => {
