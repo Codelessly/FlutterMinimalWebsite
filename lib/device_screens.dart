@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal/device_data.dart';
 
@@ -90,7 +92,7 @@ class DeviceContainer extends StatelessWidget {
     // TODO Calculate device positions for text positioning.
     double deviceContainerWidth = deviceScreenWidth + 400;
     // TODO Add label construct to give container enough room for label.
-    Rect deviceScreenRect = Offset(500, 500) & deviceScreenSize;
+    Rect deviceScreenRect = Offset(400, 400) & deviceScreenSize;
     Rect deviceContainerRect =
         Offset.zero & Size(deviceContainerWidth, deviceContainerHeight);
     return Container(
@@ -101,6 +103,13 @@ class DeviceContainer extends StatelessWidget {
               heightPadding), // TODO Move padding to deviceResizeCalc. This allows the device to exceed to not be cropped when out of screen.
       child: Stack(
         children: <Widget>[
+          Align(
+            alignment: Alignment.topLeft,
+            child: MinimalLargeLabel(
+                title: deviceData.brand,
+                subtitle: deviceData.model,
+                deviceSize: deviceScreenSize),
+          ),
           Positioned.fromRelativeRect(
             rect: RelativeRect.fromRect(deviceScreenRect, deviceContainerRect),
             child: Container(
@@ -175,82 +184,184 @@ class DeviceContainer extends StatelessWidget {
   }
 }
 
-//class MinimalLargeLabel extends StatelessWidget {
-//  final String title;
-//  final String subtitle;
-//
-//  const MinimalLargeLabel({Key key, this.title, this.subtitle})
-//      : super(key: key);
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return SizedBox(
-//      child: Stack(
-//        children: <Widget>[
-//          SizedBox(
-//            height: marginTop - 80,
-//            width: deviceScreenWidth + 200,
-//            child: Align(
-//              alignment: FractionalOffset(0, 0.3),
-//              child: AutoSizeText(
-//                subtitle ?? "",
-//                maxLines: 1,
-//                maxFontSize: 400,
-//                minFontSize: 0,
-//                style: TextStyle(
-//                    fontSize: 400,
-//                    color: Color(0xFFDFDFDF),
-//                    height: 0.9,
-//                    fontWeight: FontWeight.bold,
-//                    fontFamily: "Montserrat"),
-//              ),
-//            ),
-//          ),
-//          if (subtitle?.isEmpty ?? true)
-//            SizedBox(
-//              height: marginTop - 80,
-//              width: deviceScreenWidth + 200,
-//              child: Align(
-//                alignment: FractionalOffset(0, 0.3),
-//                child: AutoSizeText(
-//                  deviceData.brand ?? "",
-//                  maxLines: 1,
-//                  maxFontSize: 400,
-//                  minFontSize: 0,
-//                  style: TextStyle(
-//                      fontSize: 400,
-//                      color: Color(0xFF757575),
-//                      fontWeight: FontWeight.bold,
-//                      fontFamily: "Montserrat"),
-//                ),
-//              ),
-//            ),
-//          if ((subtitle?.isEmpty ?? true) == false)
-//            Container(
-//              margin: EdgeInsets.only(left: 70),
-//              child: SizedBox(
-//                height: marginTop,
-//                width: deviceScreenWidth - 50,
-//                child: Align(
-//                  alignment: FractionalOffset(0, 0.4),
-//                  child: AutoSizeText(
-//                    title ?? "",
-//                    maxLines: 1,
-//                    maxFontSize: 400,
-//                    minFontSize: 0,
-//                    wrapWords: false,
-//                    style: TextStyle(
-//                        fontSize: 400,
-//                        color: Color(0xFF757575),
-//                        height: 0.9,
-//                        fontWeight: FontWeight.bold,
-//                        fontFamily: "Montserrat"),
-//                  ),
-//                ),
-//              ),
-//            ),
-//        ],
-//      ),
-//    );
-//  }
-//}
+enum LabelType { MINIMAL_LARGE }
+
+class LabelFactory {
+  final LabelType type;
+  final String title;
+  final String subtitle;
+  final Size deviceSize;
+  PreviewMixin label;
+
+  LabelFactory(
+      {@required this.type,
+      @required this.title,
+      @required this.subtitle,
+      @required this.deviceSize}) {
+    label = getLabel();
+  }
+
+  PreviewMixin getLabel() {
+    switch (type) {
+      case LabelType.MINIMAL_LARGE:
+        return MinimalLargeLabel(
+            title: title, subtitle: subtitle, deviceSize: deviceSize);
+      // TODO Return empty no label.
+      default:
+        return MinimalLargeLabel(
+            title: title, subtitle: subtitle, deviceSize: deviceSize);
+    }
+  }
+
+  get titleRect => label.getTitleRect();
+
+  get subtitleRect => label.getSubtitleRect();
+
+  get deviceRect => label.getDeviceRect();
+
+  get containerRect => label.getContainerRect();
+}
+
+abstract class PreviewMixin {
+  factory PreviewMixin._() => null;
+
+  Rect getContainerRect() {
+    return null;
+  }
+
+  Rect getDeviceRect() {
+    return null;
+  }
+
+  // Label methods.
+  Rect getTitleRect() {
+    return null;
+  }
+
+  Rect getSubtitleRect() {
+    return null;
+  }
+}
+
+class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
+  final String title;
+  final String subtitle;
+  final Size deviceSize;
+
+  const MinimalLargeLabel(
+      {Key key,
+      @required this.title,
+      @required this.subtitle,
+      @required this.deviceSize})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Offset titleOffset = Offset.zero;
+    Offset subtitleOffset = Offset.zero;
+
+    double titleWidth = deviceSize.shortestSide;
+    double titleHeight = 250;
+    double subtitleWidth = deviceSize.shortestSide;
+    double subtitleHeight = titleHeight * 1.3;
+
+    if (subtitle?.isNotEmpty ?? false) {
+      titleOffset = Offset(100, 50);
+    } else {
+      subtitleWidth = 0;
+      subtitleHeight = 0;
+    }
+
+    Rect titleRect = titleOffset & Size(titleWidth, titleHeight);
+    Rect subtitleRect = subtitleOffset & Size(subtitleWidth, subtitleHeight);
+    Rect labelRect = titleRect.expandToInclude(subtitleRect);
+
+    return SizedBox(
+      width: labelRect.width,
+      height: labelRect.height,
+      child: Stack(
+        children: <Widget>[
+          // Subtitle.
+          Positioned.fromRect(
+            rect: subtitleRect,
+            child: SizedBox(
+              width: subtitleRect.width,
+              height: subtitleRect.height,
+              child: AutoSizeText(
+                subtitle ?? "",
+                maxLines: 1,
+                maxFontSize: 400,
+                minFontSize: 0,
+                softWrap: false,
+                style: TextStyle(
+                    fontSize: 400,
+                    color: Color(0xFFDFDFDF),
+                    fontWeight: FontWeight.bold,
+                    height: 0.9,
+                    fontFamily: "Montserrat"),
+              ),
+            ),
+          ),
+          // Display large title.
+          if (subtitle?.isEmpty ?? true)
+            Positioned.fromRect(
+              rect: titleRect,
+              child: SizedBox(
+                width: titleRect.width,
+                height: titleRect.height,
+                child: AutoSizeText(
+                  title ?? "",
+                  maxLines: 1,
+                  maxFontSize: 400,
+                  minFontSize: 0,
+                  softWrap: false,
+                  style: TextStyle(
+                      fontSize: 400,
+                      color: Color(0xFF757575),
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Montserrat"),
+                ),
+              ),
+            ),
+          // Display small title.
+          if (subtitle?.isNotEmpty ?? false)
+            Positioned.fromRect(
+              rect: titleRect,
+              child: SizedBox(
+                width: titleRect.width,
+                height: titleRect.height,
+                child: AutoSizeText(
+                  title ?? "",
+                  maxLines: 1,
+                  maxFontSize: 400,
+                  minFontSize: 0,
+                  softWrap: false,
+                  style: TextStyle(
+                      fontSize: 400,
+                      color: Color(0xFF757575),
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Montserrat"),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Rect getTitleRect() {
+    return Rect.zero;
+  }
+
+  Rect getSubtitleRect() {
+    return Rect.zero;
+  }
+
+  Rect getDeviceRect() {
+    return Rect.zero;
+  }
+
+  Rect getContainerRect() {
+    return Rect.zero;
+  }
+}
