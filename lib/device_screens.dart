@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,8 @@ class ResponsivePreview extends StatefulWidget {
 class _ResponsivePreviewState extends State<ResponsivePreview> {
   ScrollController scrollController;
   DeviceDataRepository deviceDataRepository;
+  Timer scrollTimer;
+  bool scrolling = false;
 
   @override
   void initState() {
@@ -44,31 +48,112 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     ]);
   }
 
-  // TODO: Set horizontal and vertical padding.
+  @override
+  void dispose() {
+    scrollTimer.cancel();
+    scrollController.dispose();
+    super.dispose();
+  } // TODO: Set horizontal and vertical padding.
   // Horizontal padding controls preview horizontal spacing. Control in ListView.
 
   @override
   Widget build(BuildContext context) {
     double verticalPadding = 100;
-    return ListView.builder(
-      controller: scrollController,
-      scrollDirection: Axis.horizontal,
-      physics: BouncingScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 100),
-      itemBuilder: (context, index) {
-        DeviceData deviceData = deviceDataRepository.activeDeviceDatas[index];
-        return Container(
-            child: DeviceContainer(
-              deviceData: deviceData,
-              heightPadding: verticalPadding,
-            ),
-            margin:
-                (index != (deviceDataRepository.activeDeviceDatas.length - 1))
+    return Stack(
+      children: <Widget>[
+        Container(color: Colors.white),
+        ListView.builder(
+          shrinkWrap: true,
+          controller: scrollController,
+          scrollDirection: Axis.horizontal,
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 100),
+          itemBuilder: (context, index) {
+            DeviceData deviceData =
+                deviceDataRepository.activeDeviceDatas[index];
+            return Container(
+                child: DeviceContainer(
+                  deviceData: deviceData,
+                  heightPadding: verticalPadding,
+                ),
+                margin: (index !=
+                        (deviceDataRepository.activeDeviceDatas.length - 1))
                     ? EdgeInsets.only(right: 100)
                     : null);
-      },
-      itemCount: deviceDataRepository.activeDeviceDatas.length,
+          },
+          itemCount: deviceDataRepository.activeDeviceDatas.length,
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              IconButton(
+                onPressed: () => scrolling ? stopScroll() : startScroll(),
+                icon: scrolling
+                    ? Icon(null, color: Color(0xFFDFDFDF))
+                    : Icon(Icons.play_circle_outline, color: Color(0xFFDFDFDF)),
+                iconSize: 48,
+              ),
+              IconButton(
+                onPressed: () => resetScroll(),
+                icon: scrolling
+                    ? Icon(null, color: Color(0xFFDFDFDF))
+                    : Icon(Icons.replay, color: Color(0xFFDFDFDF)),
+                iconSize: 48,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
+  }
+
+  double scrollStepDistance = 10;
+
+  void startScroll() {
+    // Timer Method.
+    scrollTimer = Timer.periodic(
+        Duration(microseconds: ((1 / 60) * 1000).round()), (timer) {
+      if (scrollController.offset >=
+          scrollController.position.maxScrollExtent) {
+        stopScroll();
+      }
+      scrollController.jumpTo(scrollController.offset + scrollStepDistance);
+    });
+    // Scroll Controller Method.
+//    scrollController
+//        .animateTo(scrollController.offset + 200,
+//            duration: Duration(milliseconds: 200), curve: Curves.linear)
+//        .then((value) {
+//      print("Continue scroll");
+//      if (scrollController.offset >=
+//          scrollController.position.maxScrollExtent) {
+//        stopScroll();
+//      } else {
+//        startScroll();
+//      }
+//    });
+    setState(() {
+      scrolling = true;
+    });
+  }
+
+  void stopScroll() {
+    // Timer Method.
+    scrollTimer.cancel();
+    // Scroll Controller Method.
+//    scrollController.animateTo(scrollController.offset,
+//        duration: Duration(seconds: 0), curve: Curves.linear);
+    setState(() {
+      scrolling = false;
+    });
+  }
+
+  void resetScroll() {
+    stopScroll();
+    scrollController.jumpTo(0);
   }
 }
 

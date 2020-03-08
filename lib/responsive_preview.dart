@@ -33,12 +33,7 @@ class _ResponsivePreviewAppState extends State<ResponsivePreviewApp>
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            Container(color: Colors.white),
-            ResponsivePreview(),
-          ],
-        ),
+        body: ResponsivePreview(),
       ),
       debugShowCheckedModeBanner: false,
     );
