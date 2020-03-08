@@ -191,17 +191,14 @@ class LabelFactory {
   final String title;
   final String subtitle;
   final Size deviceSize;
-  PreviewMixin label;
 
   LabelFactory(
       {@required this.type,
       @required this.title,
       @required this.subtitle,
-      @required this.deviceSize}) {
-    label = getLabel();
-  }
+      @required this.deviceSize});
 
-  PreviewMixin getLabel() {
+  PreviewMixin get label {
     switch (type) {
       case LabelType.MINIMAL_LARGE:
         return MinimalLargeLabel(
@@ -213,42 +210,38 @@ class LabelFactory {
     }
   }
 
-  get titleRect => label.getTitleRect();
+  Rect get containerRect => label.containerRect;
 
-  get subtitleRect => label.getSubtitleRect();
+  Rect get deviceRect => label.deviceRect;
 
-  get deviceRect => label.getDeviceRect();
+  Rect get labelRect => label.labelRect;
 
-  get containerRect => label.getContainerRect();
+  Rect get titleRect => label.titleRect;
+
+  Rect get subtitleRect => label.subtitleRect;
 }
 
 abstract class PreviewMixin {
   factory PreviewMixin._() => null;
 
-  Rect getContainerRect() {
-    return null;
-  }
+  get containerRect => Rect.zero;
 
-  Rect getDeviceRect() {
-    return null;
-  }
+  get deviceRect => Rect.zero;
 
-  // Label methods.
-  Rect getTitleRect() {
-    return null;
-  }
+  get labelRect => Rect.zero;
 
-  Rect getSubtitleRect() {
-    return null;
-  }
+  get titleRect => Rect.zero;
+
+  get subtitleRect => Rect.zero;
 }
 
 class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
   final String title;
   final String subtitle;
   final Size deviceSize;
+  final double titleHeight = 250;
 
-  const MinimalLargeLabel(
+  MinimalLargeLabel(
       {Key key,
       @required this.title,
       @required this.subtitle,
@@ -257,25 +250,6 @@ class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
 
   @override
   Widget build(BuildContext context) {
-    Offset titleOffset = Offset.zero;
-    Offset subtitleOffset = Offset.zero;
-
-    double titleWidth = deviceSize.shortestSide;
-    double titleHeight = 250;
-    double subtitleWidth = deviceSize.shortestSide;
-    double subtitleHeight = titleHeight * 1.3;
-
-    if (subtitle?.isNotEmpty ?? false) {
-      titleOffset = Offset(100, 50);
-    } else {
-      subtitleWidth = 0;
-      subtitleHeight = 0;
-    }
-
-    Rect titleRect = titleOffset & Size(titleWidth, titleHeight);
-    Rect subtitleRect = subtitleOffset & Size(subtitleWidth, subtitleHeight);
-    Rect labelRect = titleRect.expandToInclude(subtitleRect);
-
     return SizedBox(
       width: labelRect.width,
       height: labelRect.height,
@@ -349,19 +323,42 @@ class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
     );
   }
 
-  Rect getTitleRect() {
-    return Rect.zero;
+  Rect get titleRect {
+    Offset titleOffset = Offset.zero;
+
+    double titleWidth = deviceSize.shortestSide;
+
+    if (subtitle?.isNotEmpty ?? false) {
+      titleOffset = Offset(100, 50);
+    }
+
+    return titleOffset & Size(titleWidth, titleHeight);
   }
 
-  Rect getSubtitleRect() {
-    return Rect.zero;
+  Rect get subtitleRect {
+    Offset subtitleOffset = Offset.zero;
+
+    double subtitleWidth = deviceSize.shortestSide;
+    double subtitleHeight = titleHeight * 1.3;
+
+    if (subtitle?.isNotEmpty ?? false) {
+    } else {
+      subtitleWidth = 0;
+      subtitleHeight = 0;
+    }
+    return subtitleOffset & Size(subtitleWidth, subtitleHeight);
   }
 
-  Rect getDeviceRect() {
-    return Rect.zero;
+  Rect get deviceRect {
+    Offset deviceOffset =
+        Offset(titleRect.left + 50, titleRect.bottom + titleHeight);
+    double deviceResizeRatio =
+        (deviceSize.height - deviceOffset.dy) / deviceSize.height;
+    Size deviceSizeNew = deviceSize * deviceResizeRatio;
+    return deviceOffset & deviceSizeNew;
   }
 
-  Rect getContainerRect() {
-    return Rect.zero;
-  }
+  Rect get labelRect => titleRect.expandToInclude(subtitleRect);
+
+  Rect get containerRect => labelRect.expandToInclude(deviceRect);
 }
