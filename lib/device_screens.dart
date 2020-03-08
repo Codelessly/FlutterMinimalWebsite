@@ -2,6 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal/device_data.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+
+import 'pages/pages.dart';
 
 class ResponsivePreview extends StatefulWidget {
   ResponsivePreview({Key key}) : super(key: key);
@@ -19,6 +22,7 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     super.initState();
     scrollController = ScrollController();
     deviceDataRepository = DeviceDataRepository(deviceDataJson);
+//    deviceDataRepository.addAllWithBrand("iPad");
 //    deviceDataRepository.addAllWithBrand("");
 //    print(
 //        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
@@ -144,18 +148,40 @@ class DeviceContainer extends StatelessWidget {
                   elevation: 8,
                   shadowColor: Color.fromARGB(156, 178, 178, 178),
                   color: Colors.blueGrey[50],
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Image.asset(
-                    "assets/images/paper_flower_overhead_bw_w1080.jpg",
-                    fit: BoxFit.cover,
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: ResponsiveWrapper(
+                      mediaQueryData: MediaQueryData(
+                          size: labelFactory.deviceRect.size,
+                          devicePixelRatio: deviceData.devicePixelRatio *
+                              (deviceData.height /
+                                  labelFactory.deviceRect.size.height)),
+                      maxWidth: 1200,
+                      minWidth: 450,
+                      defaultScale: true,
+                      defaultScaleFactor: scaleFactor,
+                      breakpoints: [
+                        ResponsiveBreakpoint(breakpoint: 450, name: MOBILE),
+                        ResponsiveBreakpoint(
+                            breakpoint: 800, name: TABLET, scale: true),
+                        ResponsiveBreakpoint(
+                            breakpoint: 1000, name: TABLET, scale: true),
+                        ResponsiveBreakpoint(breakpoint: 1200, name: DESKTOP),
+                        ResponsiveBreakpoint(
+                            breakpoint: 2460, name: "4K", scale: true),
+                      ],
+                      background: Container(
+                        color: Color(0xFFF5F5F5),
+                      ),
+                      child: BouncingScrollWrapper.builder(context, ListPage()),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
