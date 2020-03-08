@@ -100,35 +100,50 @@ class DeviceContainer extends StatelessWidget {
         title: deviceData.brand,
         subtitle: deviceData.model,
         deviceSize: deviceScreenSize);
-    return Container(
-      width: labelFactory.containerRect.width,
-      height: labelFactory.containerRect.height,
-      margin: EdgeInsets.symmetric(
-          vertical:
-              heightPadding), // TODO Move padding to deviceResizeCalc. This allows the device to exceed to not be cropped when out of screen.
-      child: Stack(
-        children: <Widget>[
-          Positioned.fromRect(
-              rect: labelFactory.labelRect,
-              child: labelFactory.label as Widget),
-          Positioned.fromRect(
-            rect: labelFactory.deviceRect,
-            child: Container(
-              width: deviceScreenWidth,
-              height: deviceScreenHeight,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromARGB(72, 178, 178, 178),
-                    blurRadius: 40,
-                  ),
-                ],
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-              ),
-              child: Material(
-                elevation: 8,
-                shadowColor: Color.fromARGB(156, 178, 178, 178),
-                color: Colors.blueGrey[50],
+
+    // Center container
+    // TODO: Create centering methods.
+    double centerVerticalOffset = 0;
+    if (true) {
+      centerVerticalOffset =
+          deviceContainerHeight / 2 - labelFactory.containerRect.center.dy;
+    }
+
+    double scaleFactor = 1 /
+        (deviceData.devicePixelRatio *
+            (deviceData.height / labelFactory.deviceRect.size.height));
+
+    return Center(
+      child: Container(
+        width: labelFactory.containerRect.width,
+        height: labelFactory.containerRect.height,
+        margin: EdgeInsets.only(
+            top: heightPadding * 0.5,
+            bottom: heightPadding *
+                1.5), // TODO: Move padding to deviceResizeCalc. This allows the device to exceed to not be cropped when out of screen.
+        child: Stack(
+          children: <Widget>[
+            Positioned.fromRect(
+                rect: labelFactory.labelRect,
+                child: labelFactory.label as Widget),
+            Positioned.fromRect(
+              rect: labelFactory.deviceRect,
+              child: Container(
+                width: deviceScreenWidth,
+                height: deviceScreenHeight,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromARGB(72, 178, 178, 178),
+                      blurRadius: 40,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                child: Material(
+                  elevation: 8,
+                  shadowColor: Color.fromARGB(156, 178, 178, 178),
+                  color: Colors.blueGrey[50],
                 borderRadius: BorderRadius.all(Radius.circular(30)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
