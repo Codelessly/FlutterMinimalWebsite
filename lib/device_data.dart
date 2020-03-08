@@ -8,9 +8,9 @@ class DeviceDataRepository {
 
   DeviceDataRepository(String deviceDataJson, {List<String> activeDevices}) {
     deviceDatas = DeviceData.listDeserializerFromJson(deviceDataJson);
-//    activeDeviceDatas = deviceDatas;
-    // If a list of active devices exists, set active devices list.
-//    deviceDatas.removeWhere((e) => !activeDevices.any((activeDevice) => e.name == activeDevice));
+    activeDeviceDatas = deviceDatas
+        .where((element) => activeDevices.contains(element.name))
+        .toList();
   }
 
   void addDeviceData(DeviceData deviceData) {

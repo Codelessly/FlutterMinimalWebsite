@@ -21,9 +21,10 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
   void initState() {
     super.initState();
     scrollController = ScrollController();
-    deviceDataRepository = DeviceDataRepository(deviceDataJson);
+    deviceDataRepository =
+        DeviceDataRepository(deviceDataJson, activeDevices: ["iPad"]);
 //    deviceDataRepository.addAllWithBrand("iPad");
-    deviceDataRepository.addAllWithBrand("");
+//    deviceDataRepository.addAllWithBrand("");
 //    print(
 //        "Active Devices: ${deviceDataRepository.activeDeviceDatas.map((e) => e.toJson().toString()).toString()}");
   }
