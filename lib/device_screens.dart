@@ -20,6 +20,7 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
   DeviceDataRepository deviceDataRepository;
   Timer scrollTimer;
   bool scrolling = false;
+  bool firstScrollStart = true;
 
   @override
   void initState() {
@@ -27,24 +28,17 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     scrollController = ScrollController();
     deviceDataRepository = DeviceDataRepository(deviceDataJson, activeDevices: [
       "iPhone 11 Pro Max",
-      "iPhone 11",
       "iPhone X",
       "iPad Pro 11\"",
-      "iPad Air",
-      "iPad",
       "Galaxy S20 Ultra",
-      "Galaxy S20",
-      "Galaxy S10",
-      "Galaxy S9",
-      "Galaxy Note 10+",
       "Pixel 4",
-      "Pixel 3",
       "Pro Display XDR",
-      "8K",
-      "5K",
-      "4K",
-      "HD",
-      "720p",
+      "iPhone 11 Pro Max",
+      "iPhone X",
+      "iPad Pro 11\"",
+      "Galaxy S20 Ultra",
+      "Pixel 4",
+      "Pro Display XDR",
     ]);
   }
 
@@ -63,7 +57,6 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
       children: <Widget>[
         Container(color: Colors.white),
         ListView.builder(
-          shrinkWrap: true,
           controller: scrollController,
           scrollDirection: Axis.horizontal,
           physics: BouncingScrollPhysics(),
@@ -111,6 +104,11 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
   }
 
   void startScroll() {
+    if (firstScrollStart) {
+      firstScrollStart = false;
+      Future.delayed(Duration(seconds: 1), () => startScroll());
+      return;
+    }
     if (kIsWeb) {
       // Timer Method.
       scrollTimer = Timer.periodic(
@@ -124,8 +122,8 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     } else {
       // Scroll Controller Method.
       scrollController
-          .animateTo(scrollController.offset + 200,
-              duration: Duration(milliseconds: 1000), curve: Curves.linear)
+          .animateTo(scrollController.offset + 1250,
+              duration: Duration(seconds: 3), curve: Curves.linear)
           .then((value) {
         print("Continue scroll");
         if (scrolling == false ||
@@ -162,6 +160,7 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
   void resetScroll() {
     print("Reset scroll");
     stopScroll();
+    firstScrollStart = true;
     scrollController.jumpTo(0);
   }
 }
