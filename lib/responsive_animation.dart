@@ -1,21 +1,21 @@
 import 'dart:async';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal/device_data.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'labels/labels.dart';
 import 'pages/pages.dart';
 
-class ResponsivePreview extends StatefulWidget {
-  ResponsivePreview({Key key}) : super(key: key);
+class ResponsiveAnimation extends StatefulWidget {
+  ResponsiveAnimation({Key key}) : super(key: key);
 
   @override
-  _ResponsivePreviewState createState() => _ResponsivePreviewState();
+  _ResponsiveAnimationState createState() => _ResponsiveAnimationState();
 }
 
-class _ResponsivePreviewState extends State<ResponsivePreview> {
+class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
   ScrollController scrollController;
   DeviceDataRepository deviceDataRepository;
   Timer scrollTimer;
@@ -47,8 +47,7 @@ class _ResponsivePreviewState extends State<ResponsivePreview> {
     scrollTimer.cancel();
     scrollController.dispose();
     super.dispose();
-  } // TODO: Set horizontal and vertical padding.
-  // Horizontal padding controls preview horizontal spacing. Control in ListView.
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +198,7 @@ class DeviceContainer extends StatelessWidget {
         containerHeight: deviceContainerHeight);
 
     LabelFactory labelFactory = LabelFactory(
-        type: LabelType.MINIMAL_LARGE,
+        type: LabelType.SIMPLE_TOP_CENTER,
         title: deviceData.brand,
         subtitle: deviceData.model,
         deviceSize: deviceScreenSize);
@@ -335,184 +334,4 @@ class DeviceContainer extends StatelessWidget {
 
     return Size(containerHeight * aspectRatio, containerHeight);
   }
-}
-
-enum LabelType { MINIMAL_LARGE }
-
-class LabelFactory {
-  final LabelType type;
-  final String title;
-  final String subtitle;
-  final Size deviceSize;
-
-  LabelFactory(
-      {@required this.type,
-      @required this.title,
-      @required this.subtitle,
-      @required this.deviceSize});
-
-  PreviewMixin get label {
-    switch (type) {
-      case LabelType.MINIMAL_LARGE:
-        return MinimalLargeLabel(
-            title: title, subtitle: subtitle, deviceSize: deviceSize);
-      // TODO Return empty no label.
-      default:
-        return MinimalLargeLabel(
-            title: title, subtitle: subtitle, deviceSize: deviceSize);
-    }
-  }
-
-  Rect get containerRect => label.containerRect;
-
-  Rect get deviceRect => label.deviceRect;
-
-  Rect get labelRect => label.labelRect;
-
-  Rect get titleRect => label.titleRect;
-
-  Rect get subtitleRect => label.subtitleRect;
-}
-
-abstract class PreviewMixin {
-  factory PreviewMixin._() => null;
-
-  get containerRect => Rect.zero;
-
-  get deviceRect => Rect.zero;
-
-  get labelRect => Rect.zero;
-
-  get titleRect => Rect.zero;
-
-  get subtitleRect => Rect.zero;
-}
-
-class MinimalLargeLabel extends StatelessWidget with PreviewMixin {
-  final String title;
-  final String subtitle;
-  final Size deviceSize;
-  final double titleHeight = 250;
-
-  MinimalLargeLabel(
-      {Key key,
-      @required this.title,
-      @required this.subtitle,
-      @required this.deviceSize})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: labelRect.width,
-      height: labelRect.height,
-      child: Stack(
-        children: <Widget>[
-          // Display Subtitle.
-          if (title?.isNotEmpty ?? false)
-            Positioned.fromRect(
-              rect: subtitleRect,
-              child: SizedBox(
-                width: subtitleRect.width,
-                height: subtitleRect.height,
-                child: AutoSizeText(
-                  subtitle ?? "",
-                  maxLines: 1,
-                  maxFontSize: 400,
-                  minFontSize: 0,
-                  softWrap: false,
-                  style: TextStyle(
-                      fontSize: 400,
-                      color: Color(0xFFDFDFDF),
-                      fontWeight: FontWeight.bold,
-                      height: 0.9,
-                      fontFamily: "Montserrat"),
-                ),
-              ),
-            ),
-          // Display large title.
-          if (title?.isEmpty ?? true)
-            Positioned.fromRect(
-              rect: titleRect,
-              child: SizedBox(
-                width: titleRect.width,
-                height: titleRect.height,
-                child: AutoSizeText(
-                  subtitle ?? "",
-                  maxLines: 1,
-                  maxFontSize: 400,
-                  minFontSize: 0,
-                  softWrap: false,
-                  style: TextStyle(
-                      fontSize: 400,
-                      color: Color(0xFF757575),
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Montserrat"),
-                ),
-              ),
-            ),
-          // Display small title.
-          if (title?.isNotEmpty ?? false)
-            Positioned.fromRect(
-              rect: titleRect,
-              child: SizedBox(
-                width: titleRect.width,
-                height: titleRect.height,
-                child: AutoSizeText(
-                  title ?? "",
-                  maxLines: 1,
-                  maxFontSize: 400,
-                  minFontSize: 0,
-                  softWrap: false,
-                  style: TextStyle(
-                      fontSize: 400,
-                      color: Color(0xFF757575),
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Montserrat"),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  Rect get titleRect {
-    Offset titleOffset = Offset.zero;
-
-    double titleWidth = deviceSize.shortestSide * 0.8;
-
-    if (subtitle?.isNotEmpty ?? false) {
-      titleOffset = Offset(100, 50);
-    }
-
-    return titleOffset & Size(titleWidth, titleHeight * 0.8);
-  }
-
-  Rect get subtitleRect {
-    Offset subtitleOffset = Offset.zero;
-
-    double subtitleWidth = deviceSize.shortestSide * 0.8;
-    double subtitleHeight = titleHeight;
-
-    if (subtitle?.isNotEmpty ?? false) {
-    } else {
-      subtitleWidth = 0;
-      subtitleHeight = 0;
-    }
-    return subtitleOffset & Size(subtitleWidth, subtitleHeight);
-  }
-
-  Rect get deviceRect {
-    Offset deviceOffset =
-        Offset(titleRect.left + 50, titleRect.bottom - (titleHeight * 0.2));
-    double deviceResizeRatio =
-        (deviceSize.height - deviceOffset.dy) / deviceSize.height;
-    Size deviceSizeNew = deviceSize * deviceResizeRatio;
-    return deviceOffset & deviceSizeNew;
-  }
-
-  Rect get labelRect => titleRect.expandToInclude(subtitleRect);
-
-  Rect get containerRect => labelRect.expandToInclude(deviceRect);
 }
