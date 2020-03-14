@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal/device_data.dart';
@@ -16,36 +14,13 @@ class ResponsiveAnimation extends StatefulWidget {
 }
 
 class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
-  ScrollController scrollController;
-  DeviceDataRepository deviceDataRepository;
-  Timer scrollTimer;
-  bool scrolling = false;
-  bool firstScrollStart = true;
-
   @override
   void initState() {
     super.initState();
-    scrollController = ScrollController();
-    deviceDataRepository = DeviceDataRepository(deviceDataJson, activeDevices: [
-      "iPhone 11 Pro Max",
-      "iPhone X",
-      "iPad Pro 11\"",
-      "Galaxy S20 Ultra",
-      "Pixel 4",
-      "Pro Display XDR",
-      "iPhone 11 Pro Max",
-      "iPhone X",
-      "iPad Pro 11\"",
-      "Galaxy S20 Ultra",
-      "Pixel 4",
-      "Pro Display XDR",
-    ]);
   }
 
   @override
   void dispose() {
-    scrollTimer.cancel();
-    scrollController.dispose();
     super.dispose();
   }
 
@@ -55,112 +30,28 @@ class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
     return Stack(
       children: <Widget>[
         Container(color: Colors.white),
-        ListView.builder(
-          controller: scrollController,
-          scrollDirection: Axis.horizontal,
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 100),
-          itemBuilder: (context, index) {
-            DeviceData deviceData =
-                deviceDataRepository.activeDeviceDatas[index];
-            return Container(
-                child: DeviceContainer(
-                  deviceData: deviceData,
-                  heightPadding: verticalPadding,
-                ),
-                margin: (index !=
-                        (deviceDataRepository.activeDeviceDatas.length - 1))
-                    ? EdgeInsets.only(right: 100)
-                    : null);
-          },
-          itemCount: deviceDataRepository.activeDeviceDatas.length,
+        Container(
+          child: DeviceContainer(
+            deviceData: DeviceData(
+                brand: "SCALE",
+                model: "768 x 1280",
+                width: 768,
+                height: 1280,
+                physicalSize: 6.4,
+                devicePixelRatio: 1),
+            heightPadding: verticalPadding,
+          ),
         ),
         Positioned(
           top: 0,
           right: 0,
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              IconButton(
-                onPressed: () => scrolling ? stopScroll() : startScroll(),
-                icon: scrolling
-                    ? Icon(null, color: Color(0xFFDFDFDF))
-                    : Icon(Icons.play_circle_outline, color: Color(0xFFDFDFDF)),
-                iconSize: 48,
-              ),
-              IconButton(
-                onPressed: () => resetScroll(),
-                icon: scrolling
-                    ? Icon(null, color: Color(0xFFDFDFDF))
-                    : Icon(Icons.replay, color: Color(0xFFDFDFDF)),
-                iconSize: 48,
-              ),
-            ],
+            children: <Widget>[],
           ),
         ),
       ],
     );
-  }
-
-  void startScroll() {
-    if (firstScrollStart) {
-      firstScrollStart = false;
-      Future.delayed(Duration(seconds: 1), () => startScroll());
-      return;
-    }
-    if (kIsWeb) {
-      // Timer Method.
-      scrollTimer = Timer.periodic(
-          Duration(microseconds: ((1 / 30) * 1000).round()), (timer) {
-        if (scrollController.offset >=
-            scrollController.position.maxScrollExtent) {
-          stopScroll();
-        }
-        scrollController.jumpTo(scrollController.offset + 10);
-      });
-    } else {
-      // Scroll Controller Method.
-      scrollController
-          .animateTo(scrollController.offset + 1250,
-              duration: Duration(seconds: 3), curve: Curves.linear)
-          .then((value) {
-        print("Continue scroll");
-        if (scrolling == false ||
-            scrollController.offset >=
-                scrollController.position.maxScrollExtent) {
-          stopScroll();
-        } else {
-          startScroll();
-        }
-      });
-    }
-
-    setState(() {
-      scrolling = true;
-    });
-  }
-
-  void stopScroll() {
-    print("Stop scroll");
-    if (kIsWeb) {
-      // Timer Method.
-      scrollTimer.cancel();
-    } else {
-      // Scroll Controller Method.
-      scrollController.animateTo(scrollController.offset,
-          duration: Duration(seconds: 0), curve: Curves.linear);
-    }
-
-    setState(() {
-      scrolling = false;
-    });
-  }
-
-  void resetScroll() {
-    print("Reset scroll");
-    stopScroll();
-    firstScrollStart = true;
-    scrollController.jumpTo(0);
   }
 }
 
