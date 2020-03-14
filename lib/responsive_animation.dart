@@ -14,6 +14,10 @@ class ResponsiveAnimation extends StatefulWidget {
 }
 
 class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
+  double startValue = 1920;
+  double endValue = 1920;
+  bool animating = false;
+
   @override
   void initState() {
     super.initState();
@@ -27,19 +31,28 @@ class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
   @override
   Widget build(BuildContext context) {
     double verticalPadding = 100;
+    double horizontalPadding = 100;
     return Stack(
       children: <Widget>[
         Container(color: Colors.white),
         Container(
-          child: DeviceContainer(
-            deviceData: DeviceData(
-                brand: "SCALE",
-                model: "768 x 1280",
-                width: 768,
-                height: 1280,
-                physicalSize: 6.4,
-                devicePixelRatio: 1),
-            heightPadding: verticalPadding,
+          child: TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 720, end: 2560),
+            duration: Duration(seconds: 4),
+            onEnd: () => animating = false,
+            builder: (BuildContext context, value, Widget child) {
+              return DeviceContainer(
+                deviceData: DeviceData(
+                    brand: "SCALE",
+                    model: "${value.round()} x 1280",
+                    width: value,
+                    height: 1280,
+                    physicalSize: 6.4,
+                    devicePixelRatio: 1),
+                heightPadding: verticalPadding,
+                widthPadding: horizontalPadding,
+              );
+            },
           ),
         ),
         Positioned(
@@ -47,52 +60,79 @@ class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
           right: 0,
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: <Widget>[],
+            children: <Widget>[
+              IconButton(
+                onPressed: () => playAnimation(),
+                icon: animating
+                    ? Icon(null, color: Color(0xFFDFDFDF))
+                    : Icon(Icons.play_circle_outline, color: Color(0xFFDFDFDF)),
+                iconSize: 48,
+              ),
+              IconButton(
+                onPressed: () => resetAnimation(),
+                icon: animating
+                    ? Icon(null, color: Color(0xFFDFDFDF))
+                    : Icon(Icons.replay, color: Color(0xFFDFDFDF)),
+                iconSize: 48,
+              ),
+            ],
           ),
         ),
       ],
     );
   }
+
+  void playAnimation() {
+    setState(() {
+      animating = true;
+      startValue = 1920;
+      endValue = 320;
+    });
+  }
+
+  void resetAnimation() {
+    setState(() {
+      animating = false;
+      startValue = 1920;
+      endValue = 1920;
+    });
+  }
 }
 
 class DeviceContainer extends StatelessWidget {
   final DeviceData deviceData;
+  final double widthPadding;
   final double heightPadding;
 
   const DeviceContainer({
     Key key,
     @required this.deviceData,
+    this.widthPadding = 0,
     this.heightPadding = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Height available for device container.
-    // Screen height minus height padding.
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double deviceContainerHeight = screenHeight - (heightPadding * 2);
-    // Constrain the maximum width within a range
-    // calculated from the device width and height.
-    // If the width of the screen is too narrow
-    // (i.e. on a phone), the preview width is allowed
-    // to exceed the width of the phone.
-    // A maximum width aspect ratio limit is set to
-    // fit a reasonable portion of wide displays in the
-    // preview area.
+    double deviceContainerWidth = screenWidth - (widthPadding * 2);
+    Size containerSize = Size(deviceContainerWidth, deviceContainerHeight);
+
     Size deviceScreenSize = deviceScreenSizeCalc(
-        maxWidthRatio: 1,
-        boundaryWidthRatio: 1 / 2,
-        minHeightPercentage: 2 /
-            3, // TODO Automatically calculate this value from screen aspect ratio. This percentage helps control how much of the preview fits on the device screen.
         aspectRatio: deviceData.aspectRatio,
+        containerWidth: deviceContainerWidth,
         containerHeight: deviceContainerHeight);
+
+    print("Screen Dimensions: $screenWidth , $screenHeight");
+    print("Device Size: $deviceScreenSize");
 
     LabelFactory labelFactory = LabelFactory(
         type: LabelType.SIMPLE_TOP_CENTER,
         title: deviceData.brand,
         subtitle: deviceData.model,
-        deviceSize: deviceScreenSize);
+        deviceSize: deviceScreenSize,
+        containerSize: containerSize);
 
     // Center container
     // TODO: Create centering methods.
@@ -107,12 +147,16 @@ class DeviceContainer extends StatelessWidget {
 
     return Center(
       child: Container(
-        width: labelFactory.containerRect.width,
-        height: labelFactory.containerRect.height,
+        width: labelFactory.containerRect.width +
+            labelFactory.containerRect.topLeft.dx,
+        height: labelFactory.containerRect.height +
+            labelFactory.containerRect.topLeft.dy,
         margin: EdgeInsets.only(
             top: heightPadding * 0.5,
-            bottom: heightPadding *
-                1.5), // TODO: Move padding to deviceResizeCalc. This allows the device to exceed to not be cropped when out of screen.
+            bottom: heightPadding * 1.5,
+            left: widthPadding * 0.5,
+            right: widthPadding *
+                0.5), // TODO: Move padding to deviceResizeCalc. This allows the device to exceed to not be cropped when out of screen.
         child: Stack(
           children: <Widget>[
             Positioned.fromRect(
@@ -187,42 +231,10 @@ class DeviceContainer extends StatelessWidget {
     );
   }
 
-  /// Calculate the dimensions for the device size.
-  ///
-  /// Calculate the appropriate dimensions by working
-  /// backwards from device size constraints.
-  /// The purpose of setting device size constraints
-  /// is to fit device preview on the preview screen
-  /// in a way the user expects.
-  ///
-  /// The [maxWidthRatio], [boundaryWidthRatio],
-  /// and [minHeightPercentage] approximate a
-  /// solver function to maximize the device preview
-  /// size and fit the maximum portion of the device
-  /// on the preview screen. When the [aspectRatio]
-  /// of the device preview exceeds the [boundaryWidthRatio],
-  /// the device height begins to shrink, up to the
-  /// [minHeightPercentage].
-  ///
-  /// Returns the device preview [Size].
   Size deviceScreenSizeCalc(
-      {double maxWidthRatio,
-      double boundaryWidthRatio,
-      double minHeightPercentage,
-      double aspectRatio,
-      double containerHeight}) {
-    // TODO: Add asserts to force correct inputs for calculations.
-    if (aspectRatio > maxWidthRatio)
-      return Size(containerHeight * minHeightPercentage * aspectRatio,
-          containerHeight * minHeightPercentage);
-
-    if (aspectRatio > boundaryWidthRatio) {
-      double heightPercentageCalc =
-          1 - (aspectRatio - boundaryWidthRatio) * (1 - minHeightPercentage);
-      return Size(containerHeight * heightPercentageCalc * aspectRatio,
-          containerHeight * heightPercentageCalc);
-    }
-
-    return Size(containerHeight * aspectRatio, containerHeight);
+      {double aspectRatio, double containerWidth, double containerHeight}) {
+    return aspectRatio >= 1
+        ? Size(containerWidth, containerWidth / aspectRatio)
+        : Size(containerHeight * aspectRatio, containerHeight);
   }
 }

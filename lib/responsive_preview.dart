@@ -179,9 +179,11 @@ class DeviceContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     // Height available for device container.
     // Screen height minus height padding.
-    double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    double deviceContainerHeight = screenHeight - (heightPadding * 2);
+    double screenHeight = MediaQuery.of(context).size.height;
+    double deviceContainerWidth = screenWidth - (heightPadding * 2);
+    double deviceContainerHeight = screenHeight;
+    Size containerSize = Size(deviceContainerWidth, deviceContainerHeight);
     // Constrain the maximum width within a range
     // calculated from the device width and height.
     // If the width of the screen is too narrow
@@ -199,10 +201,12 @@ class DeviceContainer extends StatelessWidget {
         containerHeight: deviceContainerHeight);
 
     LabelFactory labelFactory = LabelFactory(
-        type: LabelType.SIMPLE_TOP_CENTER,
-        title: deviceData.brand,
-        subtitle: deviceData.model,
-        deviceSize: deviceScreenSize);
+      type: LabelType.SIMPLE_TOP_CENTER,
+      title: deviceData.brand,
+      subtitle: deviceData.model,
+      deviceSize: deviceScreenSize,
+      containerSize: containerSize,
+    );
 
     // Center container
     // TODO: Create centering methods.
@@ -217,8 +221,10 @@ class DeviceContainer extends StatelessWidget {
 
     return Center(
       child: Container(
-        width: labelFactory.containerRect.width,
-        height: labelFactory.containerRect.height,
+        width: labelFactory.containerRect.width +
+            labelFactory.containerRect.topLeft.dx,
+        height: labelFactory.containerRect.height +
+            labelFactory.containerRect.topLeft.dy,
         margin: EdgeInsets.only(
             top: heightPadding * 0.5,
             bottom: heightPadding *

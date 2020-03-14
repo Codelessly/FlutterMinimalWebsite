@@ -24,12 +24,15 @@ class LabelFactory {
   final String title;
   final String subtitle;
   final Size deviceSize;
+  final Size containerSize;
 
-  LabelFactory(
-      {@required this.type,
-      @required this.title,
-      @required this.subtitle,
-      @required this.deviceSize});
+  LabelFactory({
+    @required this.type,
+    @required this.title,
+    @required this.subtitle,
+    @required this.deviceSize,
+    @required this.containerSize,
+  });
 
   ResponsivePreviewMixin get label {
     switch (type) {
@@ -38,10 +41,12 @@ class LabelFactory {
             title: title, subtitle: subtitle, deviceSize: deviceSize);
       case LabelType.SIMPLE_TOP_CENTER:
         return SimpleLabel(
-            type: SimpleLabelType.TOP_CENTER,
-            title: title,
-            subtitle: subtitle,
-            deviceSize: deviceSize);
+          type: SimpleLabelType.TOP_CENTER,
+          title: title,
+          subtitle: subtitle,
+          deviceSize: deviceSize,
+          containerSize: containerSize,
+        );
       // TODO Return empty no label.
       default:
         return MinimalLargeLabel(

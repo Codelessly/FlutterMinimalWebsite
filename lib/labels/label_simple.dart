@@ -10,15 +10,17 @@ class SimpleLabel extends StatelessWidget with ResponsivePreviewMixin {
   final String title;
   final String subtitle;
   final Size deviceSize;
+  final Size containerSize;
   final double labelHeight = 200;
 
-  SimpleLabel(
-      {Key key,
-      @required this.type,
-      @required this.title,
-      @required this.subtitle,
-      @required this.deviceSize})
-      : super(key: key);
+  SimpleLabel({
+    Key key,
+    @required this.type,
+    @required this.title,
+    @required this.subtitle,
+    @required this.deviceSize,
+    @required this.containerSize,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -86,23 +88,22 @@ class SimpleLabel extends StatelessWidget with ResponsivePreviewMixin {
   Rect get titleRect {
     Offset titleOffset = Offset.zero;
 
-    double titleWidth = deviceSize.shortestSide;
+    double titleWidth = deviceSize.width * 0.8;
 
-    return titleOffset & Size(titleWidth, labelHeight);
+    return titleOffset & Size(titleWidth, labelHeight * 0.8);
   }
 
   Rect get subtitleRect {
     Offset subtitleOffset = Offset.zero;
 
-    double subtitleWidth = deviceSize.shortestSide * 0.8;
-    double subtitleHeight = labelHeight * 0.8;
+    double subtitleWidth = deviceSize.width * 0.6;
+    double subtitleHeight = labelHeight * 0.6;
 
     if (title?.isNotEmpty ?? false) {
-      subtitleOffset = Offset(deviceSize.shortestSide * 0.1, labelHeight);
+      subtitleOffset = Offset(deviceSize.width * 0.1, labelHeight * 0.8);
     }
 
-    if (subtitle?.isNotEmpty ?? false) {
-    } else {
+    if (subtitle?.isEmpty ?? true) {
       subtitleWidth = 0;
       subtitleHeight = 0;
     }
@@ -110,13 +111,27 @@ class SimpleLabel extends StatelessWidget with ResponsivePreviewMixin {
   }
 
   Rect get deviceRect {
-    double topPadding = 10;
-    Offset labelBottomCenter = labelRect.bottomCenter;
-    double deviceResizeRatio =
-        (deviceSize.height - labelRect.bottom - topPadding) / deviceSize.height;
+    double maxWidth = 0;
+    double topPadding = 20;
+    double deviceResizeRatio = 0.8;
+    if (deviceSize.height > deviceSize.width) {
+      deviceResizeRatio = (deviceSize.height - labelRect.bottom - topPadding) /
+          deviceSize.height;
+    }
+
+    if ((deviceSize.height + labelRect.bottom + topPadding) >
+        containerSize.height) {
+      deviceResizeRatio =
+          (containerSize.height - labelRect.bottom - topPadding) /
+              containerSize.height *
+              deviceResizeRatio;
+      print("Resize");
+    }
+    print("Device Size: $deviceSize");
     Size deviceSizeNew = deviceSize * deviceResizeRatio;
+    print("Device Size New: $deviceSizeNew");
     Offset deviceTopCenter = deviceSizeNew.topCenter(Offset(0, -topPadding));
-    Offset deviceOffsetNew = labelBottomCenter - deviceTopCenter;
+    Offset deviceOffsetNew = labelRect.bottomCenter - deviceTopCenter;
 
     return deviceOffsetNew & deviceSizeNew;
   }
