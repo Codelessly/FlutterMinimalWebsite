@@ -14,8 +14,10 @@ class ResponsiveAnimation extends StatefulWidget {
 }
 
 class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
+  final double initialWidth = 1920;
   double startValue = 1920;
   double endValue = 1920;
+  int duration = 5;
   bool animating = false;
 
   @override
@@ -30,16 +32,16 @@ class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
 
   @override
   Widget build(BuildContext context) {
-    double verticalPadding = 100;
-    double horizontalPadding = 100;
+    double verticalPadding = 50;
+    double horizontalPadding = 50;
     return Stack(
       children: <Widget>[
         Container(color: Colors.white),
         Container(
           child: TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: 720, end: 2560),
-            duration: Duration(seconds: 4),
-            onEnd: () => animating = false,
+            tween: Tween<double>(begin: startValue, end: endValue),
+            duration: Duration(seconds: duration),
+            onEnd: () => setState(() => animating = false),
             builder: (BuildContext context, value, Widget child) {
               return DeviceContainer(
                 deviceData: DeviceData(
@@ -85,16 +87,18 @@ class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
   void playAnimation() {
     setState(() {
       animating = true;
-      startValue = 1920;
-      endValue = 320;
+      startValue = initialWidth;
+      endValue = 560;
+      duration = 5;
     });
   }
 
   void resetAnimation() {
     setState(() {
       animating = false;
-      startValue = 1920;
-      endValue = 1920;
+      startValue = initialWidth;
+      endValue = initialWidth;
+      duration = 0;
     });
   }
 }

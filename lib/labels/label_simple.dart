@@ -111,7 +111,6 @@ class SimpleLabel extends StatelessWidget with ResponsivePreviewMixin {
   }
 
   Rect get deviceRect {
-    double maxWidth = 0;
     double topPadding = 20;
     double deviceResizeRatio = 0.8;
     if (deviceSize.height > deviceSize.width) {
@@ -119,17 +118,13 @@ class SimpleLabel extends StatelessWidget with ResponsivePreviewMixin {
           deviceSize.height;
     }
 
-    if ((deviceSize.height + labelRect.bottom + topPadding) >
+    if ((deviceSize.height * 0.8 + labelRect.bottom + topPadding) >
         containerSize.height) {
       deviceResizeRatio =
           (containerSize.height - labelRect.bottom - topPadding) /
-              containerSize.height *
-              deviceResizeRatio;
-      print("Resize");
+              deviceSize.height;
     }
-    print("Device Size: $deviceSize");
     Size deviceSizeNew = deviceSize * deviceResizeRatio;
-    print("Device Size New: $deviceSizeNew");
     Offset deviceTopCenter = deviceSizeNew.topCenter(Offset(0, -topPadding));
     Offset deviceOffsetNew = labelRect.bottomCenter - deviceTopCenter;
 
