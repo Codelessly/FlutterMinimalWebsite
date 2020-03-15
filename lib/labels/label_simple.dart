@@ -115,7 +115,8 @@ class SimpleLabel extends StatelessWidget with ResponsivePreviewMixin {
     double deviceResizeRatio = 0.8;
     if (deviceSize.height > deviceSize.width) {
       deviceResizeRatio = (deviceSize.height - labelRect.bottom - topPadding) /
-          deviceSize.height;
+          deviceSize.height *
+          0.8;
     }
 
     if ((deviceSize.height * 0.8 + labelRect.bottom + topPadding) >

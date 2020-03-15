@@ -6,16 +6,16 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'labels/labels.dart';
 import 'pages/pages.dart';
 
-class ResponsiveAnimation extends StatefulWidget {
-  ResponsiveAnimation({Key key}) : super(key: key);
+class ResponsiveAnimation2 extends StatefulWidget {
+  ResponsiveAnimation2({Key key}) : super(key: key);
 
   @override
-  _ResponsiveAnimationState createState() => _ResponsiveAnimationState();
+  _ResponsiveAnimation2State createState() => _ResponsiveAnimation2State();
 }
 
-class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
-  static double initialWidth = 1920;
-  static double initialHeight = 1280;
+class _ResponsiveAnimation2State extends State<ResponsiveAnimation2> {
+  static double initialWidth = 1280;
+  static double initialHeight = 720;
   double startValue = initialWidth;
   double endValue = initialWidth;
   int duration = 5;
@@ -38,27 +38,46 @@ class _ResponsiveAnimationState extends State<ResponsiveAnimation> {
     return Stack(
       children: <Widget>[
         Container(color: Colors.white),
-        Container(
-          child: TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: startValue, end: endValue),
-            duration: Duration(seconds: duration),
-            onEnd: () => setState(() => animating = false),
-            builder: (BuildContext context, value, Widget child) {
-//              double heightScale = 1 -
-//                  (((value - startValue) / (endValue - startValue + 1)) * 0.25);
-              double heightCalc = initialHeight;
-              return DeviceContainer(
-                deviceData: DeviceData(
-                    brand: "RESIZE",
-                    model: "${value.round()} x ${heightCalc.round()}",
-                    width: value,
-                    height: heightCalc,
-                    physicalSize: 6.4,
-                    devicePixelRatio: 1),
-                heightPadding: verticalPadding,
-                widthPadding: horizontalPadding,
-              );
-            },
+        Center(
+          child: Container(
+            child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: startValue, end: endValue),
+              duration: Duration(seconds: duration),
+              onEnd: () => setState(() => animating = false),
+              builder: (BuildContext context, value, Widget child) {
+                double heightCalc = initialHeight;
+                return ListView(
+                  scrollDirection: Axis.horizontal,
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 100),
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    DeviceContainer(
+                      deviceData: DeviceData(
+                          brand: "SCALE",
+                          model: "${value.round()} x ${heightCalc.round()}",
+                          width: value,
+                          height: heightCalc,
+                          physicalSize: 6.4,
+                          devicePixelRatio: 1),
+                      heightPadding: verticalPadding,
+                      widthPadding: horizontalPadding,
+                    ),
+                    DeviceContainer(
+                      deviceData: DeviceData(
+                          brand: "RESIZE",
+                          model: "${value.round()} x ${heightCalc.round()}",
+                          width: value,
+                          height: heightCalc,
+                          physicalSize: 6.4,
+                          devicePixelRatio: 1),
+                      heightPadding: verticalPadding,
+                      widthPadding: horizontalPadding,
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
         Positioned(
@@ -209,7 +228,7 @@ class DeviceContainer extends StatelessWidget {
                           child: ResponsiveWrapper(
                             maxWidth: 1200,
                             minWidth: 800,
-                            defaultScale: false,
+                            defaultScale: deviceData.brand == "SCALE",
                             breakpoints: [],
                             background: Container(
                               color: Color(0xFFF5F5F5),
@@ -233,7 +252,7 @@ class DeviceContainer extends StatelessWidget {
   Size deviceScreenSizeCalc(
       {double aspectRatio, double containerWidth, double containerHeight}) {
     return aspectRatio >= 1
-        ? Size(containerWidth, containerWidth / aspectRatio)
+        ? Size(containerWidth / 2, containerWidth / aspectRatio / 2)
         : Size(containerHeight * aspectRatio, containerHeight);
   }
 }
