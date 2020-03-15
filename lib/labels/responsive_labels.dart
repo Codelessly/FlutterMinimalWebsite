@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minimal/labels/label_none.dart';
 
 import 'label_minimal.dart';
 import 'label_simple.dart';
@@ -17,7 +18,7 @@ abstract class ResponsivePreviewMixin {
   get subtitleRect => Rect.zero;
 }
 
-enum LabelType { MINIMAL_LARGE, SIMPLE_TOP_CENTER }
+enum LabelType { NONE, MINIMAL_LARGE, SIMPLE_TOP_CENTER }
 
 class LabelFactory {
   final LabelType type;
@@ -47,10 +48,9 @@ class LabelFactory {
           deviceSize: deviceSize,
           containerSize: containerSize,
         );
-      // TODO Return empty no label.
+      case LabelType.NONE:
       default:
-        return MinimalLargeLabel(
-            title: title, subtitle: subtitle, deviceSize: deviceSize);
+        return NoneLabel(deviceSize: deviceSize);
     }
   }
 

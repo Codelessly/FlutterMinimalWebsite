@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:minimal/responsive_animation.dart';
+import 'package:minimal/responsive_animation_multi.dart';
 
 void main() {
   runApp(ResponsiveAnimationApp());
@@ -26,7 +26,7 @@ class _ResponsiveAnimationAppState extends State<ResponsiveAnimationApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: ResponsiveAnimation(),
+        body: ResponsiveAnimationMulti(),
       ),
       debugShowCheckedModeBanner: false,
     );

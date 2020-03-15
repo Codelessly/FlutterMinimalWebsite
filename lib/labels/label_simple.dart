@@ -40,14 +40,13 @@ class SimpleLabel extends StatelessWidget with ResponsivePreviewMixin {
                 child: AutoSizeText(
                   title ?? "",
                   maxLines: 1,
-                  maxFontSize: 200,
+                  maxFontSize: 400,
                   minFontSize: 0,
                   softWrap: false,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 400,
                       color: Color(0xFF757575),
-                      height: 0.9,
                       fontWeight: FontWeight.bold,
                       fontFamily: "Montserrat"),
                 ),
@@ -66,14 +65,13 @@ class SimpleLabel extends StatelessWidget with ResponsivePreviewMixin {
                   child: AutoSizeText(
                     subtitle ?? "",
                     maxLines: 1,
-                    maxFontSize: 200,
+                    maxFontSize: 400,
                     minFontSize: 0,
                     softWrap: false,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 400,
                         color: Color(0xFFDFDFDF),
-                        height: 0.9,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Montserrat"),
                   ),

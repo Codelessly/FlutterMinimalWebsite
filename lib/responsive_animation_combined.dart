@@ -6,14 +6,16 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'labels/labels.dart';
 import 'pages/pages.dart';
 
-class ResponsiveAnimation2 extends StatefulWidget {
-  ResponsiveAnimation2({Key key}) : super(key: key);
+class ResponsiveAnimationCombined extends StatefulWidget {
+  ResponsiveAnimationCombined({Key key}) : super(key: key);
 
   @override
-  _ResponsiveAnimation2State createState() => _ResponsiveAnimation2State();
+  _ResponsiveAnimationCombinedState createState() =>
+      _ResponsiveAnimationCombinedState();
 }
 
-class _ResponsiveAnimation2State extends State<ResponsiveAnimation2> {
+class _ResponsiveAnimationCombinedState
+    extends State<ResponsiveAnimationCombined> {
   static double initialWidth = 1280;
   static double initialHeight = 720;
   double startValue = initialWidth;
