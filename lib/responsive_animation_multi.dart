@@ -17,11 +17,6 @@ class ResponsiveAnimationMulti extends StatefulWidget {
 
 class _ResponsiveAnimationMultiState extends State<ResponsiveAnimationMulti>
     with SingleTickerProviderStateMixin {
-  static double initialWidth = 1920;
-  static double initialHeight = 1280;
-  double startValue = initialWidth;
-  double endValue = initialWidth;
-  int duration = 5;
   bool animating = false;
   bool crossFadeState = true;
   AnimationController _controller;
@@ -37,20 +32,25 @@ class _ResponsiveAnimationMultiState extends State<ResponsiveAnimationMulti>
       "720p",
       "HD",
       "4K",
-      "iPhone X",
-      "Galaxy S20",
+      "iPad Pro 12.9\"",
+      "iPhone 11 Pro",
       "iPad Pro 11\"",
+      "Pro Display XDR",
       "Pixel 4",
-      "iPhone 11",
+      "Galaxy S20",
       "4K",
       "HD",
       "720p",
-      "480p",
     ]);
     _controller = new AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        nextAnimation();
+      }
+    });
     width = Tween<double>(
       begin: deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width,
       end: deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width,
@@ -85,7 +85,7 @@ class _ResponsiveAnimationMultiState extends State<ResponsiveAnimationMulti>
           child: Container(
             margin: EdgeInsets.only(top: 50),
             child: AnimatedCrossFade(
-              duration: Duration(milliseconds: 400),
+              duration: Duration(milliseconds: 500),
               firstChild: titleText(getTitleText()),
               secondChild: titleText(getTitleText2()),
               firstCurve: Curves.easeIn,
@@ -101,7 +101,7 @@ class _ResponsiveAnimationMultiState extends State<ResponsiveAnimationMulti>
           child: Container(
             margin: EdgeInsets.only(top: 250),
             child: AnimatedCrossFade(
-              duration: Duration(milliseconds: 400),
+              duration: Duration(milliseconds: 500),
               firstChild: subtitleText(getSubtitleText()),
               secondChild: subtitleText(getSubTitleText2()),
               firstCurve: Curves.easeIn,
@@ -206,46 +206,50 @@ class _ResponsiveAnimationMultiState extends State<ResponsiveAnimationMulti>
   }
 
   void playAnimation() {
-//    Future.delayed(Duration(seconds: 1), () {
+    nextAnimation();
     setState(() {
-      crossFadeState = !crossFadeState;
-      activeDeviceIndex += 1;
-      width = Tween<double>(
-        begin:
-            deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].width,
-        end: deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width,
-      ).animate(CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeOutCubic,
-      ));
-      height = Tween<double>(
-        begin: deviceDataRepository
-            .activeDeviceDatas[activeDeviceIndex - 1].height,
-        end: deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height,
-      ).animate(CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeOutCubic,
-      ));
-//      _controller.addStatusListener((status) {
-//        if (status == AnimationStatus.completed) {
-//          _controller.
-//        }
-//      });
-      _controller.forward(from: 0);
-//        animating = true;
-//        startValue = initialWidth;
-//        endValue = 360;
-//        duration = 5;
+      animating = true;
     });
-//    });
+  }
+
+  void nextAnimation() {
+    Future.delayed(Duration(milliseconds: 1000), () {
+      if (activeDeviceIndex <
+          deviceDataRepository.activeDeviceDatas.length - 1) {
+        setState(() {
+          crossFadeState = !crossFadeState;
+          activeDeviceIndex += 1;
+          print(
+              "Active Device: ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].name}");
+          width = Tween<double>(
+            begin: deviceDataRepository
+                .activeDeviceDatas[activeDeviceIndex - 1].width,
+            end:
+                deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width,
+          ).animate(CurvedAnimation(
+            parent: _controller,
+            curve: Curves.easeOutCubic,
+          ));
+          height = Tween<double>(
+            begin: deviceDataRepository
+                .activeDeviceDatas[activeDeviceIndex - 1].height,
+            end: deviceDataRepository
+                .activeDeviceDatas[activeDeviceIndex].height,
+          ).animate(CurvedAnimation(
+            parent: _controller,
+            curve: Curves.easeOutCubic,
+          ));
+          _controller.forward(from: 0);
+        });
+      } else {
+        resetAnimation();
+      }
+    });
   }
 
   void resetAnimation() {
     setState(() {
       animating = false;
-      startValue = initialWidth;
-      endValue = initialWidth;
-      duration = 0;
       activeDeviceIndex = 0;
       _controller.reset();
     });
