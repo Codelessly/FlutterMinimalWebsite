@@ -188,21 +188,21 @@ class _ResponsiveAnimationMultiState extends State<ResponsiveAnimationMulti>
   String getSubtitleText() {
     return crossFadeState
         ? activeDeviceIndex == 0
-            ? "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height}"
-            : "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height}"
+            ? "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width.round()} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height.round()}"
+            : "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width.round()} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height.round()}"
         : activeDeviceIndex == 0
-            ? "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height}"
-            : "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].width} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].height}";
+            ? "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width.round()} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height.round()}"
+            : "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].width.round()} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].height.round()}";
   }
 
   String getSubTitleText2() {
     return crossFadeState
         ? activeDeviceIndex == 0
-            ? "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height}"
-            : "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].width} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].height}"
+            ? "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width.round()} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height.round()}"
+            : "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].width.round()} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex - 1].height.round()}"
         : activeDeviceIndex == 0
-            ? "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height}"
-            : "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height}";
+            ? "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width.round()} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height.round()}"
+            : "${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].width.round()} x ${deviceDataRepository.activeDeviceDatas[activeDeviceIndex].height.round()}";
   }
 
   void playAnimation() {
@@ -251,7 +251,6 @@ class _ResponsiveAnimationMultiState extends State<ResponsiveAnimationMulti>
     setState(() {
       animating = false;
       activeDeviceIndex = 0;
-      _controller.reset();
     });
   }
 }
