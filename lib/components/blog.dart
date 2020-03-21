@@ -5,6 +5,7 @@ import 'package:minimal/components/color.dart';
 import 'package:minimal/components/spacing.dart';
 import 'package:minimal/components/text.dart';
 import 'package:minimal/components/typography.dart';
+import 'package:minimal/routes.dart';
 
 class ImageWrapper extends StatelessWidget {
   final String image;
@@ -289,7 +290,7 @@ class ListItem extends StatelessWidget {
           child: Container(
             margin: marginBottom24,
             child: ReadMoreButton(
-              onPressed: () => Navigator.pushNamed(context, '/post'),
+              onPressed: () => Navigator.pushNamed(context, Routes.post),
             ),
           ),
         ),
@@ -317,8 +318,8 @@ class MenuBar extends StatelessWidget {
           child: Row(
             children: <Widget>[
               GestureDetector(
-                onTap: () =>
-                    Navigator.popUntil(context, ModalRoute.withName("/")),
+                onTap: () => Navigator.popUntil(
+                    context, ModalRoute.withName(Navigator.defaultRouteName)),
                 child: Text("MINIMAL",
                     style: GoogleFonts.montserrat(
                         color: textPrimary,
@@ -332,8 +333,8 @@ class MenuBar extends StatelessWidget {
                   child: Wrap(
                     children: <Widget>[
                       FlatButton(
-                        onPressed: () => Navigator.popUntil(
-                            context, ModalRoute.withName("/")),
+                        onPressed: () => Navigator.popUntil(context,
+                            ModalRoute.withName(Navigator.defaultRouteName)),
                         child: Text(
                           "HOME",
                           style: buttonTextStyle,
@@ -353,7 +354,8 @@ class MenuBar extends StatelessWidget {
                         highlightColor: Colors.transparent,
                       ),
                       FlatButton(
-                        onPressed: () => Navigator.pushNamed(context, '/style'),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, Routes.style),
                         child: Text(
                           "STYLE",
                           style: buttonTextStyle,

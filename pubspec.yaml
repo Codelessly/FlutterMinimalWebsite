@@ -10,6 +10,7 @@ dependencies:
     sdk: flutter
   responsive_framework: ^0.0.4
   google_fonts: ^0.3.10
+  animations: ^1.0.0+5
 
 dev_dependencies:
   flutter_test:
