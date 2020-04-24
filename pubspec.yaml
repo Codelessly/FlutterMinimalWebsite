@@ -3,13 +3,13 @@ description: A minimalistic Flutter website template for blogs and portfolios.
 version: 1.0.1
 
 environment:
-  sdk: ">=2.4.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   responsive_framework: ^0.0.4
-  google_fonts: ^0.3.10
+  google_fonts: ^1.0.0
   animations: ^1.0.0+5
 
 dev_dependencies:
