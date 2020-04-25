@@ -29,20 +29,22 @@ class MyApp extends StatelessWidget {
           background: Container(color: Color(0xFFF5F5F5))),
       initialRoute: Routes.home,
       onGenerateRoute: (RouteSettings settings) {
-        switch (settings.name) {
-          case Routes.home:
-            return Routes.fadeThrough(settings, (context) => ListPage());
-            break;
-          case Routes.post:
-            return Routes.fadeThrough(settings, (context) => PostPage());
-            break;
-          case Routes.style:
-            return Routes.fadeThrough(settings, (context) => TypographyPage());
-            break;
-          default:
-            return null;
-            break;
-        }
+        return Routes.fadeThrough(settings, (context) {
+          switch (settings.name) {
+            case Routes.home:
+              return ListPage();
+              break;
+            case Routes.post:
+              return PostPage();
+              break;
+            case Routes.style:
+              return TypographyPage();
+              break;
+            default:
+              return null;
+              break;
+          }
+        });
       },
       theme: Theme.of(context).copyWith(platform: TargetPlatform.android),
       debugShowCheckedModeBanner: false,
