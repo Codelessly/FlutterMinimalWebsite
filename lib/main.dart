@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:minimal/pages/pages.dart';
 import 'package:minimal/routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:responsive_framework/utils/bouncing_scroll_behavior.dart';
 
 void main() {
   runApp(MyApp());
