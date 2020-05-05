@@ -17,13 +17,11 @@ class MyApp extends StatelessWidget {
           minWidth: 450,
           defaultScale: true,
           breakpoints: [
-            ResponsiveBreakpoint(breakpoint: 450, name: MOBILE),
-            ResponsiveBreakpoint(
-                breakpoint: 800, name: TABLET, autoScale: true),
-            ResponsiveBreakpoint(
-                breakpoint: 1000, name: TABLET, autoScale: true),
-            ResponsiveBreakpoint(breakpoint: 1200, name: DESKTOP),
-            ResponsiveBreakpoint(breakpoint: 2460, name: "4K", autoScale: true),
+            ResponsiveBreakpoint.resize(450, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+            ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+            ResponsiveBreakpoint.autoScale(2460, name: "4K"),
           ],
           background: Container(color: Color(0xFFF5F5F5))),
       initialRoute: Routes.home,
