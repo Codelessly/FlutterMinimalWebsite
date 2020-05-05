@@ -1,12 +1,12 @@
 ![Screenshots](screenshots/Minimal%20Home.png)
-# [Flutter Minimal Website](https://gallery.imfast.io/flutterwebsites/minimal/)
+# [Flutter Minimal Website](https://gallery.codelessly.com/flutterwebsites/minimal/)
 [![Flutter Responsive](https://img.shields.io/badge/flutter-responsive-brightgreen.svg?style=flat-square)](https://github.com/Codelessly/ResponsiveFramework) [![GitHub release](https://img.shields.io/github/release/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite/releases) [![GitHub Release Date](https://img.shields.io/github/release-date/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite/releases) [![GitHub issues](https://img.shields.io/github/issues/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite/issues) [![GitHub top language](https://img.shields.io/github/languages/top/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://github.com/Codelessly/FlutterMinimalWebsite) [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/Codelessly/FlutterMinimalWebsite.svg?style=flat-square)](https://libraries.io/github/Codelessly/FlutterMinimalWebsite) [![License](https://img.shields.io/badge/License-BSD%200--Clause-orange.svg?style=flat-square)](https://opensource.org/licenses/0BSD)
 
 <img src="assets/Minimal-Logo-iOS.png" width="128">
 
 > ### A minimalistic website for blogs and portfolios built with Flutter.
 
-[View Flutter Minimal Website](https://gallery.imfast.io/flutterwebsites/minimal/)
+[View Flutter Minimal Website](https://gallery.codelessly.com/flutterwebsites/minimal/)
 
 ## Screenshots
 
@@ -20,7 +20,7 @@ This minimalistic website template was built as a demo for the [Flutter Responsi
 
 Flutter Minimal Website is licensed under Zero-Clause BSD and released as Emailware. If you like this project or it helped you, please leave your email for updates. Although it is not required, I'd very much appreciate it!
 
-<a href="https://gallery.imfast.io/flutterwebsites/minimal/newsletter/" target="_blank"><img src="screenshots/Email%20Newsletter%20Signup.png"></a>
+<a href="https://gallery.codelessly.com/flutterwebsites/minimal/newsletter/" target="_blank"><img src="screenshots/Email%20Newsletter%20Signup.png"></a>
 
 
 ## Features
@@ -107,7 +107,7 @@ Please feel free to open an issue or reach out through one of the channel below.
   <img alt="Codelessly Website"
        src="https://lh3.googleusercontent.com/YmMGcgeO7Km9-J9vFRByov5sb7OUKetnKs8pTi0JZMDj3GVJ61GMTcTlHB7u9uHDHag=w96" />
 </a>
-<a href="https://twitter.com/codelessly1">
+<a href="https://twitter.com/BuildCodelessly">
   <img alt="Codelessly Twitter"
        src="https://lh3.ggpht.com/lSLM0xhCA1RZOwaQcjhlwmsvaIQYaP3c5qbDKCgLALhydrgExnaSKZdGa8S3YtRuVA=w96" />
 </a>
