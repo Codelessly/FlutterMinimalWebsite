@@ -8,6 +8,8 @@
 
 [View Flutter Minimal Website](https://gallery.codelessly.com/flutterwebsites/minimal/)
 
+[Skia Version](https://gallery.codelessly.com/flutterwebsites/minimal/skia/)
+
 ## Screenshots
 
 |List|Post| 
