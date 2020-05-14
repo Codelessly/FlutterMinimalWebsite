@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   responsive_framework: ^0.0.7
-  google_fonts: ^1.0.0
+  google_fonts: ^1.1.0
   animations: ^1.0.0+5
 
 dev_dependencies:
