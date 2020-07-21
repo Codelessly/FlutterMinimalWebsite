@@ -16,7 +16,7 @@ dependencies:
 #      url: https://github.com/Codelessly/ResponsiveFramework.git
 #      ref: master
   google_fonts: ^1.1.0
-  animations: ^1.0.0+5
+  animations: ^1.1.1
 
 dev_dependencies:
   flutter_test:
