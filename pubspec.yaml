@@ -15,7 +15,7 @@ dependencies:
 #    git:
 #      url: https://github.com/Codelessly/ResponsiveFramework.git
 #      ref: master
-  google_fonts: ^1.1.0
+  google_fonts: ^1.1.2
   animations: ^1.1.2
 
 dev_dependencies:
