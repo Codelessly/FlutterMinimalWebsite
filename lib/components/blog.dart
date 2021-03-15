@@ -10,7 +10,7 @@ import 'package:minimal/routes.dart';
 class ImageWrapper extends StatelessWidget {
   final String image;
 
-  const ImageWrapper({Key key, this.image}) : super(key: key);
+  const ImageWrapper({Key? key, required this.image}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ImageWrapper extends StatelessWidget {
 class TagWrapper extends StatelessWidget {
   final List<Tag> tags;
 
-  const TagWrapper({Key key, this.tags}) : super(key: key);
+  const TagWrapper({Key? key, this.tags = const []}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class TagWrapper extends StatelessWidget {
 class Tag extends StatelessWidget {
   final String tag;
 
-  const Tag({Key key, this.tag}) : super(key: key);
+  const Tag({Key? key, required this.tag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class Tag extends StatelessWidget {
 class ReadMoreButton extends StatelessWidget {
   final Function onPressed;
 
-  const ReadMoreButton({Key key, @required this.onPressed}) : super(key: key);
+  const ReadMoreButton({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class ReadMoreButton extends StatelessWidget {
         onHover: (event) => setState(() => hover = true),
         onExit: (event) => setState(() => hover = false),
         child: OutlineButton(
-          onPressed: onPressed,
+          onPressed: onPressed as void Function()?,
           highlightedBorderColor: textPrimary,
           hoverColor: textPrimary,
           borderSide: BorderSide(color: textPrimary, width: 2),
@@ -116,7 +116,8 @@ Widget dividerSmall = Container(
   ),
 );
 
-List<Widget> authorSection({String imageUrl, String name, String bio}) {
+List<Widget> authorSection(
+    {required String imageUrl, String? name, String? bio}) {
   return [
     divider,
     Container(
@@ -246,12 +247,12 @@ class Footer extends StatelessWidget {
 
 class ListItem extends StatelessWidget {
   // TODO replace with Post item model.
-  final String imageUrl;
   final String title;
-  final String description;
+  final String? imageUrl;
+  final String? description;
 
   const ListItem(
-      {Key key, this.imageUrl, @required this.title, this.description})
+      {Key? key, required this.title, this.imageUrl, this.description})
       : super(key: key);
 
   @override
@@ -261,7 +262,7 @@ class ListItem extends StatelessWidget {
         if (imageUrl != null)
           Container(
             child: ImageWrapper(
-              image: imageUrl,
+              image: imageUrl!,
             ),
           ),
         Align(
@@ -280,7 +281,7 @@ class ListItem extends StatelessWidget {
             child: Container(
               margin: marginBottom12,
               child: Text(
-                description,
+                description!,
                 style: bodyTextStyle,
               ),
             ),
