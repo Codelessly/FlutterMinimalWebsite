@@ -8,7 +8,9 @@
 
 [View Flutter Minimal Website](https://gallery.codelessly.com/flutterwebsites/minimal/)
 
-[Skia Version](https://gallery.codelessly.com/flutterwebsites/minimal/skia/)
+[CanvasKit Renderer Version](https://gallery.codelessly.com/flutterwebsites/minimal/skia/)
+
+[HTML Renderer Version](https://gallery.codelessly.com/flutterwebsites/minimal/html/)
 
 ## Screenshots
 
