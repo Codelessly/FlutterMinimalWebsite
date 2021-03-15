@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       builder: (context, widget) => ResponsiveWrapper.builder(
-          BouncingScrollWrapper.builder(context, widget),
+          BouncingScrollWrapper.builder(context, widget!),
           maxWidth: 1200,
           minWidth: 450,
           defaultScale: true,
@@ -30,16 +30,12 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case Routes.home:
               return ListPage();
-              break;
             case Routes.post:
               return PostPage();
-              break;
             case Routes.style:
               return TypographyPage();
-              break;
             default:
-              return null;
-              break;
+              return SizedBox.shrink();
           }
         });
       },

@@ -5,7 +5,7 @@ import 'package:minimal/components/typography.dart';
 class TextBody extends StatelessWidget {
   final String text;
 
-  const TextBody({Key key, this.text}) : super(key: key);
+  const TextBody({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TextBody extends StatelessWidget {
 class TextBodySecondary extends StatelessWidget {
   final String text;
 
-  const TextBodySecondary({Key key, this.text}) : super(key: key);
+  const TextBodySecondary({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class TextBodySecondary extends StatelessWidget {
 class TextHeadlineSecondary extends StatelessWidget {
   final String text;
 
-  const TextHeadlineSecondary({Key key, this.text}) : super(key: key);
+  const TextHeadlineSecondary({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class TextHeadlineSecondary extends StatelessWidget {
 class TextBlockquote extends StatelessWidget {
   final String text;
 
-  const TextBlockquote({Key key, this.text}) : super(key: key);
+  const TextBlockquote({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

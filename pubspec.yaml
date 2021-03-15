@@ -1,9 +1,9 @@
 name: minimal
 description: A minimalistic Flutter website template for blogs and portfolios.
-version: 1.0.3
+version: 1.1.0
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -15,13 +15,13 @@ dependencies:
 #    git:
 #      url: https://github.com/Codelessly/ResponsiveFramework.git
 #      ref: master
-  google_fonts: ^1.1.2
-  animations: ^1.1.2
+  google_fonts: ^2.0.0
+  animations: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.8.1
+  flutter_launcher_icons: ^0.9.0
 
 flutter_icons:
   android: true
