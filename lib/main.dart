@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
           }
         });
       },
-      theme: Theme.of(context).copyWith(platform: TargetPlatform.android),
       debugShowCheckedModeBanner: false,
     );
   }
