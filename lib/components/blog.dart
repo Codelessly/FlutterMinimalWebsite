@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal/components/color.dart';
 import 'package:minimal/components/spacing.dart';
@@ -70,36 +69,56 @@ class Tag extends StatelessWidget {
 }
 
 class ReadMoreButton extends StatelessWidget {
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   const ReadMoreButton({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool hover = false;
-    return StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-      return MouseRegion(
-        onHover: (event) => setState(() => hover = true),
-        onExit: (event) => setState(() => hover = false),
-        child: OutlineButton(
-          onPressed: onPressed as void Function()?,
-          highlightedBorderColor: textPrimary,
-          hoverColor: textPrimary,
-          borderSide: BorderSide(color: textPrimary, width: 2),
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            "READ MORE",
-            style: GoogleFonts.montserrat(
+    return OutlinedButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all<Color>(textPrimary),
+        side: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.focused) ||
+              states.contains(MaterialState.hovered) ||
+              states.contains(MaterialState.pressed)) {
+            return const BorderSide(color: textPrimary, width: 2);
+          }
+
+          return const BorderSide(color: textPrimary, width: 2);
+        }),
+        foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+          if (states.contains(MaterialState.focused) ||
+              states.contains(MaterialState.hovered) ||
+              states.contains(MaterialState.pressed)) {
+            return Colors.white;
+          }
+
+          return textPrimary;
+        }),
+        textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
+          if (states.contains(MaterialState.focused) ||
+              states.contains(MaterialState.hovered) ||
+              states.contains(MaterialState.pressed)) {
+            return GoogleFonts.montserrat(
               textStyle: TextStyle(
-                  fontSize: 14,
-                  color: hover ? Colors.white : textPrimary,
-                  letterSpacing: 1),
-            ),
-          ),
-        ),
-      );
-    });
+                  fontSize: 14, color: Colors.white, letterSpacing: 1),
+            );
+          }
+
+          return GoogleFonts.montserrat(
+            textStyle:
+                TextStyle(fontSize: 14, color: textPrimary, letterSpacing: 1),
+          );
+        }),
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            const EdgeInsets.symmetric(horizontal: 12, vertical: 16)),
+      ),
+      child: Text(
+        "READ MORE",
+      ),
+    );
   }
 }
 
@@ -116,8 +135,7 @@ Widget dividerSmall = Container(
   ),
 );
 
-List<Widget> authorSection(
-    {required String imageUrl, String? name, String? bio}) {
+List<Widget> authorSection({String? imageUrl, String? name, String? bio}) {
   return [
     divider,
     Container(
