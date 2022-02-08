@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "codelessly" "\0"
-            VALUE "FileDescription", "A new Flutter project." "\0"
+            VALUE "CompanyName", "Codelessly Inc." "\0"
+            VALUE "FileDescription", "A minimalistic Flutter website template for blogs and portfolios." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "example" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2021 codelessly. All rights reserved." "\0"
-            VALUE "OriginalFilename", "example.exe" "\0"
-            VALUE "ProductName", "example" "\0"
+            VALUE "InternalName", "minimal" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2022 Codelessly Inc. All rights reserved." "\0"
+            VALUE "OriginalFilename", "minimal.exe" "\0"
+            VALUE "ProductName", "Minimal" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

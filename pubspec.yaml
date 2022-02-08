@@ -8,8 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  responsive_framework:
-    path: ../
+  responsive_framework: ^0.1.5
   # Uncomment to build standalone project.
 #  responsive_framework:
 #    git:

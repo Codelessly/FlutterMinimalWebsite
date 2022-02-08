@@ -1,4 +1,4 @@
-package codelessly.example
+package com.minimal
 
 import io.flutter.embedding.android.FlutterActivity
 
