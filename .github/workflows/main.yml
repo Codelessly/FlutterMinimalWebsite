@@ -27,12 +27,15 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d')"
+      - name: Get time in seconds
+        id: seconds
+        run: echo "::set-output name=seconds::$(date +'%s')"
       - name: Push build commit
         run: |
           cd clone_dir
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add *
-          git commit -m "Build Minimal ${{ steps.date.outputs.date }} (${{ $EPOCHSECONDS }})"
+          git commit -m "Build Minimal ${{ steps.date.outputs.date }} (${{ steps.seconds.outputs.seconds }})"
           git pull --rebase
           git push
