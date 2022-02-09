@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          token: ${{ secrets.PAT }}
+      - uses: subosito/flutter-action@v1.5.3
+        with:
+          channel: stable
+      - name: Clone deployment repo
+        run: |
+          git clone --single-branch "https://${{ secrets.PAT }}@github.com/searchy2/Demo.git" "clone_dir"
+          rm -rf clone_dir/flutterwebsites/minimal
+          mkdir -p clone_dir/flutterwebsites/minimal
+      - name: Build
+        run: |
+          flutter build web --release
+          mv build/web/* clone_dir/flutterwebsites/minimal
+      - name: Push build commit
+        run: |
+          cd clone_dir
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add *
+          git commit -m "Build Minimal ${{ steps.date.outputs.date }} (${{ steps.seconds.outputs.seconds }})"
+          git pull --rebase
+          git push
