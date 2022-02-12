@@ -1,6 +1,8 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:minimal/components/spacing.dart';
 import 'package:minimal/components/typography.dart';
+
+import 'color.dart';
 
 class TextBody extends StatelessWidget {
   final String text;
@@ -75,3 +77,10 @@ class TextBlockquote extends StatelessWidget {
     );
   }
 }
+
+ButtonStyle? menuButtonStyle = TextButton.styleFrom(
+    backgroundColor: Colors.transparent,
+    onSurface: null,
+    primary: textSecondary,
+    textStyle: buttonTextStyle,
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16));

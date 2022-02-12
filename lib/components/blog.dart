@@ -342,7 +342,10 @@ class MenuBar extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
             children: <Widget>[
-              GestureDetector(
+              InkWell(
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 onTap: () => Navigator.popUntil(
                     context, ModalRoute.withName(Navigator.defaultRouteName)),
                 child: Text("MINIMAL",
@@ -357,57 +360,42 @@ class MenuBar extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: Wrap(
                     children: <Widget>[
-                      FlatButton(
+                      TextButton(
                         onPressed: () => Navigator.popUntil(context,
                             ModalRoute.withName(Navigator.defaultRouteName)),
-                        child: Text(
+                        child: const Text(
                           "HOME",
-                          style: buttonTextStyle,
                         ),
-                        splashColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
+                        style: menuButtonStyle,
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "PORTFOLIO",
-                          style: buttonTextStyle,
                         ),
-                        splashColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
+                        style: menuButtonStyle,
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () =>
                             Navigator.pushNamed(context, Routes.style),
-                        child: Text(
+                        child: const Text(
                           "STYLE",
-                          style: buttonTextStyle,
                         ),
-                        splashColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
+                        style: menuButtonStyle,
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "ABOUT",
-                          style: buttonTextStyle,
                         ),
-                        splashColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
+                        style: menuButtonStyle,
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           "CONTACT",
-                          style: buttonTextStyle,
                         ),
-                        splashColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
+                        style: menuButtonStyle,
                       ),
                     ],
                   ),
