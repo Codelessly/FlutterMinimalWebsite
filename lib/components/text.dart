@@ -62,9 +62,9 @@ class TextBlockquote extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: marginBottom24,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           border: Border(left: BorderSide(width: 2, color: Color(0xFF333333)))),
-      padding: EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 20),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(

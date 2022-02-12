@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:minimal/components/components.dart';
 
 class PostPage extends StatelessWidget {
+  const PostPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 32),
+          margin: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             children: <Widget>[
-              MenuBar(),
-              ImageWrapper(
+              const MenuBar(),
+              const ImageWrapper(
                 image: "assets/images/mugs_side_bw_w1080.jpg",
               ),
               Align(
@@ -24,43 +26,43 @@ class PostPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: TextBodySecondary(text: "Writing  /  Project"),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: TextBody(
                     text:
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus a pellentesque sit amet porttitor eget. Ipsum nunc aliquet bibendum enim facilisis gravida."),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: TextBody(
                     text:
                         "Montes nascetur ridiculus mus mauris vitae ultricies leo. Vitae purus faucibus ornare suspendisse sed nisi lacus sed viverra. Magna sit amet purus gravida. In dictum non consectetur a erat nam. Et egestas quis ipsum suspendisse ultrices. Tempor orci dapibus ultrices in iaculis nunc sed augue. Feugiat pretium nibh ipsum consequat nisl vel pretium lectus quam. Feugiat nisl pretium fusce id velit ut tortor pretium."),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child:
                     TextHeadlineSecondary(text: "Secondary Headline Example"),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: TextBody(
                     text:
                         "Nullam lobortis faucibus cursus. Sed aliquam semper mi sit amet interdum. Aliquam felis quam, ultrices ut elementum a, porta vel ex. Pellentesque at tempus magna. Vestibulum viverra lectus quis laoreet ullamcorper. Nunc finibus orci in luctus hendrerit. Ut dui mi, lacinia hendrerit elit ut, malesuada luctus enim."),
               ),
-              TextBlockquote(
+              const TextBlockquote(
                   text:
                       "Arcu ac tortor dignissim convallis aenean et tortor. Neque vitae tempus quam pellentesque nec nam aliquam. Dictum varius duis at consectetur lorem donec massa sapien faucibus. Etiam tempor orci eu lobortis elementum nibh tellus molestie nunc. Ac odio tempor orci dapibus ultrices in iaculis nunc sed."),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: TextBody(
                     text:
                         "Sed elementum tempus egestas sed sed risus. Mauris in aliquam sem fringilla ut morbi tincidunt. Placerat vestibulum lectus mauris ultrices eros. Et leo duis ut diam. Auctor neque vitae tempus quam. Nec nam aliquam sem et tortor consequat. Suspendisse interdum consectetur libero id faucibus nisl. Ornare suspendisse sed nisi lacus sed viverra. Tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum. Egestas purus viverra accumsan in nisl nisi."),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: TagWrapper(tags: [
                   Tag(tag: "Writing"),
@@ -74,12 +76,12 @@ class PostPage extends StatelessWidget {
                   bio:
                       "Mattis molestie a iaculis at erat pellentesque adipiscing commodo. Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget. Sed euismod nisi porta lorem. Aliquet nec ullamcorper sit amet risus nullam eget felis eget."),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 80),
-                child: PostNavigation(),
+                padding: const EdgeInsets.symmetric(vertical: 80),
+                child: const PostNavigation(),
               ),
               divider,
               // Footer
-              Footer(),
+              const Footer(),
             ],
           ),
         ),

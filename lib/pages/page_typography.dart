@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:minimal/components/components.dart';
 
 class TypographyPage extends StatelessWidget {
+  const TypographyPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,10 +11,10 @@ class TypographyPage extends StatelessWidget {
         children: <Widget>[
           SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 32),
+              margin: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 children: <Widget>[
-                  MenuBar(),
+                  const MenuBar(),
                   Align(
                     alignment: Alignment.center,
                     child: Container(
@@ -84,7 +86,7 @@ class TypographyPage extends StatelessWidget {
                     ),
                   ),
                   divider,
-                  Footer(),
+                  const Footer(),
                 ],
               ),
             ),

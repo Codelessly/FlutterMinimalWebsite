@@ -19,8 +19,8 @@ class ImageFixedWidth extends StatelessWidget {
       width: width,
       height: height,
       fit: BoxFit.cover,
-      fadeOutDuration: Duration(milliseconds: 100),
-      fadeInDuration: Duration(milliseconds: 200),
+      fadeOutDuration: const Duration(milliseconds: 100),
+      fadeInDuration: const Duration(milliseconds: 200),
     );
   }
 }

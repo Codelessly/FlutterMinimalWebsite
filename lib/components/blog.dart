@@ -16,7 +16,7 @@ class ImageWrapper extends StatelessWidget {
     //TODO Listen to inherited widget width updates.
     double width = MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 24),
+      margin: const EdgeInsets.symmetric(vertical: 24),
       child: Image.asset(
         image,
         width: width,
@@ -57,11 +57,11 @@ class Tag extends StatelessWidget {
         tag,
         style: GoogleFonts.openSans(color: Colors.white, fontSize: 14),
       ),
-      fillColor: Color(0xFF242424),
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      fillColor: const Color(0xFF242424),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       elevation: 0,
       hoverElevation: 0,
-      hoverColor: Color(0xFFC7C7C7),
+      hoverColor: const Color(0xFFC7C7C7),
       highlightElevation: 0,
       focusElevation: 0,
     );
@@ -102,20 +102,20 @@ class ReadMoreButton extends StatelessWidget {
               states.contains(MaterialState.hovered) ||
               states.contains(MaterialState.pressed)) {
             return GoogleFonts.montserrat(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                   fontSize: 14, color: Colors.white, letterSpacing: 1),
             );
           }
 
           return GoogleFonts.montserrat(
-            textStyle:
-                TextStyle(fontSize: 14, color: textPrimary, letterSpacing: 1),
+            textStyle: const TextStyle(
+                fontSize: 14, color: textPrimary, letterSpacing: 1),
           );
         }),
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
             const EdgeInsets.symmetric(horizontal: 12, vertical: 16)),
       ),
-      child: Text(
+      child: const Text(
         "READ MORE",
       ),
     );
@@ -125,7 +125,7 @@ class ReadMoreButton extends StatelessWidget {
 const Widget divider = Divider(color: Color(0xFFEEEEEE), thickness: 1);
 Widget dividerSmall = Container(
   width: 40,
-  decoration: BoxDecoration(
+  decoration: const BoxDecoration(
     border: Border(
       bottom: BorderSide(
         color: Color(0xFFA0A0A0),
@@ -139,14 +139,14 @@ List<Widget> authorSection({String? imageUrl, String? name, String? bio}) {
   return [
     divider,
     Container(
-      padding: EdgeInsets.symmetric(vertical: 40),
+      padding: const EdgeInsets.symmetric(vertical: 40),
       child: Row(
         children: <Widget>[
           if (imageUrl != null)
             Container(
-              margin: EdgeInsets.only(right: 25),
+              margin: const EdgeInsets.only(right: 25),
               child: Material(
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
                 clipBehavior: Clip.hardEdge,
                 color: Colors.transparent,
                 child: Image.asset(
@@ -184,6 +184,8 @@ List<Widget> authorSection({String? imageUrl, String? name, String? bio}) {
 }
 
 class PostNavigation extends StatelessWidget {
+  const PostNavigation({Key? key}) : super(key: key);
+
   // TODO Get PostID from Global Routing Singleton.
   // Example: String currentPage = RouteController.of(context).currentPage;
   @override
@@ -193,7 +195,7 @@ class PostNavigation extends StatelessWidget {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Icon(
+            const Icon(
               Icons.keyboard_arrow_left,
               size: 25,
               color: textSecondary,
@@ -201,11 +203,11 @@ class PostNavigation extends StatelessWidget {
             Text("PREVIOUS POST", style: buttonTextStyle),
           ],
         ),
-        Spacer(),
+        const Spacer(),
         Row(
           children: <Widget>[
             Text("NEXT POST", style: buttonTextStyle),
-            Icon(
+            const Icon(
               Icons.keyboard_arrow_right,
               size: 25,
               color: textSecondary,
@@ -218,6 +220,8 @@ class PostNavigation extends StatelessWidget {
 }
 
 class ListNavigation extends StatelessWidget {
+  const ListNavigation({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -225,7 +229,7 @@ class ListNavigation extends StatelessWidget {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Icon(
+            const Icon(
               Icons.keyboard_arrow_left,
               size: 25,
               color: textSecondary,
@@ -233,11 +237,11 @@ class ListNavigation extends StatelessWidget {
             Text("NEWER POSTS", style: buttonTextStyle),
           ],
         ),
-        Spacer(),
+        const Spacer(),
         Row(
           children: <Widget>[
             Text("OLDER POSTS", style: buttonTextStyle),
-            Icon(
+            const Icon(
               Icons.keyboard_arrow_right,
               size: 25,
               color: textSecondary,
@@ -250,12 +254,14 @@ class ListNavigation extends StatelessWidget {
 }
 
 class Footer extends StatelessWidget {
+  const Footer({Key? key}) : super(key: key);
+
   // TODO Add additional footer components (i.e. about, links, logos).
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 40),
-      child: Align(
+      padding: const EdgeInsets.symmetric(vertical: 40),
+      child: const Align(
         alignment: Alignment.centerRight,
         child: TextBody(text: "Copyright © 2020"),
       ),
@@ -278,10 +284,8 @@ class ListItem extends StatelessWidget {
     return Column(
       children: <Widget>[
         if (imageUrl != null)
-          Container(
-            child: ImageWrapper(
-              image: imageUrl!,
-            ),
+          ImageWrapper(
+            image: imageUrl!,
           ),
         Align(
           alignment: Alignment.centerLeft,
@@ -327,13 +331,15 @@ class ListItem extends StatelessWidget {
  * a hamburger menu on screens smaller than 400px.
  */
 class MenuBar extends StatelessWidget {
+  const MenuBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          margin: EdgeInsets.symmetric(vertical: 30),
+          margin: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
             children: <Widget>[
               GestureDetector(
@@ -412,8 +418,8 @@ class MenuBar extends StatelessWidget {
         ),
         Container(
             height: 1,
-            margin: EdgeInsets.only(bottom: 30),
-            color: Color(0xFFEEEEEE)),
+            margin: const EdgeInsets.only(bottom: 30),
+            color: const Color(0xFFEEEEEE)),
       ],
     );
   }
