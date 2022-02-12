@@ -21,7 +21,7 @@ jobs:
           mkdir -p clone_dir/flutterwebsites/minimal-html/
       - name: Build
         run: |
-          flutter build web --release --base-href /flutterwebsites/minimal-html/
+          flutter build web --release --base-href /flutterwebsites/minimal-html/ --web-renderer html
           mv build/web/* clone_dir/flutterwebsites/minimal-html
       - name: Get current date
         id: date
