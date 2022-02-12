@@ -1,4 +1,4 @@
-name: Build
+name: Build HTML
 
 on:
   workflow_dispatch:
