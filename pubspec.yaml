@@ -8,12 +8,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  responsive_framework: ^0.1.5
+  responsive_framework:
+    path: ../
   # Uncomment to build standalone project.
-#  responsive_framework:
-#    git:
-#      url: https://github.com/Codelessly/ResponsiveFramework.git
-#      ref: master
+  #  responsive_framework:
+  #    git:
+  #      url: https://github.com/Codelessly/ResponsiveFramework.git
   google_fonts: ^2.3.1
   animations: ^2.0.2
   loading_gifs: ^0.3.0
