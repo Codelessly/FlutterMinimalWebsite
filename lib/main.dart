@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      builder: (context, widget) => ResponsiveWrapper.builder(
-          BouncingScrollWrapper.builder(context, widget!),
+      builder: (context, child) => ResponsiveWrapper.builder(
+          BouncingScrollWrapper.builder(context, child!),
           maxWidth: 1200,
           minWidth: 450,
           defaultScale: true,
