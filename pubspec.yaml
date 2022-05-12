@@ -11,8 +11,8 @@ dependencies:
 #  responsive_framework:
 #    path: ../
   # Uncomment to build standalone project.
-  responsive_framework: ^0.1.6
-  google_fonts: ^2.3.1
+  responsive_framework: ^0.1.7
+  google_fonts: ^2.3.2
   animations: ^2.0.2
   loading_gifs: ^0.3.0
 
