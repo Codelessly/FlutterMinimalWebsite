@@ -17,10 +17,10 @@ class ImageFixedWidth extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ImageFixedWidthState createState() => _ImageFixedWidthState();
+  ImageFixedWidthState createState() => ImageFixedWidthState();
 }
 
-class _ImageFixedWidthState extends State<ImageFixedWidth> {
+class ImageFixedWidthState extends State<ImageFixedWidth> {
   bool imagesLoaded = false;
   bool preloadedImages = false;
 
