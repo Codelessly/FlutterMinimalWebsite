@@ -7,9 +7,9 @@ import 'package:minimal/components/typography.dart';
 import 'package:minimal/routes.dart';
 
 class ImageWrapper extends StatelessWidget {
-  final String image;
-
   const ImageWrapper({Key? key, required this.image}) : super(key: key);
+
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class ImageWrapper extends StatelessWidget {
 }
 
 class TagWrapper extends StatelessWidget {
-  final List<Tag> tags;
-
   const TagWrapper({Key? key, this.tags = const []}) : super(key: key);
+
+  final List<Tag> tags;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +45,9 @@ class TagWrapper extends StatelessWidget {
 }
 
 class Tag extends StatelessWidget {
-  final String tag;
-
   const Tag({Key? key, required this.tag}) : super(key: key);
+
+  final String tag;
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +69,9 @@ class Tag extends StatelessWidget {
 }
 
 class ReadMoreButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
   const ReadMoreButton({Key? key, required this.onPressed}) : super(key: key);
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,10 @@ class ReadMoreButton extends StatelessWidget {
               states.contains(MaterialState.pressed)) {
             return GoogleFonts.montserrat(
               textStyle: const TextStyle(
-                  fontSize: 14, color: Colors.white, letterSpacing: 1),
+                fontSize: 14,
+                color: Colors.white,
+                letterSpacing: 1,
+              ),
             );
           }
 
@@ -113,7 +116,8 @@ class ReadMoreButton extends StatelessWidget {
           );
         }),
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-            const EdgeInsets.symmetric(horizontal: 12, vertical: 16)),
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        ),
       ),
       child: const Text(
         "READ MORE",
@@ -122,7 +126,11 @@ class ReadMoreButton extends StatelessWidget {
   }
 }
 
-const Widget divider = Divider(color: Color(0xFFEEEEEE), thickness: 1);
+const Widget divider = Divider(
+  color: Color(0xFFEEEEEE),
+  thickness: 1,
+);
+
 Widget dividerSmall = Container(
   width: 40,
   decoration: const BoxDecoration(
@@ -135,7 +143,11 @@ Widget dividerSmall = Container(
   ),
 );
 
-List<Widget> authorSection({String? imageUrl, String? name, String? bio}) {
+List<Widget> authorSection({
+  String? imageUrl,
+  String? name,
+  String? bio,
+}) {
   return [
     divider,
     Container(
@@ -263,21 +275,24 @@ class Footer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: const Align(
         alignment: Alignment.centerRight,
-        child: TextBody(text: "Copyright © 2020"),
+        child: TextBody(text: "Copyright © 2022"),
       ),
     );
   }
 }
 
 class ListItem extends StatelessWidget {
+  const ListItem({
+    Key? key,
+    required this.title,
+    this.imageUrl,
+    this.description,
+  }) : super(key: key);
+
+  final String? description;
+  final String? imageUrl;
   // TODO replace with Post item model.
   final String title;
-  final String? imageUrl;
-  final String? description;
-
-  const ListItem(
-      {Key? key, required this.title, this.imageUrl, this.description})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -347,13 +362,18 @@ class MenuBar extends StatelessWidget {
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 onTap: () => Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName)),
-                child: Text("MINIMAL",
-                    style: GoogleFonts.montserrat(
-                        color: textPrimary,
-                        fontSize: 30,
-                        letterSpacing: 3,
-                        fontWeight: FontWeight.w500)),
+                  context,
+                  ModalRoute.withName(Navigator.defaultRouteName),
+                ),
+                child: Text(
+                  "MINIMAL",
+                  style: GoogleFonts.montserrat(
+                    color: textPrimary,
+                    fontSize: 30,
+                    letterSpacing: 3,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
               Flexible(
                 child: Container(
@@ -361,8 +381,10 @@ class MenuBar extends StatelessWidget {
                   child: Wrap(
                     children: <Widget>[
                       TextButton(
-                        onPressed: () => Navigator.popUntil(context,
-                            ModalRoute.withName(Navigator.defaultRouteName)),
+                        onPressed: () => Navigator.popUntil(
+                          context,
+                          ModalRoute.withName(Navigator.defaultRouteName),
+                        ),
                         style: menuButtonStyle,
                         child: const Text(
                           "HOME",
@@ -405,9 +427,10 @@ class MenuBar extends StatelessWidget {
           ),
         ),
         Container(
-            height: 1,
-            margin: const EdgeInsets.only(bottom: 30),
-            color: const Color(0xFFEEEEEE)),
+          height: 1,
+          margin: const EdgeInsets.only(bottom: 30),
+          color: const Color(0xFFEEEEEE),
+        ),
       ],
     );
   }

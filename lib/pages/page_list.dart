@@ -21,34 +21,38 @@ class ListPage extends StatelessWidget {
                 children: <Widget>[
                   const MenuBar(),
                   const ListItem(
-                      imageUrl:
-                          "assets/images/paper_flower_overhead_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
+                    imageUrl:
+                        "assets/images/paper_flower_overhead_bw_w1080.jpg",
+                    title: listItemTitleText,
+                    description: listItemPreviewText,
+                  ),
                   divider,
                   const ListItem(
-                      imageUrl:
-                          "assets/images/iphone_cactus_tea_overhead_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
+                    imageUrl:
+                        "assets/images/iphone_cactus_tea_overhead_bw_w1080.jpg",
+                    title: listItemTitleText,
+                    description: listItemPreviewText,
+                  ),
                   divider,
                   const ListItem(
-                      imageUrl:
-                          "assets/images/typewriter_overhead_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
+                    imageUrl: "assets/images/typewriter_overhead_bw_w1080.jpg",
+                    title: listItemTitleText,
+                    description: listItemPreviewText,
+                  ),
                   divider,
                   const ListItem(
-                      imageUrl:
-                          "assets/images/coffee_paperclips_pencil_angled_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
+                    imageUrl:
+                        "assets/images/coffee_paperclips_pencil_angled_bw_w1080.jpg",
+                    title: listItemTitleText,
+                    description: listItemPreviewText,
+                  ),
                   divider,
                   const ListItem(
-                      imageUrl:
-                          "assets/images/joy_note_coffee_eyeglasses_overhead_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
+                    imageUrl:
+                        "assets/images/joy_note_coffee_eyeglasses_overhead_bw_w1080.jpg",
+                    title: listItemTitleText,
+                    description: listItemPreviewText,
+                  ),
                   divider,
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 80),
