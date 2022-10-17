@@ -1,10 +1,16 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal/components/color.dart';
 import 'package:minimal/components/spacing.dart';
 import 'package:minimal/components/text.dart';
 import 'package:minimal/components/typography.dart';
+import 'package:minimal/models/header_model.dart';
 import 'package:minimal/routes.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+
+import '../utils/globals.dart';
 
 class ImageWrapper extends StatelessWidget {
   const ImageWrapper({Key? key, required this.image}) : super(key: key);
@@ -345,6 +351,96 @@ class ListItem extends StatelessWidget {
  * navigation links. Navigation links collapse into
  * a hamburger menu on screens smaller than 400px.
  */
+
+List<HeaderItem> headerItems = [
+  HeaderItem(title: 'HOME', onTap: () {}),
+  HeaderItem(title: 'PORTFOLIO', onTap: () {}),
+  HeaderItem(title: 'STYLE', onTap: () {}),
+  HeaderItem(title: 'ABOUT', onTap: () {}),
+  HeaderItem(title: 'CONTACT', onTap: () {}),
+];
+
+Widget headerLogo(BuildContext context) {
+  return SizedBox(
+    child: MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: InkWell(
+        hoverColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onTap: () => Navigator.popUntil(
+          context,
+          ModalRoute.withName(Navigator.defaultRouteName),
+        ),
+        child: Text(
+          "MINIMAL",
+          style: GoogleFonts.montserrat(
+            color: textPrimary,
+            fontSize: ResponsiveValue(
+              context,
+              defaultValue: 30,
+              valueWhen: [
+                const Condition.equals(name: TABLET, value: 20.0),
+                const Condition.largerThan(name: TABLET, value: 35)
+              ],
+            ).value!.toDouble(),
+            letterSpacing: 3,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget headerRow(BuildContext context) {
+  return ResponsiveVisibility(
+    visible: false,
+    visibleWhen: const [
+      Condition.largerThan(name: MOBILE),
+    ],
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: headerItems.map(
+        (headerItem) {
+          return MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Container(
+              margin: const EdgeInsets.only(right: 30.0),
+              child: GestureDetector(
+                onTap: headerItem.title == 'HOME'
+                    ? () => Navigator.popUntil(
+                          context,
+                          ModalRoute.withName(Navigator.defaultRouteName),
+                        )
+                    : headerItem.title == 'STYLE'
+                        ? () => Navigator.pushNamed(context, Routes.style)
+                        : headerItem.onTap,
+                child: Text(
+                  headerItem.title,
+                  style: GoogleFonts.montserrat(
+                    color: textPrimary,
+                    fontSize: ResponsiveValue(
+                      context,
+                      defaultValue: 10,
+                      valueWhen: [
+                        const Condition.largerThan(name: MOBILE, value: 13),
+                        const Condition.largerThan(name: TABLET, value: 17)
+                      ],
+                    ).value!.toDouble(),
+                    letterSpacing: 3,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ).toList(),
+    ),
+  );
+}
+
 class MenuBar extends StatelessWidget {
   const MenuBar({Key? key}) : super(key: key);
 
@@ -357,72 +453,64 @@ class MenuBar extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
             children: <Widget>[
-              InkWell(
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onTap: () => Navigator.popUntil(
-                  context,
-                  ModalRoute.withName(Navigator.defaultRouteName),
-                ),
-                child: Text(
-                  "MINIMAL",
-                  style: GoogleFonts.montserrat(
-                    color: textPrimary,
-                    fontSize: 30,
-                    letterSpacing: 3,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Wrap(
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.popUntil(
-                          context,
-                          ModalRoute.withName(Navigator.defaultRouteName),
-                        ),
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "HOME",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "PORTFOLIO",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, Routes.style),
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "STYLE",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "ABOUT",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "CONTACT",
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              headerLogo(context),
+              const Spacer(),
+              const HeaderMenuTile(),
+              headerRow(context),
+
+              //   visible: false,
+              //   visibleWhen: const [
+              //     Condition.largerThan(name: MOBILE),
+              //     Condition.largerThan(name: TABLET),
+              //     Condition.largerThan(name: DESKTOP),
+              //   ],
+              //   child: Flexible(
+              //     child: Container(
+              //       alignment: Alignment.centerRight,
+              //       child: Wrap(
+              //         children: <Widget>[
+              //           TextButton(
+              //             onPressed: () => Navigator.popUntil(
+              //
+              //             ),
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "HOME",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: () {},
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "PORTFOLIO",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: ,
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "STYLE",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: () {},
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "ABOUT",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: () {},
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "CONTACT",
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -432,6 +520,27 @@ class MenuBar extends StatelessWidget {
           color: const Color(0xFFEEEEEE),
         ),
       ],
+    );
+  }
+}
+
+class HeaderMenuTile extends StatelessWidget {
+  const HeaderMenuTile({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ResponsiveVisibility(
+      hiddenWhen: const [
+        Condition.largerThan(name: MOBILE),
+      ],
+      child: IconButton(
+        onPressed: () {
+          Globals.scaffoldKey.currentState!.openEndDrawer();
+        },
+        icon: const Icon(Icons.menu),
+      ),
     );
   }
 }

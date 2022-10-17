@@ -12,6 +12,36 @@ class ListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: Drawer(
+        width: 170,
+        backgroundColor: Colors.white,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 24.0,
+            ),
+            child: ListView.separated(
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(
+                    headerItems[index].title,
+                    style: const TextStyle(
+                      color: textPrimary,
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(
+                  height: 10.0,
+                );
+              },
+              itemCount: headerItems.length,
+            ),
+          ),
+        ),
+      ),
       body: Stack(
         children: <Widget>[
           SingleChildScrollView(
