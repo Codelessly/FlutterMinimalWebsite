@@ -2,16 +2,16 @@ name: Build HTML
 
 on:
   workflow_dispatch:
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
           token: ${{ secrets.PAT }}
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           channel: stable
       - name: Clone deployment repo
@@ -25,10 +25,10 @@ jobs:
           mv build/web/* clone_dir/flutterwebsites/minimal-html
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y%m%d')"
+        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
       - name: Get time in seconds
         id: seconds
-        run: echo "::set-output name=seconds::$(date +'%s')"
+        run: echo "seconds=$(date +'%s')" >> $GITHUB_OUTPUT
       - name: Push build commit
         run: |
           cd clone_dir
