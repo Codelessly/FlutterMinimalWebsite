@@ -1,15 +1,21 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal/components/color.dart';
 import 'package:minimal/components/spacing.dart';
 import 'package:minimal/components/text.dart';
 import 'package:minimal/components/typography.dart';
+import 'package:minimal/models/header_model.dart';
 import 'package:minimal/routes.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+
+import '../utils/globals.dart';
 
 class ImageWrapper extends StatelessWidget {
-  final String image;
-
   const ImageWrapper({Key? key, required this.image}) : super(key: key);
+
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +34,9 @@ class ImageWrapper extends StatelessWidget {
 }
 
 class TagWrapper extends StatelessWidget {
-  final List<Tag> tags;
-
   const TagWrapper({Key? key, this.tags = const []}) : super(key: key);
+
+  final List<Tag> tags;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +51,9 @@ class TagWrapper extends StatelessWidget {
 }
 
 class Tag extends StatelessWidget {
-  final String tag;
-
   const Tag({Key? key, required this.tag}) : super(key: key);
+
+  final String tag;
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +75,9 @@ class Tag extends StatelessWidget {
 }
 
 class ReadMoreButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
   const ReadMoreButton({Key? key, required this.onPressed}) : super(key: key);
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +109,10 @@ class ReadMoreButton extends StatelessWidget {
               states.contains(MaterialState.pressed)) {
             return GoogleFonts.montserrat(
               textStyle: const TextStyle(
-                  fontSize: 14, color: Colors.white, letterSpacing: 1),
+                fontSize: 14,
+                color: Colors.white,
+                letterSpacing: 1,
+              ),
             );
           }
 
@@ -113,7 +122,8 @@ class ReadMoreButton extends StatelessWidget {
           );
         }),
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-            const EdgeInsets.symmetric(horizontal: 12, vertical: 16)),
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        ),
       ),
       child: const Text(
         "READ MORE",
@@ -122,7 +132,11 @@ class ReadMoreButton extends StatelessWidget {
   }
 }
 
-const Widget divider = Divider(color: Color(0xFFEEEEEE), thickness: 1);
+const Widget divider = Divider(
+  color: Color(0xFFEEEEEE),
+  thickness: 1,
+);
+
 Widget dividerSmall = Container(
   width: 40,
   decoration: const BoxDecoration(
@@ -135,7 +149,11 @@ Widget dividerSmall = Container(
   ),
 );
 
-List<Widget> authorSection({String? imageUrl, String? name, String? bio}) {
+List<Widget> authorSection({
+  String? imageUrl,
+  String? name,
+  String? bio,
+}) {
   return [
     divider,
     Container(
@@ -263,21 +281,24 @@ class Footer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: const Align(
         alignment: Alignment.centerRight,
-        child: TextBody(text: "Copyright © 2020"),
+        child: TextBody(text: "Copyright © 2022"),
       ),
     );
   }
 }
 
 class ListItem extends StatelessWidget {
+  const ListItem({
+    Key? key,
+    required this.title,
+    this.imageUrl,
+    this.description,
+  }) : super(key: key);
+
+  final String? description;
+  final String? imageUrl;
   // TODO replace with Post item model.
   final String title;
-  final String? imageUrl;
-  final String? description;
-
-  const ListItem(
-      {Key? key, required this.title, this.imageUrl, this.description})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -330,6 +351,96 @@ class ListItem extends StatelessWidget {
  * navigation links. Navigation links collapse into
  * a hamburger menu on screens smaller than 400px.
  */
+
+List<HeaderItem> headerItems = [
+  HeaderItem(title: 'HOME', onTap: () {}),
+  HeaderItem(title: 'PORTFOLIO', onTap: () {}),
+  HeaderItem(title: 'STYLE', onTap: () {}),
+  HeaderItem(title: 'ABOUT', onTap: () {}),
+  HeaderItem(title: 'CONTACT', onTap: () {}),
+];
+
+Widget headerLogo(BuildContext context) {
+  return SizedBox(
+    child: MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: InkWell(
+        hoverColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onTap: () => Navigator.popUntil(
+          context,
+          ModalRoute.withName(Navigator.defaultRouteName),
+        ),
+        child: Text(
+          "MINIMAL",
+          style: GoogleFonts.montserrat(
+            color: textPrimary,
+            fontSize: ResponsiveValue(
+              context,
+              defaultValue: 30,
+              valueWhen: [
+                const Condition.equals(name: TABLET, value: 20.0),
+                const Condition.largerThan(name: TABLET, value: 35)
+              ],
+            ).value!.toDouble(),
+            letterSpacing: 3,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget headerRow(BuildContext context) {
+  return ResponsiveVisibility(
+    visible: false,
+    visibleWhen: const [
+      Condition.largerThan(name: MOBILE),
+    ],
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: headerItems.map(
+        (headerItem) {
+          return MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Container(
+              margin: const EdgeInsets.only(right: 30.0),
+              child: GestureDetector(
+                onTap: headerItem.title == 'HOME'
+                    ? () => Navigator.popUntil(
+                          context,
+                          ModalRoute.withName(Navigator.defaultRouteName),
+                        )
+                    : headerItem.title == 'STYLE'
+                        ? () => Navigator.pushNamed(context, Routes.style)
+                        : headerItem.onTap,
+                child: Text(
+                  headerItem.title,
+                  style: GoogleFonts.montserrat(
+                    color: textPrimary,
+                    fontSize: ResponsiveValue(
+                      context,
+                      defaultValue: 10,
+                      valueWhen: [
+                        const Condition.largerThan(name: MOBILE, value: 13),
+                        const Condition.largerThan(name: TABLET, value: 17)
+                      ],
+                    ).value!.toDouble(),
+                    letterSpacing: 3,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ).toList(),
+    ),
+  );
+}
+
 class MenuBar extends StatelessWidget {
   const MenuBar({Key? key}) : super(key: key);
 
@@ -342,73 +453,94 @@ class MenuBar extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
             children: <Widget>[
-              InkWell(
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onTap: () => Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName)),
-                child: Text("MINIMAL",
-                    style: GoogleFonts.montserrat(
-                        color: textPrimary,
-                        fontSize: 30,
-                        letterSpacing: 3,
-                        fontWeight: FontWeight.w500)),
-              ),
-              Flexible(
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Wrap(
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.popUntil(context,
-                            ModalRoute.withName(Navigator.defaultRouteName)),
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "HOME",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "PORTFOLIO",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, Routes.style),
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "STYLE",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "ABOUT",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "CONTACT",
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              headerLogo(context),
+              const Spacer(),
+              const HeaderMenuTile(),
+              headerRow(context),
+
+              //   visible: false,
+              //   visibleWhen: const [
+              //     Condition.largerThan(name: MOBILE),
+              //     Condition.largerThan(name: TABLET),
+              //     Condition.largerThan(name: DESKTOP),
+              //   ],
+              //   child: Flexible(
+              //     child: Container(
+              //       alignment: Alignment.centerRight,
+              //       child: Wrap(
+              //         children: <Widget>[
+              //           TextButton(
+              //             onPressed: () => Navigator.popUntil(
+              //
+              //             ),
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "HOME",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: () {},
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "PORTFOLIO",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: ,
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "STYLE",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: () {},
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "ABOUT",
+              //             ),
+              //           ),
+              //           TextButton(
+              //             onPressed: () {},
+              //             style: menuButtonStyle,
+              //             child: const Text(
+              //               "CONTACT",
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
         Container(
-            height: 1,
-            margin: const EdgeInsets.only(bottom: 30),
-            color: const Color(0xFFEEEEEE)),
+          height: 1,
+          margin: const EdgeInsets.only(bottom: 30),
+          color: const Color(0xFFEEEEEE),
+        ),
       ],
+    );
+  }
+}
+
+class HeaderMenuTile extends StatelessWidget {
+  const HeaderMenuTile({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ResponsiveVisibility(
+      hiddenWhen: const [
+        Condition.largerThan(name: MOBILE),
+      ],
+      child: IconButton(
+        onPressed: () {
+          Globals.scaffoldKey.currentState!.openEndDrawer();
+        },
+        icon: const Icon(Icons.menu),
+      ),
     );
   }
 }

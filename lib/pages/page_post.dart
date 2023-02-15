@@ -64,11 +64,13 @@ class PostPage extends StatelessWidget {
               ),
               const Align(
                 alignment: Alignment.centerLeft,
-                child: TagWrapper(tags: [
-                  Tag(tag: "Writing"),
-                  Tag(tag: "Photography"),
-                  Tag(tag: "Development")
-                ]),
+                child: TagWrapper(
+                  tags: [
+                    Tag(tag: "Writing"),
+                    Tag(tag: "Photography"),
+                    Tag(tag: "Development")
+                  ],
+                ),
               ),
               ...authorSection(
                   imageUrl: "assets/images/avatar_default.png",

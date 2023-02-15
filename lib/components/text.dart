@@ -24,7 +24,10 @@ class TextBody extends StatelessWidget {
 class TextBodySecondary extends StatelessWidget {
   final String text;
 
-  const TextBodySecondary({Key? key, required this.text}) : super(key: key);
+  const TextBodySecondary({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,10 @@ class TextBodySecondary extends StatelessWidget {
 class TextHeadlineSecondary extends StatelessWidget {
   final String text;
 
-  const TextHeadlineSecondary({Key? key, required this.text}) : super(key: key);
+  const TextHeadlineSecondary({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +64,23 @@ class TextHeadlineSecondary extends StatelessWidget {
 class TextBlockquote extends StatelessWidget {
   final String text;
 
-  const TextBlockquote({Key? key, required this.text}) : super(key: key);
+  const TextBlockquote({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: marginBottom24,
       decoration: const BoxDecoration(
-          border: Border(left: BorderSide(width: 2, color: Color(0xFF333333)))),
+        border: Border(
+          left: BorderSide(
+            width: 2,
+            color: Color(0xFF333333),
+          ),
+        ),
+      ),
       padding: const EdgeInsets.only(left: 20),
       child: Align(
         alignment: Alignment.centerLeft,
@@ -79,8 +94,12 @@ class TextBlockquote extends StatelessWidget {
 }
 
 ButtonStyle? menuButtonStyle = TextButton.styleFrom(
-    backgroundColor: Colors.transparent,
-    onSurface: null,
-    primary: textSecondary,
-    textStyle: buttonTextStyle,
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16));
+  backgroundColor: Colors.transparent,
+  //onSurface: null,
+  //primary: textSecondary,
+  textStyle: buttonTextStyle,
+  padding: const EdgeInsets.symmetric(
+    horizontal: 16,
+    vertical: 16,
+  ),
+);
