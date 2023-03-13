@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:minimal/components/components.dart';
 
 class PostPage extends StatelessWidget {
+  static const String name = 'post';
+
   const PostPage({Key? key}) : super(key: key);
 
   @override
