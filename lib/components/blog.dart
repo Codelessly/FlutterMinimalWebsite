@@ -4,7 +4,8 @@ import 'package:minimal/components/color.dart';
 import 'package:minimal/components/spacing.dart';
 import 'package:minimal/components/text.dart';
 import 'package:minimal/components/typography.dart';
-import 'package:minimal/routes.dart';
+import 'package:minimal/pages/page_post.dart';
+import 'package:minimal/pages/page_typography.dart';
 
 class ImageWrapper extends StatelessWidget {
   final String image;
@@ -313,7 +314,7 @@ class ListItem extends StatelessWidget {
           child: Container(
             margin: marginBottom24,
             child: ReadMoreButton(
-              onPressed: () => Navigator.pushNamed(context, Routes.post),
+              onPressed: () => Navigator.pushNamed(context, PostPage.name),
             ),
           ),
         ),
@@ -377,7 +378,7 @@ class MinimalMenuBar extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () =>
-                            Navigator.pushNamed(context, Routes.style),
+                            Navigator.pushNamed(context, TypographyPage.name),
                         style: menuButtonStyle,
                         child: const Text(
                           "STYLE",
