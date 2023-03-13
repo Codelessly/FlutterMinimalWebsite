@@ -19,7 +19,7 @@ class ListPage extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 children: <Widget>[
-                  const MenuBar(),
+                  const MinimalMenuBar(),
                   const ListItem(
                       imageUrl:
                           "assets/images/paper_flower_overhead_bw_w1080.jpg",

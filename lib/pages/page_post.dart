@@ -12,7 +12,7 @@ class PostPage extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             children: <Widget>[
-              const MenuBar(),
+              const MinimalMenuBar(),
               const ImageWrapper(
                 image: "assets/images/mugs_side_bw_w1080.jpg",
               ),
