@@ -14,7 +14,7 @@ class TypographyPage extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 children: <Widget>[
-                  const MenuBar(),
+                  const MinimalMenuBar(),
                   Align(
                     alignment: Alignment.center,
                     child: Container(
