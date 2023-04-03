@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   responsive_framework:
     path: ../
+  navigation_utils:
+    path: navigation_utils
   # Uncomment to build standalone project.
 #  responsive_framework: ^0.2.0
   google_fonts: ^4.0.3

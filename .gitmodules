@@ -1,0 +1,3 @@
+[submodule "navigation_utils"]
+	path = navigation_utils
+	url = https://github.com/rayliverified/NavigationUtils.git
