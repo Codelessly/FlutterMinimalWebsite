@@ -134,7 +134,7 @@ Please feel free to open an issue or reach out through one of the channel below.
 
     BSD Zero Clause License
 
-    Copyright © 2020 Codelessly
+    Copyright © 2023 Codelessly
 
     Permission to use, copy, modify, and/or distribute this software for any
     purpose with or without fee is hereby granted.

@@ -264,7 +264,7 @@ class Footer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: const Align(
         alignment: Alignment.centerRight,
-        child: TextBody(text: "Copyright © 2020"),
+        child: TextBody(text: "Copyright © 2023"),
       ),
     );
   }
