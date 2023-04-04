@@ -11,4 +11,4 @@ PRODUCT_NAME = Minimal
 PRODUCT_BUNDLE_IDENTIFIER = com.minimal
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2022 Codelessly Inc. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 Codelessly Inc. All rights reserved.
