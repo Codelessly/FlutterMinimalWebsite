@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Make breakpoint values accessible throughout the app by wrapping the
-      // app with a builder method.
+      // Wrapping the app with a builder method makes breakpoints
+      // accessible throughout the widget tree.
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [
@@ -26,25 +26,28 @@ class MyApp extends StatelessWidget {
         ],
       ),
       initialRoute: '/',
-      // The following code demonstrates an implementation of the AutoScale functionality
-      // of ResponsiveScaledBox. The ResponsiveScaledBox widget preserves
+      // The following code implements the legacy ResponsiveWrapper AutoScale functionality
+      // using the new ResponsiveScaledBox. The ResponsiveScaledBox widget preserves
       // the legacy ResponsiveWrapper behavior, scaling the UI instead of resizing.
+      //
+      // A ConditionalRouteWidget is used to showcase how to disable the AutoScale
+      // behavior for a page.
       onGenerateRoute: (RouteSettings settings) {
         // A custom `fadeThrough` route transition animation.
         return Routes.fadeThrough(settings, (context) {
           // Wrap widgets with another widget based on the route.
-          // Wrap the page with ResponsiveScaledBox on desired pages.
+          // Wrap the page with the ResponsiveScaledBox for desired pages.
           return ConditionalRouteWidget(
               routesExcluded: const [
                 TypographyPage.name
-              ], // An example of excluding a page from AutoScale.
+              ], // Excluding a page from AutoScale.
               builder: (context, child) => MaxWidthBox(
                     // A widget that limits the maximum width.
                     // This is used to create a gutter area on either side of the content.
                     maxWidth: 1200,
                     background: Container(color: const Color(0xFFF5F5F5)),
                     child: ResponsiveScaledBox(
-                        // ResponsiveScaledBox renders it's child with a FittedBox set to the `width` value.
+                        // ResponsiveScaledBox renders its child with a FittedBox set to the `width` value.
                         // Set the fixed width value based on the active breakpoint.
                         width: ResponsiveValue<double>(context,
                             conditionalValues: [
@@ -53,7 +56,8 @@ class MyApp extends StatelessWidget {
                                   start: 800, end: 1100, value: 800),
                               const Condition.between(
                                   start: 1000, end: 1200, value: 1000),
-                              // Because the `maxWidth` is set to 1200 via the MaxWidthBox, the layout cannot expand over 1200px.
+                              // There are no conditions for width over 1200
+                              // because the `maxWidth` is set to 1200 via the MaxWidthBox.
                             ]).value,
                         child: child!),
                   ),
