@@ -62,7 +62,8 @@ class MyApp extends StatelessWidget {
                         child: child!),
                   ),
               child: BouncingScrollWrapper.builder(
-                  context, buildPage(settings.name ?? '')));
+                  context, buildPage(settings.name ?? ''),
+                  dragWithMouse: true));
         });
       },
       debugShowCheckedModeBanner: false,
