@@ -13,8 +13,7 @@ dependencies:
     path: ../
   # Uncomment to build standalone project.
   #  responsive_framework: ^1.0.0
-  navigation_utils:
-    path: navigation_utils
+  navigation_utils: ^0.0.1-pre.1
   google_fonts: ^4.0.3
   animations: ^2.0.7
   loading_gifs: ^0.3.0
