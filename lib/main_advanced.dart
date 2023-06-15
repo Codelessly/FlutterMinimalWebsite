@@ -51,10 +51,10 @@ class MyApp extends StatelessWidget {
                         // Set the fixed width value based on the active breakpoint.
                         width: ResponsiveValue<double>(context,
                             conditionalValues: [
-                              const Condition.equals(name: MOBILE, value: 450),
-                              const Condition.between(
+                              Condition.equals(name: MOBILE, value: 450),
+                              Condition.between(
                                   start: 800, end: 1100, value: 800),
-                              const Condition.between(
+                              Condition.between(
                                   start: 1000, end: 1200, value: 1000),
                               // There are no conditions for width over 1200
                               // because the `maxWidth` is set to 1200 via the MaxWidthBox.
