@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:minimal/pages/pages.dart';
 import 'package:minimal/routes.dart';
-import 'package:navigation_utils/navigation_utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
+import 'utils/conditional_route_widget.dart';
 
 void main() {
   runApp(const MyApp());
