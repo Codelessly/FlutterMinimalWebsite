@@ -6,6 +6,9 @@ import 'package:minimal/components/text.dart';
 import 'package:minimal/components/typography.dart';
 import 'package:minimal/pages/page_post.dart';
 import 'package:minimal/pages/page_typography.dart';
+import 'package:minimal/pages/pages.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ImageWrapper extends StatelessWidget {
   final String image;
@@ -117,7 +120,7 @@ class ReadMoreButton extends StatelessWidget {
             const EdgeInsets.symmetric(horizontal: 12, vertical: 16)),
       ),
       child: const Text(
-        "READ MORE",
+        "PONGASE EN CONTACTO",
       ),
     );
   }
@@ -349,7 +352,7 @@ class MinimalMenuBar extends StatelessWidget {
                 splashColor: Colors.transparent,
                 onTap: () => Navigator.popUntil(
                     context, ModalRoute.withName(Navigator.defaultRouteName)),
-                child: Text("MINIMAL",
+                child: Text("CAS-I",
                     style: GoogleFonts.montserrat(
                         color: textPrimary,
                         fontSize: 30,
@@ -362,40 +365,42 @@ class MinimalMenuBar extends StatelessWidget {
                   child: Wrap(
                     children: <Widget>[
                       TextButton(
-                        onPressed: () => Navigator.popUntil(context,
-                            ModalRoute.withName(Navigator.defaultRouteName)),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AboutUsPage.name),
                         style: menuButtonStyle,
                         child: const Text(
-                          "HOME",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "PORTFOLIO",
+                          "INICIO",
                         ),
                       ),
                       TextButton(
                         onPressed: () =>
-                            Navigator.pushNamed(context, TypographyPage.name),
+                            Navigator.pushNamed(context, ListPage.name),
                         style: menuButtonStyle,
                         child: const Text(
-                          "STYLE",
+                          "SERVICIOS",
+                        ),
+                      ),
+                      // TextButton(
+                      //   onPressed: () =>
+                      //       Navigator.pushNamed(context, TypographyPage.name),
+                      //   style: menuButtonStyle,
+                      //   child: const Text(
+                      //     "STYLE",
+                      //   ),
+                      // ),
+                      TextButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, PostPage.name),
+                        style: menuButtonStyle,
+                        child: const Text(
+                          "CONTACTENOS",
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => goToCas(),
                         style: menuButtonStyle,
                         child: const Text(
-                          "ABOUT",
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "CONTACT",
+                          "CLIENTES",
                         ),
                       ),
                     ],
@@ -411,5 +416,15 @@ class MinimalMenuBar extends StatelessWidget {
             color: const Color(0xFFEEEEEE)),
       ],
     );
+  }
+}
+
+Future<void> goToCas() async {
+  String url = 'https://cas-app.pages.dev/#/';
+  try {
+    await launchUrlString(url, mode: LaunchMode.inAppBrowserView);
+  } catch (e) {
+    print("cant go to google lol");
+    print(e.toString());
   }
 }

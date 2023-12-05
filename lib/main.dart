@@ -40,17 +40,21 @@ class MyApp extends StatelessWidget {
   Widget buildPage(String name) {
     switch (name) {
       case '/':
+        return const AboutUsPage();
       case ListPage.name:
         return const ListPage();
       case PostPage.name:
         // Custom "per-page" breakpoints.
-        return const ResponsiveBreakpoints(breakpoints: [
-          Breakpoint(start: 0, end: 480, name: MOBILE),
-          Breakpoint(start: 481, end: 1200, name: TABLET),
-          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
-        ], child: PostPage());
+        return const PostPage();
+      // return const ResponsiveBreakpoints(breakpoints: [
+      //   Breakpoint(start: 0, end: 480, name: MOBILE),
+      //   Breakpoint(start: 481, end: 1200, name: TABLET),
+      //   Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+      // ], child: PostPage());
       case TypographyPage.name:
         return const TypographyPage();
+      case AboutUsPage.name:
+        return const AboutUsPage();
       default:
         return const SizedBox.shrink();
     }

@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                   dragWithMouse: true));
         });
       },
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
     );
   }
 
@@ -82,6 +82,8 @@ class MyApp extends StatelessWidget {
         return const PostPage();
       case TypographyPage.name:
         return const TypographyPage();
+      case AboutUsPage.name:
+        return const AboutUsPage();
       default:
         return const SizedBox.shrink();
     }
