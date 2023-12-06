@@ -350,8 +350,7 @@ class MinimalMenuBar extends StatelessWidget {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
-                onTap: () => Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName)),
+                onTap: () => Navigator.pushNamed(context, AboutUsPage.name),
                 child: Text("CAS-I",
                     style: GoogleFonts.montserrat(
                         color: textPrimary,
