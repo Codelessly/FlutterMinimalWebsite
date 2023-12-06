@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // color: Color.fromRGBO(119, 124, 217, 1.0),
       // Wrapping the app with a builder method makes breakpoints
       // accessible throughout the widget tree.
       builder: (context, child) => ResponsiveBreakpoints.builder(

@@ -343,21 +343,26 @@ class MinimalMenuBar extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
+          color: const Color.fromRGBO(119, 124, 217, 1.0),
           margin: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
             children: <Widget>[
               InkWell(
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onTap: () => Navigator.pushNamed(context, AboutUsPage.name),
-                child: Text("CAS-I",
-                    style: GoogleFonts.montserrat(
-                        color: textPrimary,
-                        fontSize: 30,
-                        letterSpacing: 3,
-                        fontWeight: FontWeight.w500)),
-              ),
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  onTap: () => Navigator.pushNamed(context, AboutUsPage.name),
+                  // child: Text("CAS-I",
+                  //     style: GoogleFonts.montserrat(
+                  //         color: textPrimary,
+                  //         fontSize: 30,
+                  //         letterSpacing: 3,
+                  //         fontWeight: FontWeight.w500)),
+                  child: Image.asset(
+                    "assets/images/cas-i-web.png",
+                    height: 70,
+                    width: 300,
+                  )),
               Flexible(
                 child: Container(
                   alignment: Alignment.centerRight,

@@ -13,11 +13,13 @@ class AboutUsPage extends StatelessWidget {
         children: <Widget>[
           SingleChildScrollView(
             child: Container(
+              // color: const Color.fromRGBO(119, 124, 217, 1.0),
               margin: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 children: <Widget>[
                   const MinimalMenuBar(),
                   Container(
+                    color: const Color.fromRGBO(119, 124, 217, 1.0),
                     margin: marginBottom24,
                   ),
                   Align(
@@ -60,7 +62,7 @@ class AboutUsPage extends StatelessWidget {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(119, 124, 217, 1.0),
     );
   }
 }

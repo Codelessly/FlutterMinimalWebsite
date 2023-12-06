@@ -18,7 +18,7 @@ class PostPage extends StatelessWidget {
               // const ImageWrapper(
               //   image: "assets/images/web-logo-cas-i.png",
               // ),
-              Image.asset("assets/images/casi-logo-name.png"),
+              Image.asset("assets/images/web-logo-cas-i.png"),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
@@ -89,7 +89,7 @@ class PostPage extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(119, 124, 217, 1.0),
     );
   }
 }

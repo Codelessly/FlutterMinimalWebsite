@@ -95,7 +95,7 @@ class TypographyPage extends StatelessWidget {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(119, 124, 217, 1.0),
     );
   }
 }

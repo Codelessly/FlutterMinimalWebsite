@@ -26,17 +26,17 @@ class ListPage extends StatelessWidget {
         children: <Widget>[
           SingleChildScrollView(
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 32),
+              margin: const EdgeInsets.symmetric(horizontal: 40),
               child: const Column(
                 children: <Widget>[
                   MinimalMenuBar(),
                   ListItem(
-                      imageUrl: "assets/images/coding.jpeg",
+                      imageUrl: "assets/images/coding.jpg",
                       title: listItemTitleText,
                       description: listItemPreviewText),
                   divider,
                   ListItem(
-                      imageUrl: "assets/images/protect.jpeg",
+                      imageUrl: "assets/images/protect.jpg",
                       title: listItemTitleText2,
                       description: listItemPreviewText2),
                   divider,
@@ -46,7 +46,7 @@ class ListPage extends StatelessWidget {
                       description: listItemPreviewText3),
                   divider,
                   ListItem(
-                      imageUrl: "assets/images/consult.jpeg",
+                      imageUrl: "assets/images/dogs/consult.jpg",
                       title: listItemTitleText4,
                       description: listItemPreviewText4),
                   divider,
@@ -68,7 +68,7 @@ class ListPage extends StatelessWidget {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(119, 124, 217, 1.0),
     );
   }
 }
