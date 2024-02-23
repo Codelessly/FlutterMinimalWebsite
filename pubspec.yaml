@@ -14,8 +14,8 @@ dependencies:
     path: ../
   # Uncomment to build standalone project.
   #  responsive_framework: ^1.0.0
-  google_fonts: ^5.1.0
-  animations: ^2.0.8
+  google_fonts: ^6.1.0
+  animations: ^2.0.11
   loading_gifs: ^0.3.0
 
 dev_dependencies:
@@ -27,10 +27,18 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
+  remove_alpha_ios: true
+  image_path: "assets/Minimal-Logo.png"
   image_path_android: "assets/Minimal-Logo.png"
   image_path_ios: "assets/Minimal-Logo-iOS.png"
   adaptive_icon_background: "#FFFFFFFF"
   adaptive_icon_foreground: "assets/Minimal-Logo-Adaptive.png"
+  web:
+    generate: true
+  macos:
+    generate: true
+  windows:
+    generate: true
 
 flutter:
   uses-material-design: true
