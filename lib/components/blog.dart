@@ -235,13 +235,15 @@ class ListNavigation extends StatelessWidget {
               size: 25,
               color: textSecondary,
             ),
-            Text("NEWER POSTS", style: buttonTextStyle),
+            if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
+              Text("NEWER POSTS", style: buttonTextStyle),
           ],
         ),
         const Spacer(),
         Row(
           children: <Widget>[
-            Text("OLDER POSTS", style: buttonTextStyle),
+            if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
+              Text("OLDER POSTS", style: buttonTextStyle),
             const Icon(
               Icons.keyboard_arrow_right,
               size: 25,
