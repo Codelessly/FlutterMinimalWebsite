@@ -4,8 +4,8 @@ import 'package:minimal/components/color.dart';
 import 'package:minimal/components/spacing.dart';
 import 'package:minimal/components/text.dart';
 import 'package:minimal/components/typography.dart';
-import 'package:minimal/pages/page_post.dart';
-import 'package:minimal/pages/page_typography.dart';
+import 'package:minimal/pages/pages.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class ImageWrapper extends StatelessWidget {
   final String image;
@@ -355,52 +355,62 @@ class MinimalMenuBar extends StatelessWidget {
                         letterSpacing: 3,
                         fontWeight: FontWeight.w500)),
               ),
-              Flexible(
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Wrap(
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.popUntil(context,
-                            ModalRoute.withName(Navigator.defaultRouteName)),
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "HOME",
+              if (ResponsiveBreakpoints.of(context).isMobile) ...[
+                const Spacer(),
+                Transform.translate(
+                  offset: const Offset(16, 0),
+                  child: IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () {},
+                  ),
+                )
+              ] else
+                Flexible(
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: Wrap(
+                      children: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.popUntil(context,
+                              ModalRoute.withName(Navigator.defaultRouteName)),
+                          style: menuButtonStyle,
+                          child: const Text(
+                            "HOME",
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "PORTFOLIO",
+                        TextButton(
+                          onPressed: () {},
+                          style: menuButtonStyle,
+                          child: const Text(
+                            "PORTFOLIO",
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, TypographyPage.name),
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "STYLE",
+                        TextButton(
+                          onPressed: () =>
+                              Navigator.pushNamed(context, TypographyPage.name),
+                          style: menuButtonStyle,
+                          child: const Text(
+                            "STYLE",
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "ABOUT",
+                        TextButton(
+                          onPressed: () {},
+                          style: menuButtonStyle,
+                          child: const Text(
+                            "ABOUT",
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: menuButtonStyle,
-                        child: const Text(
-                          "CONTACT",
+                        TextButton(
+                          onPressed: () {},
+                          style: menuButtonStyle,
+                          child: const Text(
+                            "CONTACT",
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
