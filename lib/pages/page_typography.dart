@@ -4,7 +4,7 @@ import 'package:minimal/components/components.dart';
 class TypographyPage extends StatelessWidget {
   static const String name = 'typography';
 
-  const TypographyPage({Key? key}) : super(key: key);
+  const TypographyPage({super.key});
 
   @override
   Widget build(BuildContext context) {

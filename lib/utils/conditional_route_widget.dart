@@ -7,14 +7,13 @@ class ConditionalRouteWidget extends StatelessWidget {
   final Widget child;
 
   const ConditionalRouteWidget(
-      {Key? key,
+      {super.key,
       this.routes,
       this.routesExcluded,
       required this.builder,
       required this.child})
       : assert(routes == null || routesExcluded == null,
-            'Cannot include `routes` and `routesExcluded`. Please provide an list of routes to include or exclude, not both.'),
-        super(key: key);
+            'Cannot include `routes` and `routesExcluded`. Please provide an list of routes to include or exclude, not both.');
 
   @override
   Widget build(BuildContext context) {

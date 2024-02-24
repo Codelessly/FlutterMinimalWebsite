@@ -10,7 +10,7 @@ import 'package:minimal/pages/page_typography.dart';
 class ImageWrapper extends StatelessWidget {
   final String image;
 
-  const ImageWrapper({Key? key, required this.image}) : super(key: key);
+  const ImageWrapper({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ImageWrapper extends StatelessWidget {
 class TagWrapper extends StatelessWidget {
   final List<Tag> tags;
 
-  const TagWrapper({Key? key, this.tags = const []}) : super(key: key);
+  const TagWrapper({super.key, this.tags = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class TagWrapper extends StatelessWidget {
 class Tag extends StatelessWidget {
   final String tag;
 
-  const Tag({Key? key, required this.tag}) : super(key: key);
+  const Tag({super.key, required this.tag});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class Tag extends StatelessWidget {
 class ReadMoreButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const ReadMoreButton({Key? key, required this.onPressed}) : super(key: key);
+  const ReadMoreButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +185,7 @@ List<Widget> authorSection({String? imageUrl, String? name, String? bio}) {
 }
 
 class PostNavigation extends StatelessWidget {
-  const PostNavigation({Key? key}) : super(key: key);
+  const PostNavigation({super.key});
 
   // TODO Get PostID from Global Routing Singleton.
   // Example: String currentPage = RouteController.of(context).currentPage;
@@ -221,7 +221,7 @@ class PostNavigation extends StatelessWidget {
 }
 
 class ListNavigation extends StatelessWidget {
-  const ListNavigation({Key? key}) : super(key: key);
+  const ListNavigation({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +255,7 @@ class ListNavigation extends StatelessWidget {
 }
 
 class Footer extends StatelessWidget {
-  const Footer({Key? key}) : super(key: key);
+  const Footer({super.key});
 
   // TODO Add additional footer components (i.e. about, links, logos).
   @override
@@ -277,8 +277,7 @@ class ListItem extends StatelessWidget {
   final String? description;
 
   const ListItem(
-      {Key? key, required this.title, this.imageUrl, this.description})
-      : super(key: key);
+      {super.key, required this.title, this.imageUrl, this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -332,7 +331,7 @@ class ListItem extends StatelessWidget {
  * a hamburger menu on screens smaller than 400px.
  */
 class MinimalMenuBar extends StatelessWidget {
-  const MinimalMenuBar({Key? key}) : super(key: key);
+  const MinimalMenuBar({super.key});
 
   @override
   Widget build(BuildContext context) {

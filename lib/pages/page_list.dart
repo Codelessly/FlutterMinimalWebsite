@@ -9,7 +9,7 @@ const String listItemPreviewText =
 class ListPage extends StatelessWidget {
   static const String name = 'list';
 
-  const ListPage({Key? key}) : super(key: key);
+  const ListPage({super.key});
 
   @override
   Widget build(BuildContext context) {

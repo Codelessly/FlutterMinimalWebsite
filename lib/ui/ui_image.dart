@@ -10,11 +10,10 @@ class ImageFixedWidth extends StatefulWidget {
   final double imageRatio;
 
   const ImageFixedWidth(
-      {Key? key,
+      {super.key,
       required this.imageUrl,
       required this.width,
-      this.imageRatio = 1})
-      : super(key: key);
+      this.imageRatio = 1});
 
   @override
   ImageFixedWidthState createState() => ImageFixedWidthState();

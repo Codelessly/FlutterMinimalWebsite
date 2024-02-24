@@ -4,7 +4,7 @@ import 'package:minimal/components/components.dart';
 class PostPage extends StatelessWidget {
   static const String name = 'post';
 
-  const PostPage({Key? key}) : super(key: key);
+  const PostPage({super.key});
 
   @override
   Widget build(BuildContext context) {
