@@ -40,7 +40,7 @@ class TagWrapper extends StatelessWidget {
         child: Wrap(
           spacing: 8,
           runSpacing: 0,
-          children: <Widget>[...tags],
+          children: [...tags],
         ));
   }
 }
@@ -142,7 +142,7 @@ List<Widget> authorSection({String? imageUrl, String? name, String? bio}) {
     Container(
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: Row(
-        children: <Widget>[
+        children: [
           if (imageUrl != null)
             Container(
               margin: const EdgeInsets.only(right: 25),
@@ -160,7 +160,7 @@ List<Widget> authorSection({String? imageUrl, String? name, String? bio}) {
             ),
           Expanded(
             child: Column(
-              children: <Widget>[
+              children: [
                 if (name != null)
                   Align(
                     alignment: Alignment.centerLeft,
@@ -193,9 +193,9 @@ class PostNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
+      children: [
         Row(
-          children: <Widget>[
+          children: [
             const Icon(
               Icons.keyboard_arrow_left,
               size: 25,
@@ -206,7 +206,7 @@ class PostNavigation extends StatelessWidget {
         ),
         const Spacer(),
         Row(
-          children: <Widget>[
+          children: [
             Text("NEXT POST", style: buttonTextStyle),
             const Icon(
               Icons.keyboard_arrow_right,
@@ -227,9 +227,9 @@ class ListNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
+      children: [
         Row(
-          children: <Widget>[
+          children: [
             const Icon(
               Icons.keyboard_arrow_left,
               size: 25,
@@ -241,7 +241,7 @@ class ListNavigation extends StatelessWidget {
         ),
         const Spacer(),
         Row(
-          children: <Widget>[
+          children: [
             if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
               Text("OLDER POSTS", style: buttonTextStyle),
             const Icon(
@@ -284,7 +284,7 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         if (imageUrl != null)
           ImageWrapper(
             image: imageUrl!,
@@ -339,11 +339,11 @@ class MinimalMenuBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
+      children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
-            children: <Widget>[
+            children: [
               InkWell(
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
@@ -371,7 +371,7 @@ class MinimalMenuBar extends StatelessWidget {
                   child: Container(
                     alignment: Alignment.centerRight,
                     child: Wrap(
-                      children: <Widget>[
+                      children: [
                         TextButton(
                           onPressed: () => Navigator.popUntil(context,
                               ModalRoute.withName(Navigator.defaultRouteName)),

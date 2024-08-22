@@ -10,12 +10,12 @@ class TypographyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: <Widget>[
+        children: [
           SingleChildScrollView(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
-                children: <Widget>[
+                children: [
                   const MinimalMenuBar(),
                   Align(
                     alignment: Alignment.center,
