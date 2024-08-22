@@ -79,29 +79,29 @@ class ReadMoreButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        overlayColor: MaterialStateProperty.all<Color>(textPrimary),
-        side: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.focused) ||
-              states.contains(MaterialState.hovered) ||
-              states.contains(MaterialState.pressed)) {
+        overlayColor: WidgetStateProperty.all<Color>(textPrimary),
+        side: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.focused) ||
+              states.contains(WidgetState.hovered) ||
+              states.contains(WidgetState.pressed)) {
             return const BorderSide(color: textPrimary, width: 2);
           }
 
           return const BorderSide(color: textPrimary, width: 2);
         }),
-        foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-          if (states.contains(MaterialState.focused) ||
-              states.contains(MaterialState.hovered) ||
-              states.contains(MaterialState.pressed)) {
+        foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+          if (states.contains(WidgetState.focused) ||
+              states.contains(WidgetState.hovered) ||
+              states.contains(WidgetState.pressed)) {
             return Colors.white;
           }
 
           return textPrimary;
         }),
-        textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
-          if (states.contains(MaterialState.focused) ||
-              states.contains(MaterialState.hovered) ||
-              states.contains(MaterialState.pressed)) {
+        textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+          if (states.contains(WidgetState.focused) ||
+              states.contains(WidgetState.hovered) ||
+              states.contains(WidgetState.pressed)) {
             return GoogleFonts.montserrat(
               textStyle: const TextStyle(
                   fontSize: 14, color: Colors.white, letterSpacing: 1),
@@ -113,7 +113,7 @@ class ReadMoreButton extends StatelessWidget {
                 fontSize: 14, color: textPrimary, letterSpacing: 1),
           );
         }),
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
             const EdgeInsets.symmetric(horizontal: 12, vertical: 16)),
       ),
       child: const Text(
