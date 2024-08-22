@@ -13,8 +13,8 @@ dependencies:
 #  responsive_framework:
 #    path: ../
   # Uncomment to build standalone project.
-  responsive_framework: ^1.2.0
-  google_fonts: ^6.1.0
+  responsive_framework: ^1.4.0
+  google_fonts: ^6.2.1
   animations: ^2.0.11
   loading_gifs: ^0.3.0
 
@@ -22,7 +22,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
 
 flutter_icons:
   android: true
