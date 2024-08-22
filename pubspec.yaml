@@ -4,8 +4,8 @@ version: 1.6.0
 publish_to: none
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.0.0"
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
@@ -17,6 +17,7 @@ dependencies:
   google_fonts: ^6.2.1
   animations: ^2.0.11
   loading_gifs: ^0.3.0
+  url_launcher: ^6.3.0 # Requires setup.
 
 dev_dependencies:
   flutter_test:

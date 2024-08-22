@@ -1,8 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:minimal/pages/pages.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (kIsWeb) {
+    usePathUrlStrategy();
+  }
+
   runApp(const MyApp());
 }
 
@@ -24,12 +33,28 @@ class MyApp extends StatelessWidget {
         child: child!,
       ),
       initialRoute: '/',
+      onGenerateInitialRoutes: (initialRoute) => [
+        MaterialPageRoute(
+            settings: RouteSettings(name: initialRoute),
+            builder: (context) {
+              String sanitizedRoute =
+                  initialRoute != '/' && initialRoute.startsWith('/')
+                      ? initialRoute.substring(1)
+                      : initialRoute;
+
+              return BouncingScrollWrapper.builder(
+                  context, buildPage(sanitizedRoute),
+                  dragWithMouse: true);
+            })
+      ],
       onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(builder: (context) {
-          return BouncingScrollWrapper.builder(
-              context, buildPage(settings.name ?? ''),
-              dragWithMouse: true);
-        });
+        return MaterialPageRoute(
+            settings: RouteSettings(name: '/${settings.name}'),
+            builder: (context) {
+              return BouncingScrollWrapper.builder(
+                  context, buildPage(settings.name ?? ''),
+                  dragWithMouse: true);
+            });
       },
       debugShowCheckedModeBanner: false,
     );
