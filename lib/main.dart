@@ -63,21 +63,22 @@ class MyApp extends StatelessWidget {
   // onGenerateRoute route switcher.
   // Navigate using the page name, `Navigator.pushNamed(context, ListPage.name)`.
   Widget buildPage(String name) {
-    switch (name) {
-      case '/':
-      case ListPage.name:
-        return const ListPage();
-      case PostPage.name:
-        // Custom "per-page" breakpoints.
-        return const ResponsiveBreakpoints(breakpoints: [
-          Breakpoint(start: 0, end: 480, name: MOBILE),
-          Breakpoint(start: 481, end: 1200, name: TABLET),
-          Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
-        ], child: PostPage());
-      case TypographyPage.name:
-        return const TypographyPage();
-      default:
-        return const SizedBox.shrink();
-    }
+    return MaxWidthBox(
+        // A widget that limits the maximum width.
+        // This is used to create a gutter area on either side of the content.
+        maxWidth: 1200,
+        background: Container(color: const Color(0xFFF5F5F5)),
+        child: switch (name) {
+          '/' || ListPage.name => const ListPage(),
+          PostPage.name =>
+            // Custom "per-page" breakpoints.
+            const ResponsiveBreakpoints(breakpoints: [
+              Breakpoint(start: 0, end: 480, name: MOBILE),
+              Breakpoint(start: 481, end: 1200, name: TABLET),
+              Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+            ], child: PostPage()),
+          TypographyPage.name => const TypographyPage(),
+          _ => const SizedBox.shrink(),
+        });
   }
 }
