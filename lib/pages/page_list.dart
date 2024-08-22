@@ -14,57 +14,46 @@ class ListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      backgroundColor: Colors.white,
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         children: [
-          SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                children: [
-                  const MinimalMenuBar(),
-                  const ListItem(
-                      imageUrl:
-                          "assets/images/paper_flower_overhead_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
-                  divider,
-                  const ListItem(
-                      imageUrl:
-                          "assets/images/iphone_cactus_tea_overhead_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
-                  divider,
-                  const ListItem(
-                      imageUrl:
-                          "assets/images/typewriter_overhead_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
-                  divider,
-                  const ListItem(
-                      imageUrl:
-                          "assets/images/coffee_paperclips_pencil_angled_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
-                  divider,
-                  const ListItem(
-                      imageUrl:
-                          "assets/images/joy_note_coffee_eyeglasses_overhead_bw_w1080.jpg",
-                      title: listItemTitleText,
-                      description: listItemPreviewText),
-                  divider,
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 80),
-                    child: const ListNavigation(),
-                  ),
-                  divider,
-                  const Footer(),
-                ],
-              ),
-            ),
+          const MinimalMenuBar(),
+          const ListItem(
+              imageUrl: "assets/images/paper_flower_overhead_bw_w1080.jpg",
+              title: listItemTitleText,
+              description: listItemPreviewText),
+          divider,
+          const ListItem(
+              imageUrl: "assets/images/iphone_cactus_tea_overhead_bw_w1080.jpg",
+              title: listItemTitleText,
+              description: listItemPreviewText),
+          divider,
+          const ListItem(
+              imageUrl: "assets/images/typewriter_overhead_bw_w1080.jpg",
+              title: listItemTitleText,
+              description: listItemPreviewText),
+          divider,
+          const ListItem(
+              imageUrl:
+                  "assets/images/coffee_paperclips_pencil_angled_bw_w1080.jpg",
+              title: listItemTitleText,
+              description: listItemPreviewText),
+          divider,
+          const ListItem(
+              imageUrl:
+                  "assets/images/joy_note_coffee_eyeglasses_overhead_bw_w1080.jpg",
+              title: listItemTitleText,
+              description: listItemPreviewText),
+          divider,
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 80),
+            child: const ListNavigation(),
           ),
+          divider,
+          const Footer(),
         ],
       ),
-      backgroundColor: Colors.white,
     );
   }
 }
