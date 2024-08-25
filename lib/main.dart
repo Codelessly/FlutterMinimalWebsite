@@ -59,26 +59,26 @@ class MyApp extends StatelessWidget {
           String pathName =
               path != '/' && path.startsWith('/') ? path.substring(1) : path;
           return BouncingScrollWrapper.builder(
-              context,
-              MaxWidthBox(
-                  // A widget that limits the maximum width.
-                  // This is used to create a gutter area on either side of the content.
-                  maxWidth: 1200,
-                  background: Container(color: const Color(0xFFF5F5F5)),
-                  child: switch (pathName) {
-                    '/' || ListPage.name => const ListPage(),
-                    PostPage.name =>
-                      // Custom "per-page" breakpoints.
-                      const ResponsiveBreakpoints(breakpoints: [
-                        Breakpoint(start: 0, end: 480, name: MOBILE),
-                        Breakpoint(start: 481, end: 1200, name: TABLET),
-                        Breakpoint(
-                            start: 1201, end: double.infinity, name: DESKTOP),
-                      ], child: PostPage()),
-                    TypographyPage.name => const TypographyPage(),
-                    _ => const SizedBox.shrink(),
-                  }),
-              dragWithMouse: true);
+            context,
+            MaxWidthBox(
+                // A widget that limits the maximum width.
+                // This is used to create a gutter area on either side of the content.
+                maxWidth: 1200,
+                background: Container(color: const Color(0xFFF5F5F5)),
+                child: switch (pathName) {
+                  '/' || ListPage.name => const ListPage(),
+                  PostPage.name =>
+                    // Custom "per-page" breakpoints.
+                    const ResponsiveBreakpoints(breakpoints: [
+                      Breakpoint(start: 0, end: 480, name: MOBILE),
+                      Breakpoint(start: 481, end: 1200, name: TABLET),
+                      Breakpoint(
+                          start: 1201, end: double.infinity, name: DESKTOP),
+                    ], child: PostPage()),
+                  TypographyPage.name => const TypographyPage(),
+                  _ => const SizedBox.shrink(),
+                }),
+          );
         });
   }
 }
