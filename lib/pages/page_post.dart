@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimal/components/components.dart';
+import 'package:minimal/utils/max_width_extension.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class PostPage extends StatelessWidget {
@@ -11,8 +12,8 @@ class PostPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
-      body: ListView(
-        children: [
+      body: CustomScrollView(
+        slivers: [
           ...[
             const MinimalMenuBar(),
             const ImageWrapper(
@@ -80,17 +81,18 @@ class PostPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 80),
               child: const PostNavigation(),
             ),
-            divider,
-            // Footer
-            const Footer(),
-          ].map(
-            (item) => MaxWidthBox(
-              maxWidth: 1200,
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              backgroundColor: Colors.white,
-              child: item,
-            ),
+          ].toMaxWidthSliver(),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: MaxWidthBox(
+                maxWidth: 1200,
+                backgroundColor: Colors.white,
+                child: Container()),
           ),
+          ...[
+            divider,
+            const Footer(),
+          ].toMaxWidthSliver(),
         ],
       ),
     );

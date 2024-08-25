@@ -44,27 +44,20 @@ class MyApp extends StatelessWidget {
                   routesExcluded: const [
                     TypographyPage.name
                   ], // Excluding a page from AutoScale.
-                  builder: (context, child) => MaxWidthBox(
-                        // A widget that limits the maximum width.
-                        // This is used to create a gutter area on either side of the content.
-                        maxWidth: 1200,
-                        background: Container(color: const Color(0xFFF5F5F5)),
-                        child: ResponsiveScaledBox(
-                            // ResponsiveScaledBox renders its child with a FittedBox set to the `width` value.
-                            // Set the fixed width value based on the active breakpoint.
-                            width: ResponsiveValue<double>(context,
-                                conditionalValues: [
-                                  const Condition.equals(
-                                      name: MOBILE, value: 450),
-                                  const Condition.between(
-                                      start: 800, end: 1100, value: 800),
-                                  const Condition.between(
-                                      start: 1000, end: 1200, value: 1000),
-                                  // There are no conditions for width over 1200
-                                  // because the `maxWidth` is set to 1200 via the MaxWidthBox.
-                                ]).value,
-                            child: child!),
-                      ),
+                  builder: (context, child) => ResponsiveScaledBox(
+                      // ResponsiveScaledBox renders its child with a FittedBox set to the `width` value.
+                      // Set the fixed width value based on the active breakpoint.
+                      width:
+                          ResponsiveValue<double>(context, conditionalValues: [
+                        const Condition.equals(name: MOBILE, value: 450),
+                        const Condition.between(
+                            start: 800, end: 1100, value: 800),
+                        const Condition.between(
+                            start: 1000, end: 1200, value: 1000),
+                        // There are no conditions for width over 1200
+                        // because the `maxWidth` is set to 1200 via the MaxWidthBox.
+                      ]).value,
+                      child: child!),
                   child: BouncingScrollWrapper.builder(
                       context, buildPage(settings.name ?? ''),
                       dragWithMouse: true));
