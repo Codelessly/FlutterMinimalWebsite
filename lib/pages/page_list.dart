@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minimal/components/components.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 // TODO Replace with object model.
 const String listItemTitleText = "A BETTER BLOG FOR WRITING";
@@ -14,44 +15,53 @@ class ListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF5F5F5),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
         children: [
-          const MinimalMenuBar(),
-          const ListItem(
-              imageUrl: "assets/images/paper_flower_overhead_bw_w1080.jpg",
-              title: listItemTitleText,
-              description: listItemPreviewText),
-          divider,
-          const ListItem(
-              imageUrl: "assets/images/iphone_cactus_tea_overhead_bw_w1080.jpg",
-              title: listItemTitleText,
-              description: listItemPreviewText),
-          divider,
-          const ListItem(
-              imageUrl: "assets/images/typewriter_overhead_bw_w1080.jpg",
-              title: listItemTitleText,
-              description: listItemPreviewText),
-          divider,
-          const ListItem(
-              imageUrl:
-                  "assets/images/coffee_paperclips_pencil_angled_bw_w1080.jpg",
-              title: listItemTitleText,
-              description: listItemPreviewText),
-          divider,
-          const ListItem(
-              imageUrl:
-                  "assets/images/joy_note_coffee_eyeglasses_overhead_bw_w1080.jpg",
-              title: listItemTitleText,
-              description: listItemPreviewText),
-          divider,
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 80),
-            child: const ListNavigation(),
+          ...[
+            const MinimalMenuBar(),
+            const ListItem(
+                imageUrl: "assets/images/paper_flower_overhead_bw_w1080.jpg",
+                title: listItemTitleText,
+                description: listItemPreviewText),
+            divider,
+            const ListItem(
+                imageUrl:
+                    "assets/images/iphone_cactus_tea_overhead_bw_w1080.jpg",
+                title: listItemTitleText,
+                description: listItemPreviewText),
+            divider,
+            const ListItem(
+                imageUrl: "assets/images/typewriter_overhead_bw_w1080.jpg",
+                title: listItemTitleText,
+                description: listItemPreviewText),
+            divider,
+            const ListItem(
+                imageUrl:
+                    "assets/images/coffee_paperclips_pencil_angled_bw_w1080.jpg",
+                title: listItemTitleText,
+                description: listItemPreviewText),
+            divider,
+            const ListItem(
+                imageUrl:
+                    "assets/images/joy_note_coffee_eyeglasses_overhead_bw_w1080.jpg",
+                title: listItemTitleText,
+                description: listItemPreviewText),
+            divider,
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 80),
+              child: const ListNavigation(),
+            ),
+            divider,
+            const Footer(),
+          ].map(
+            (item) => MaxWidthBox(
+              maxWidth: 1200,
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              backgroundColor: Colors.white,
+              child: item,
+            ),
           ),
-          divider,
-          const Footer(),
         ],
       ),
     );
