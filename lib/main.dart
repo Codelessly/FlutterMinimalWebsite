@@ -33,28 +33,15 @@ class MyApp extends StatelessWidget {
         child: child!,
       ),
       initialRoute: '/',
-      onGenerateInitialRoutes: (initialRoute) => [
-        MaterialPageRoute(
-            settings: RouteSettings(name: initialRoute),
-            builder: (context) {
-              String sanitizedRoute =
-                  initialRoute != '/' && initialRoute.startsWith('/')
-                      ? initialRoute.substring(1)
-                      : initialRoute;
-
-              return BouncingScrollWrapper.builder(
-                  context, buildPage(sanitizedRoute),
-                  dragWithMouse: true);
-            })
-      ],
+      onGenerateInitialRoutes: (initialRoute) {
+        final Uri uri = Uri.parse(initialRoute);
+        return [
+          buildPage(path: uri.path, queryParams: uri.queryParameters),
+        ];
+      },
       onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-            settings: RouteSettings(name: '/${settings.name}'),
-            builder: (context) {
-              return BouncingScrollWrapper.builder(
-                  context, buildPage(settings.name ?? ''),
-                  dragWithMouse: true);
-            });
+        final Uri uri = Uri.parse(settings.name ?? '/');
+        return buildPage(path: uri.path, queryParams: uri.queryParameters);
       },
       debugShowCheckedModeBanner: false,
     );
@@ -62,23 +49,35 @@ class MyApp extends StatelessWidget {
 
   // onGenerateRoute route switcher.
   // Navigate using the page name, `Navigator.pushNamed(context, ListPage.name)`.
-  Widget buildPage(String name) {
-    return MaxWidthBox(
-        // A widget that limits the maximum width.
-        // This is used to create a gutter area on either side of the content.
-        maxWidth: 1200,
-        background: Container(color: const Color(0xFFF5F5F5)),
-        child: switch (name) {
-          '/' || ListPage.name => const ListPage(),
-          PostPage.name =>
-            // Custom "per-page" breakpoints.
-            const ResponsiveBreakpoints(breakpoints: [
-              Breakpoint(start: 0, end: 480, name: MOBILE),
-              Breakpoint(start: 481, end: 1200, name: TABLET),
-              Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
-            ], child: PostPage()),
-          TypographyPage.name => const TypographyPage(),
-          _ => const SizedBox.shrink(),
+  PageRoute buildPage(
+      {required String path, Map<String, String> queryParams = const {}}) {
+    return MaterialPageRoute(
+        settings: RouteSettings(
+            name: (path.startsWith('/') == false) ? '/$path' : path),
+        builder: (context) {
+          String pathName =
+              path != '/' && path.startsWith('/') ? path.substring(1) : path;
+          return BouncingScrollWrapper.builder(
+              context,
+              MaxWidthBox(
+                  // A widget that limits the maximum width.
+                  // This is used to create a gutter area on either side of the content.
+                  maxWidth: 1200,
+                  background: Container(color: const Color(0xFFF5F5F5)),
+                  child: switch (pathName) {
+                    '/' || ListPage.name => const ListPage(),
+                    PostPage.name =>
+                      // Custom "per-page" breakpoints.
+                      const ResponsiveBreakpoints(breakpoints: [
+                        Breakpoint(start: 0, end: 480, name: MOBILE),
+                        Breakpoint(start: 481, end: 1200, name: TABLET),
+                        Breakpoint(
+                            start: 1201, end: double.infinity, name: DESKTOP),
+                      ], child: PostPage()),
+                    TypographyPage.name => const TypographyPage(),
+                    _ => const SizedBox.shrink(),
+                  }),
+              dragWithMouse: true);
         });
   }
 }
