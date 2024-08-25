@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:minimal/pages/pages.dart';
+import 'package:minimal/routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
@@ -49,9 +50,9 @@ class MyApp extends StatelessWidget {
 
   // onGenerateRoute route switcher.
   // Navigate using the page name, `Navigator.pushNamed(context, ListPage.name)`.
-  PageRoute buildPage(
+  Route<dynamic> buildPage(
       {required String path, Map<String, String> queryParams = const {}}) {
-    return MaterialPageRoute(
+    return Routes.noAnimation(
         settings: RouteSettings(
             name: (path.startsWith('/') == false) ? '/$path' : path),
         builder: (context) {
