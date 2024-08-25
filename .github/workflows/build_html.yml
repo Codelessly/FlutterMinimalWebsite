@@ -7,11 +7,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
         with:
           submodules: recursive
           token: ${{ secrets.PAT }}
-      - uses: subosito/flutter-action@v2.8.0
+      - uses: subosito/flutter-action@master
         with:
           channel: stable
       - name: Clone deployment repo
