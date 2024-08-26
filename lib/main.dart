@@ -58,22 +58,19 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           String pathName =
               path != '/' && path.startsWith('/') ? path.substring(1) : path;
-          return BouncingScrollWrapper.builder(
-            context,
-            switch (pathName) {
-              '/' || ListPage.name => const ListPage(),
-              PostPage.name =>
-                // Breakpoints can be nested.
-                // Here's an example of custom "per-page" breakpoints.
-                const ResponsiveBreakpoints(breakpoints: [
-                  Breakpoint(start: 0, end: 480, name: MOBILE),
-                  Breakpoint(start: 481, end: 1200, name: TABLET),
-                  Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
-                ], child: PostPage()),
-              TypographyPage.name => const TypographyPage(),
-              _ => const SizedBox.shrink(),
-            },
-          );
+          return switch (pathName) {
+            '/' || ListPage.name => const ListPage(),
+            PostPage.name =>
+              // Breakpoints can be nested.
+              // Here's an example of custom "per-page" breakpoints.
+              const ResponsiveBreakpoints(breakpoints: [
+                Breakpoint(start: 0, end: 480, name: MOBILE),
+                Breakpoint(start: 481, end: 1200, name: TABLET),
+                Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+              ], child: PostPage()),
+            TypographyPage.name => const TypographyPage(),
+            _ => const SizedBox.shrink(),
+          };
         });
   }
 }
