@@ -1,6 +1,6 @@
 name: minimal
 description: A minimalistic Flutter website template for blogs and portfolios.
-version: 2.0.0
+version: 2.1.0
 publish_to: none
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
 #  responsive_framework:
 #    path: ../
   # Uncomment to build standalone project.
-  responsive_framework: ^1.4.0
+  responsive_framework: ^1.5.0
   google_fonts: ^6.2.1
   animations: ^2.0.11
   loading_gifs: ^0.3.0
