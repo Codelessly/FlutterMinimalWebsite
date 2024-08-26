@@ -63,7 +63,8 @@ class MyApp extends StatelessWidget {
             switch (pathName) {
               '/' || ListPage.name => const ListPage(),
               PostPage.name =>
-                // Custom "per-page" breakpoints.
+                // Breakpoints can be nested.
+                // Here's an example of custom "per-page" breakpoints.
                 const ResponsiveBreakpoints(breakpoints: [
                   Breakpoint(start: 0, end: 480, name: MOBILE),
                   Breakpoint(start: 481, end: 1200, name: TABLET),

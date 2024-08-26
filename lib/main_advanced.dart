@@ -52,10 +52,10 @@ class MyApp extends StatelessWidget {
                         const Condition.equals(name: MOBILE, value: 450),
                         const Condition.between(
                             start: 800, end: 1100, value: 800),
-                        const Condition.between(
-                            start: 1000, end: 1200, value: 1000),
-                        // There are no conditions for width over 1200
-                        // because the `maxWidth` is set to 1200 via the MaxWidthBox.
+                        Condition.between(
+                            start: 1000,
+                            end: double.maxFinite.toInt(),
+                            value: 1000),
                       ]).value,
                       child: child!),
                   child: BouncingScrollWrapper.builder(
