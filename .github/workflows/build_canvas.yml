@@ -19,7 +19,7 @@ jobs:
           channel: stable
       - name: Clone deployment repo
         run: |
-          git clone --single-branch "https://${{ secrets.PAT }}@github.com/searchy2/Demo.git" "clone_dir"
+          git clone --single-branch "https://${{ secrets.PAT }}@github.com/rayliverified/Demo.git" "clone_dir"
           rm -rf clone_dir/flutterwebsites/minimal-canvas/
           mkdir -p clone_dir/flutterwebsites/minimal-canvas/
       - name: Build

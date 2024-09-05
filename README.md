@@ -95,10 +95,10 @@ Minimal Template is a good start but there are still a lot of features to develo
 Please feel free to open an issue or reach out through one of the channel below. If you are thinking about contributing to this template, do not hesitate! There are no formal pull request requirements and I will work with you to get your contributions added.
 
 **Design:** 
-* [Ray Li](https://github.com/searchy2)
+* [Ray Li](https://github.com/rayliverified)
 
 **Development:** 
-* [Ray Li](https://github.com/searchy2)
+* [Ray Li](https://github.com/rayliverified)
 * *add yourself here by contributing*
 
 **Sponsor:** [Codelessly - No Code Automation Tools](https://codelessly.com)
