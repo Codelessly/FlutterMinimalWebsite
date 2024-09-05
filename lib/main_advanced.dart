@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       // behavior for a page.
       onGenerateRoute: (RouteSettings settings) {
         // A custom `fadeThrough` route transition animation.
-        return Routes.fadeThrough(
+        return Routes.noAnimation(
             settings: settings,
             builder: (context) {
               // Wrap widgets with another widget based on the route.
