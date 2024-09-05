@@ -1,0 +1,10 @@
+targets:
+  $default:
+    sources:
+      - swagger/**
+      - lib/**
+    builders:
+      swagger_dart_code_generator:
+        options:
+          input_folder: "swagger"
+          output_folder: "lib/lemon_squeezy/"

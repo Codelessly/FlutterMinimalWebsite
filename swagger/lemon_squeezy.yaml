@@ -1,0 +1,228 @@
+openapi: 3.0.0
+info:
+  title: Lemon Squeezy API
+  version: v1
+  description: API documentation for Lemon Squeezy
+servers:
+  - url: https://api.lemonsqueezy.com/v1
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Product:
+      type: object
+      properties:
+        type:
+          type: string
+          example: products
+        id:
+          type: string
+          example: '1'
+        attributes:
+          type: object
+          properties:
+            store_id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: Example Product
+            slug:
+              type: string
+              example: example-product
+            description:
+              type: string
+              example: Lorem ipsum...
+            status:
+              type: string
+              example: published
+              enum:
+                - draft
+                - published
+            status_formatted:
+              type: string
+              example: Published
+            thumb_url:
+              type: string
+              format: url
+              example: https://app.lemonsqueezy.com/storage/media/1/1c40f227-aed5-4321-9ffc-62f37a06c9a0.jpg
+            large_thumb_url:
+              type: string
+              format: url
+              example: https://app.lemonsqueezy.com/storage/media/1/1c40f227-aed5-4321-9ffc-62f37a06c9a0.jpg
+            price:
+              type: integer
+              example: 999
+            price_formatted:
+              type: string
+              example: '$9.99'
+            from_price:
+              type: integer
+              nullable: true
+            to_price:
+              type: integer
+              nullable: true
+            pay_what_you_want:
+              type: boolean
+              example: false
+            buy_now_url:
+              type: string
+              format: url
+              example: https://my-store.lemonsqueezy.com/checkout/buy/0a841cf5-4cc2-4bbb-ae5d-9529d97deec6
+            created_at:
+              type: string
+              format: date-time
+              example: '2021-05-27T12:54:47.000000Z'
+            updated_at:
+              type: string
+              format: date-time
+              example: '2021-07-14T11:25:24.000000Z'
+            test_mode:
+              type: boolean
+              example: false
+        relationships:
+          type: object
+          properties:
+            store:
+              type: object
+              properties:
+                links:
+                  type: object
+                  properties:
+                    related:
+                      type: string
+                      format: url
+                      example: https://api.lemonsqueezy.com/v1/products/1/store
+                    self:
+                      type: string
+                      format: url
+                      example: https://api.lemonsqueezy.com/v1/products/1/relationships/store
+            variants:
+              type: object
+              properties:
+                links:
+                  type: object
+                  properties:
+                    related:
+                      type: string
+                      format: url
+                      example: https://api.lemonsqueezy.com/v1/products/1/variants
+                    self:
+                      type: string
+                      format: url
+                      example: https://api.lemonsqueezy.com/v1/products/1/relationships/variants
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              format: url
+              example: https://api.lemonsqueezy.com/v1/products/1
+
+paths:
+  /products/{id}:
+    get:
+      summary: Retrieve a product
+      description: Retrieves the product with the given ID.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the product to retrieve
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        example: '1.0'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: url
+                        example: https://api.lemonsqueezy.com/v1/products/1
+                  data:
+                    $ref: '#/components/schemas/Product'
+      security:
+        - bearerAuth: []
+  /products:
+    get:
+      summary: List all products
+      description: Returns a paginated list of products.
+      parameters:
+        - in: query
+          name: filter[store_id]
+          schema:
+            type: integer
+          description: Only return products belonging to the store with this ID.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      page:
+                        type: object
+                        properties:
+                          currentPage:
+                            type: integer
+                            example: 1
+                          from:
+                            type: integer
+                            example: 1
+                          lastPage:
+                            type: integer
+                            example: 1
+                          perPage:
+                            type: integer
+                            example: 10
+                          to:
+                            type: integer
+                            example: 10
+                          total:
+                            type: integer
+                            example: 10
+                  jsonapi:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        example: '1.0'
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type: string
+                        format: url
+                        example: https://api.lemonsqueezy.com/v1/products?page%5Bnumber%5D=1&page%5Bsize%5D=10&sort=name
+                      last:
+                        type: string
+                        format: url
+                        example: https://api.lemonsqueezy.com/v1/products?page%5Bnumber%5D=1&page%5Bsize%5D=10&sort=name
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+      security:
+        - bearerAuth: []
