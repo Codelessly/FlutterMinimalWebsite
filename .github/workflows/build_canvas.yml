@@ -24,7 +24,7 @@ jobs:
           mkdir -p clone_dir/flutterwebsites/minimal-canvas/
       - name: Build
         run: |
-          flutter build web --release --base-href /flutterwebsites/minimal-canvas/ --web-renderer canvaskit
+          flutter build web --release --base-href /flutterwebsites/minimal-canvas/ --web-renderer canvaskit --web-resources-cdn
           mv build/web/* clone_dir/flutterwebsites/minimal-canvas
       - name: Get current date
         id: date
